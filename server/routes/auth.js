@@ -87,7 +87,7 @@ router.post('/login', async (req, res) => {
                     return res.status(400).json({ success: false, msg: 'Invalid password' });
                 }
                 // password is valid
-                // return jwt token 7 days
+                // return jwt token days
                 const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '3d' });
                 res.json({
                     success: true,

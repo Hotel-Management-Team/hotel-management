@@ -16,10 +16,26 @@ const userSchema = new Schema({
         unique: true
     },
     role: {
-        type: String,
-        required: true,
-        enum: ['manager', 'admin'],
-        default: 'manager'
+       hasRoom: {
+        type: Boolean,
+         default: false
+       },
+       hasPrice: {
+        type: Boolean,
+            default: false
+       },
+       hasType: {
+        type: Boolean,
+        default: false
+       },
+       hasRental:{
+        type: Boolean,
+        default: false
+         },
+         isAdmin: {
+            type: Boolean,
+            default: false
+        }
     },
     createAt: {
         type: Date,
