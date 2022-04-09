@@ -1,0 +1,55 @@
+POST  http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "123456",
+    "email": "ntneik15@gmail.com"
+}
+
+###
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "email":"ntneik15@gmail.com",
+    "password":"123456"
+}
+
+###
+POST http://localhost:5000/api/rooms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+
+{
+    "name": "Phòng 1.5",
+    "type": "Single",
+    "charge": 1000,
+    "description": "create"
+}
+
+###
+GET http://localhost:5000/api/rooms
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+
+###
+PUT  http://localhost:5000/api/rooms/6251496854b6a63896ae4cbf
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+
+{
+    "_id": "6251496854b6a63896ae4cbf",
+    "name": "Phòng 1.1",
+    "type": "Double",
+    "charge": 1000,
+    "description": "create",
+    "status": "Available",
+    "__v": 0
+}
+
+###
+DELETE http://localhost:5000/api/rooms/62514b89e3e4efae4fcda9b7
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
