@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const authRouter = require('./routes/auth');
 const roomsRouter = require('./routes/rooms');
+const cors = require('cors');
 
 // config dotenv
 const env = require('dotenv').config();
@@ -20,6 +21,8 @@ const ConnectDB = async () => {
     }
 }
 ConnectDB();
+
+app.use(cors());
 
 app.use(express.json());
 app.use('/api/auth', authRouter);

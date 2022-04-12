@@ -7,13 +7,21 @@ Content-Type: application/json
     "email": "ntkien19@gmail.com"
 }
 
+
+###
+
+GET http://localhost:5000/api/auth
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
+
+
 ###
 
 POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-    "email":"ntneik15@gmail.com",
+    "email":"ntneik152@gmail.com",
     "password":"123456"
 }
 

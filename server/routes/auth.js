@@ -3,10 +3,21 @@ const router = express.Router();
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const verifyToken = require('../middlewares/auth.middleware');
 
-router.get('/', (req, res) => {
-    res.send('USER ROUTE');
-});
+// @route   GET api/auth
+// @desc    check if user is logged in
+// @access  Public
+router.get('/', verifyToken,  async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select('-password');
+        if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+        res.json({ success: true, user });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server Error');
+    }
+    });
 
 // @route   POST api/auth/register
 // @desc    Register user
@@ -36,9 +47,11 @@ router.post('/register', (req, res) => {
                  // argon2 password hashing
                  argon2.hash(password).then(hash => {
                      newUser.password = hash;
+                     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '3d' });
                      newUser.save().then(user => {
                          res.json({
                              success: true,
+                             token: token,
                              msg: 'User registered'
                          });
                      }).catch(err => {
@@ -49,8 +62,6 @@ router.post('/register', (req, res) => {
                          });
                      });
                  });
-                 // return jwt token 7 days
-                 const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '3d' });
              }
          });
     }
@@ -78,7 +89,7 @@ router.post('/login', async (req, res) => {
          try{
              const user = await User.findOne({ email: email });
              if(!user) {
-                 return res.status(400).json({ success: false, msg: 'User not exist' });
+                 return res.status(400).json({ success: false, msg: 'Email not exist' });
              }
              // user found
              // verify password
@@ -92,7 +103,7 @@ router.post('/login', async (req, res) => {
                 res.json({
                     success: true,
                     token: token,
-                    message: 'User logged in'
+                    msg: 'User logged in'
                 });
          } 
          catch(err){
