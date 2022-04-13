@@ -1,7 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const verifyToken = require('../middlewares/auth.middleware');
-const Invoice = require('../models/invoice.model');
+import { Router } from 'express';
+import verifyToken from '../middlewares/auth.middleware';
+import Invoice from '../models/invoice.model';
+
+const router = Router();
 
 router.get('/', async (req, res) => {
     try {
@@ -46,4 +47,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

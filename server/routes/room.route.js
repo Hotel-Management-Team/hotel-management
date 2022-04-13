@@ -1,11 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const verifyToken = require('../middlewares/auth.middleware');
-const Room = require('../models/room.model');
+import { Router } from "express";
+import verifyToken from '../middlewares/auth.middleware';
+import Room from '../models/room.model';
 
-// @route  GET api/room
-// @desc   Get  room
-// @access Private
+const router = Router();
+
 router.get('/', verifyToken, async (req, res) => {
     try {
         const room = await Room.find({ user: req.userId }).populate();
@@ -124,5 +122,4 @@ router.delete('/:id', verifyToken, async (req, res) => {
     }
 });
 
-
-module.exports = router;
+export default router;

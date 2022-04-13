@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+import mongoose from 'mongoose';
 
-const invoiceSchema = new Schema({
+const invoiceSchema = new mongoose.Schema({
     createAt: {
         type: Date,
         default: Date.now
@@ -45,4 +44,6 @@ const invoiceSchema = new Schema({
     // }
 });
 
-module.exports = mongoose.model('Invoice', invoiceSchema);
+const Invoice = mongoose.model('invoice', invoiceSchema);
+
+export default Invoice;

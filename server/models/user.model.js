@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+import mongoose from 'mongoose';
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -16,23 +15,23 @@ const userSchema = new Schema({
         unique: true
     },
     role: {
-       hasRoom: {
-        type: Boolean,
-         default: false
-       },
-       hasPrice: {
-        type: Boolean,
+        hasRoom: {
+            type: Boolean,
             default: false
-       },
-       hasType: {
-        type: Boolean,
-        default: false
-       },
-       hasRental:{
-        type: Boolean,
-        default: false
-         },
-         isAdmin: {
+        },
+        hasPrice: {
+            type: Boolean,
+            default: false
+        },
+        hasType: {
+            type: Boolean,
+            default: false
+        },
+        hasRental: {
+            type: Boolean,
+            default: false
+        },
+        isAdmin: {
             type: Boolean,
             default: false
         }
@@ -43,4 +42,6 @@ const userSchema = new Schema({
     },
 });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+export default User;
