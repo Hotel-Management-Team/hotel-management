@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Charge = require('./Charge');
+const Charge = require('./charge.model');
 const { Schema } = mongoose;
 
 const roomSchema = new Schema({

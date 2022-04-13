@@ -9,7 +9,6 @@ Content-Type: application/json
 
 
 ###
-
 GET http://localhost:5000/api/auth
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
@@ -26,9 +25,9 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:5000/api/rooms
+POST  http://localhost:5000/api/room
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
 
 {
     "name": "Phòng 1.5",
@@ -38,12 +37,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzO
 }
 
 ###
-GET http://localhost:5000/api/rooms
+GET http://localhost:5000/api/room
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
 
 ###
-PUT  http://localhost:5000/api/rooms/6251496854b6a63896ae4cbf
+PUT  http://localhost:5000/api/room/6251496854b6a63896ae4cbf
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
 
@@ -58,6 +57,24 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzO
 }
 
 ###
-DELETE http://localhost:5000/api/rooms/62514b89e3e4efae4fcda9b7
+DELETE http://localhost:5000/api/room/62514b89e3e4efae4fcda9b7
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+
+###
+GET http://localhost:5000/api/invoice
+Content-Type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+
+###
+POST  http://localhost:5000/api/invoice
+Content-Type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
+
+{
+    "total": 1000000,
+    "status": "paid",
+    "prepaid": 0,
+    "arriveDate": "2019-12-12",
+    "departureDate": "2019-12-12"
+}
