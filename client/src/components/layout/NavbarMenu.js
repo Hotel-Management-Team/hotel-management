@@ -1,11 +1,11 @@
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import learnItLogo from '../../assets/logo.svg'
 import logoutIcon from '../../assets/logout.svg'
 import Button from 'react-bootstrap/Button'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
+
 
 const NavbarMenu = () => {
 	const {
@@ -17,36 +17,55 @@ const NavbarMenu = () => {
 
 	const logout = () => logoutUser()
 
+
+	const [isSelect, setIsSelect] = useState([{},{},{},{}])
+
+	//'border-bottom': '1px solid white'
 	return (
-		<Navbar expand='lg' bg='primary' variant='dark' className='shadow'>
-			<Navbar.Brand className='font-weight-bolder text-white'>
-				<img
-					src={learnItLogo}
-					alt='learnItLogo'
-					width='32'
-					height='32'
-					className='mr-2'
-				/>
-				LearnIt
+		<Navbar expand='lg' bg='primary' variant='dark' className='shadow px-4'>
+			<Navbar.Brand className='font-weight-bolder text-white border border-white p-1 ' to='/dashboard' as={Link}>
+				MERN HOTEL
 			</Navbar.Brand>
 
 			<Navbar.Toggle aria-controls='basic-navbar-nav' />
 
-			<Navbar.Collapse id='basic-navbar-nav'>
+			<Navbar.Collapse id='basic-navbar-nav' className='d-flex justify-content-between'>
 				<Nav className='mr-auto'>
 					<Nav.Link
-						className='font-weight-bolder text-white'
-						to='/dashboard'
+						className='font-weight-bolder text-white mx-2'
+						style={isSelect[0]}
+						to='/booking'
 						as={Link}
+						onClick={() => setIsSelect([{'border-bottom': '2px solid white'},{},{},{}])}
 					>
-						Dashboard
+						ĐẶT PHÒNG
 					</Nav.Link>
 					<Nav.Link
-						className='font-weight-bolder text-white'
-						to='/about'
+						className='font-weight-bolder text-white  mx-2'
+						style={isSelect[1]}
+						to='/system-management'
 						as={Link}
+						onClick={() => setIsSelect([{},{'border-bottom': '2px solid white'},{},{}])}
 					>
-						About
+						QUẢN LÝ HỆ THỐNG
+					</Nav.Link>
+					<Nav.Link
+						className='font-weight-bolder text-white mx-2'
+						style={isSelect[2]}
+						to='/revenue-management'
+						as={Link}
+						onClick={() => setIsSelect([{},{},{'border-bottom': '2px solid white'},{}])}
+					>
+						QUẢN LÝ THU CHI
+					</Nav.Link>
+					<Nav.Link
+						className='font-weight-bolder text-white  mx-2'
+						style={isSelect[3]}
+						to='/account-management'
+						as={Link}
+						onClick={() => setIsSelect([{},{},{},{'border-bottom': '2px solid white'}])}
+					>
+						TÀI KHOẢN
 					</Nav.Link>
 				</Nav>
 
@@ -57,6 +76,7 @@ const NavbarMenu = () => {
 					<Button
 						variant='secondary'
 						className='font-weight-bolder text-white'
+						size='sm'
 						onClick={logout}
 					>
 						<img
