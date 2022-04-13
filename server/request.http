@@ -73,7 +73,7 @@ Content-Type: application/json
 
 {
     "total": 1000000,
-    "status": "paid",
+    "status": "Paid",
     "prepaid": 0,
     "arriveDate": "2019-12-12",
     "departureDate": "2019-12-12"
