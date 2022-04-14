@@ -72,14 +72,14 @@ const LoginForm = () => {
           Login
         </Button>
       </Form>
-      <p>
+      {/* <p>
         Don't have an account?
         <Link to="/register">
           <Button variant="info" size="sm" className="ml-2">
             Register
           </Button>
         </Link>
-      </p>
+      </p> */}
     </>
   );
 };

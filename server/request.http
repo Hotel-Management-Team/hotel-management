@@ -28,10 +28,10 @@ Content-Type: application/json
 ###
 POST http://localhost:5000/api/rooms
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTU2OWJiOWIxZTQxNjhhZmNhNzc3NSIsImlhdCI6MTY0OTg0OTcxOCwiZXhwIjoxNjUwMTA4OTE4fQ.mnAl1DtCc1C7oAoku1UAUq3DZeO-QocU8Cr4fgGAVwo
 
 {
-    "name": "Phòng 1.5",
+    "name": "Phòng 2.2",
     "type": "Single",
     "charge": 1000,
     "description": "create"
@@ -40,7 +40,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzO
 ###
 GET http://localhost:5000/api/rooms
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTU2OWJiOWIxZTQxNjhhZmNhNzc3NSIsImlhdCI6MTY0OTg0OTA3OCwiZXhwIjoxNjUwMTA4Mjc4fQ.6AVZLNBHbz8fuqvX5eCfrKDPh_tAcD9_6woVqFQJreY
 
 ###
 PUT  http://localhost:5000/api/rooms/6251496854b6a63896ae4cbf

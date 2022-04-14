@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
+import { useContext, useState, useEffect } from "react";
+import { RoomsContext } from "../contexts/RoomsContext";
+import Spinner from "react-bootstrap/esm/Spinner";
+import CardRoom from "../components/common/CardRoom";
 
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+  return <h1>Dashboard</h1>;
+};
 
-export default Dashboard
+export default Dashboard;
