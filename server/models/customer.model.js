@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 
 const CustomerSchema = new mongoose.Schema({
+    ID: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     name: {
         type: String,
         required: true,
@@ -15,11 +20,7 @@ const CustomerSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['Local', 'Foreign'],
-    },
-    ID: {
-        type: String,
-        required: true,
-    },
+    }
 });
 
 const Customer = mongoose.model('Customer', CustomerSchema);

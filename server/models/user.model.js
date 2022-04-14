@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -14,7 +15,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    role: {
+    permissons: {
         hasRoom: {
             type: Boolean,
             default: false
