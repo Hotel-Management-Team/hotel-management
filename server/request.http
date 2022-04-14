@@ -78,3 +78,14 @@ Content-Type: application/json
     "arriveDate": "2019-12-12",
     "departureDate": "2019-12-12"
 }
+
+###
+POST  http://localhost:5000/api/ticket
+Content-Type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
+
+{
+   "user": "62512b53820fde9944d93209", 
+   "room": "6251496854b6a63896ae4cbf", 
+   "charge": "625191366804590ec7d86660"
+}

@@ -13,11 +13,9 @@ const roomSchema = new mongoose.Schema({
         enum: ['Single', 'Double', 'Triple', 'Quad']
     },
     charge: {
-        // type: Schema.Types.ObjectId,
-        // required: true,
-        // ref: 'Charge'
-        type: Number,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Charge'
     },
     description: {
         type: String,
@@ -25,9 +23,9 @@ const roomSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: 'Available',
+        default: 'Waiting',
         required: true,
-        enum: ['Available', 'Occupied', 'Reserved', 'cleaning']
+        enum: ['Booked', 'Waiting', 'NeedClean']
 
     }
 });
