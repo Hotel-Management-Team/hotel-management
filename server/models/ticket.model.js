@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const ticketSchema = new mongoose.Schema({
-    user: {
+    customer: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'Customer',
         required: true
     },
     room: {
@@ -12,10 +12,11 @@ const ticketSchema = new mongoose.Schema({
         required: true
     },
     startDate: {
+        // date new Date("<YYYY-mm-dd>"
         type: Date,
-        default: Date.now,
-        required: true
-    }
+        required: true,
+        default: Date.now
+    },
 });
 
 const Ticket = mongoose.model("Ticket", ticketSchema);

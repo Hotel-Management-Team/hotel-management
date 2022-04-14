@@ -3,6 +3,7 @@ import authRoute from "./auth.route";
 import roomRoute from "./room.route";
 import invoiceRoute from "./invoice.route";
 import ticketRoute from "./ticket.route";
+import roomTypeRoute from "./roomType.route";
 
 const router = express.Router();
 
@@ -22,6 +23,10 @@ const defaultRoutes = [
     {
         path: "/api/invoice",
         route: invoiceRoute,
+    },
+    {
+        path: "/api/roomtype",
+        route: roomTypeRoute,
     },
     {
         path: "/api",

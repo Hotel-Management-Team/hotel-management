@@ -15,7 +15,11 @@ const CustomerSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['Local', 'Foreign'],
-    }
+    },
+    ID: {
+        type: String,
+        required: true,
+    },
 });
 
 const Customer = mongoose.model('Customer', CustomerSchema);

@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import Charge from './charge.model';
 
 const roomSchema = new mongoose.Schema({
     name: {

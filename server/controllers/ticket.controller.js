@@ -1,19 +1,57 @@
 import Ticket from "../models/ticket.model";
 import Room from "../models/room.model";
+import Charge from "../models/charge.model";
+import Customer from "../models/customer.model";
 
 export const getTicket = async (req, res) => {
     const tickets = await Ticket.find();
-    console.log(tickets);
-    res.json(tickets);
+    const results = new Array();
+
+    for (let i = 0; i < tickets.length; i++) {
+        const room = await Room.findById(tickets[i].room);
+        const charge = await Charge.findById(room.charge);
+        const customer = await Customer.findById(tickets[i].customer);
+
+        results.push({
+            roomName: room.name,
+            customerName: customer.name,
+            customerPhone: customer.phone,
+            customerType: customer.type,
+            customerID: customer.ID,
+            customerAddress: customer.address,
+            startDate: tickets[i].startDate,
+        });
+    };
+    res.json(results);
+};
+
+export const getTicketList = async (req, res) => {
+    const { room, startDate } = req.body;
+    // switch startDate from 2016-05-18T16:00:00Z  to 18/05/2016
+
+    const tickets = await Ticket.find({ room, startDate });
+    const results = new Array();
+
+    for (let i = 0; i < tickets.length; i++) {
+        const customer = await Customer.findById(tickets[i].customer);
+        results.push(customer);
+    };
+    res.json(results);
 };
 
 export const postTicket = async (req, res) => {
-    const { user, room, charge } = req.body;
+    const { customer, room } = req.body;
+    // check if room is available and charge is valid
+    const roomAvailable = await Room.findById(room);
+    if (!roomAvailable) {
+        return res.status(400).json({
+            message: "Room is not available"
+        });
+    }
     // save rentTicket and change status of room
     const ticket = new Ticket({
-        user,
-        room,
-        charge
+        customer,
+        room
     });
     await ticket.save();
     const updatedRoom = await Room.findByIdAndUpdate(room, { status: "Booked" });

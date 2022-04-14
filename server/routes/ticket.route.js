@@ -1,15 +1,17 @@
 import { Router } from "express";
 import verifyToken from '../middlewares/auth.middleware';
-import { getTicket, postTicket, putTicket, deleteTicket } from "../controllers/ticket.controller";
+import { getTicket, postTicket, putTicket, deleteTicket, getTicketList } from "../controllers/ticket.controller";
 
 const router = Router();
 
-router.get('/', getTicket);
+router.get('/', verifyToken, getTicket);
 
-router.post('/', postTicket);
+router.post('/list', verifyToken, getTicketList);
 
-router.put('/:id', putTicket);
+router.post('/', verifyToken, postTicket);
 
-router.delete('/:id', deleteTicket);
+router.put('/:id', verifyToken, putTicket);
+
+router.delete('/:id', verifyToken, deleteTicket);
 
 export default router;

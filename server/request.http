@@ -85,7 +85,33 @@ Content-Type: application/json
 //Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
 
 {
-   "user": "62512b53820fde9944d93209", 
-   "room": "6251496854b6a63896ae4cbf", 
-   "charge": "625191366804590ec7d86660"
+   "customer": "62518e2e050b10088b0f8167", 
+   "room": "6251497554b6a63896ae4cc3"
 }
+
+###
+DELETE http://localhost:5000/api/ticket/6257cad59f4faba74efb16a2
+Content-Type: application/json
+
+###
+POST http://localhost:5000/api/ticket/list
+Content-Type: application/json
+
+{
+    "room": "6251496854b6a63896ae4cbf",
+    "startDate": "2022-04-14T07:30:27.610+00:00"
+}
+
+###
+POST http://localhost:5000/api/roomType
+Content-Type: application/json
+
+{
+    "name": "Phòng Đôi",
+    "description": "Phòng dành cho cặp đôi"
+}
+
+###
+DELETE http://localhost:5000/api/roomType/6257e1f8bc2808e113b7dd7a
+Content-Type: application/json
+
