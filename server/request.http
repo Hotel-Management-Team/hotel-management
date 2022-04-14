@@ -9,7 +9,6 @@ Content-Type: application/json
 
 
 ###
-
 GET http://localhost:5000/api/auth
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
@@ -26,9 +25,9 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:5000/api/rooms
+POST  http://localhost:5000/api/room
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTU2OWJiOWIxZTQxNjhhZmNhNzc3NSIsImlhdCI6MTY0OTg0OTcxOCwiZXhwIjoxNjUwMTA4OTE4fQ.mnAl1DtCc1C7oAoku1UAUq3DZeO-QocU8Cr4fgGAVwo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
 
 {
     "name": "Phòng 2.2",
@@ -38,12 +37,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTU2OWJiO
 }
 
 ###
-GET http://localhost:5000/api/rooms
+GET http://localhost:5000/api/room
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTU2OWJiOWIxZTQxNjhhZmNhNzc3NSIsImlhdCI6MTY0OTg0OTA3OCwiZXhwIjoxNjUwMTA4Mjc4fQ.6AVZLNBHbz8fuqvX5eCfrKDPh_tAcD9_6woVqFQJreY
 
 ###
-PUT  http://localhost:5000/api/rooms/6251496854b6a63896ae4cbf
+PUT  http://localhost:5000/api/room/6251496854b6a63896ae4cbf
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
 
@@ -58,6 +57,96 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzO
 }
 
 ###
-DELETE http://localhost:5000/api/rooms/62514b89e3e4efae4fcda9b7
+DELETE http://localhost:5000/api/room/62514b89e3e4efae4fcda9b7
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+
+###
+GET http://localhost:5000/api/invoice
+Content-Type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+
+###
+POST  http://localhost:5000/api/invoice
+Content-Type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
+
+{
+    "total": 1000000,
+    "status": "Paid",
+    "prepaid": 0,
+    "arriveDate": "2019-12-12",
+    "departureDate": "2019-12-12"
+}
+
+###
+POST  http://localhost:5000/api/ticket
+Content-Type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
+
+{
+   "customer": "62518e2e050b10088b0f8167", 
+   "room": "6251497554b6a63896ae4cc3"
+}
+
+###
+DELETE http://localhost:5000/api/ticket/6257cad59f4faba74efb16a2
+Content-Type: application/json
+
+###
+POST http://localhost:5000/api/ticket/list
+Content-Type: application/json
+
+{
+    "room": "6251496854b6a63896ae4cbf",
+    "startDate": "2022-04-14T07:30:27.610+00:00"
+}
+
+###
+POST http://localhost:5000/api/roomType
+Content-Type: application/json
+
+{
+    "name": "Phòng Đôi",
+    "description": "Phòng dành cho cặp đôi"
+}
+
+###
+DELETE http://localhost:5000/api/roomType/6257e1f8bc2808e113b7dd7a
+Content-Type: application/json
+
+###
+GET http://localhost:5000/api/customer
+Content-Type: application/json
+
+###
+POST http://localhost:5000/api/customer
+Content-Type: application/json
+
+{
+    "name": "Nguyễn Văn A",
+    "email": "123456789",
+    "phone": "123456789",
+    "address": "Thua Thien Hue",
+    "type": "Local",
+    "ID": "12345678911"
+}
+
+###
+DELETE http://localhost:5000/api/customer/6257e52692b3716d066108b5
+Content-Type: application/json
+
+###
+POST http://localhost:5000/api/user
+Content-Type: application/json
+
+{
+    "username": "mie6996", 
+    "email": "nguyenxuanphat060301@gmail.com", 
+    "password": "123456"
+}
+
+
+###
+DELETE http://localhost:5000/api/user/6257eafd874ffd5f1df66e85
+Content-Type: application/json

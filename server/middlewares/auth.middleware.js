@@ -1,17 +1,21 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-    if (!token) return res.sendStatus(401).json({ sucess: false, message: 'Unauthorized' });
+    if (!token)
+        return res.sendStatus(401).json({
+            success: false,
+            msg: 'Access denied. No token provided.'
+        });
     try {
-           const decoded = jwt.verify(token, process.env.JWT_SECRET);
-              req.userId = decoded.id;
-                next();
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.userId = decoded.id;
+        next();
     } catch (error) {
         console.error(error.message);
-       return res.sendStatus(403).json({ sucess: false, message: 'Forbidden' });
+        return res.sendStatus(403).json({ success: false, msg: 'Forbidden' });
     }
 }
 
-module.exports = verifyToken;
+export default verifyToken;
