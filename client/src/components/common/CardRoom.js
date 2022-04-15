@@ -12,7 +12,7 @@ const CardRoom = ({ Room }) => {
           <Card.Text>{Room.description}</Card.Text>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-end  bg-white">
-          <h4 className="text-danger"> 1000 $</h4>
+          <h4 className="text-danger"> {Room.price} $</h4>
         </Card.Footer>
       </Card>
     </>

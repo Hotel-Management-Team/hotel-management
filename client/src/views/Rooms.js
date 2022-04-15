@@ -22,7 +22,7 @@ const Rooms = () => {
   if (roomsLoading) {
     return (
       <div className="spinner-container">
-        <Spinner animation="border" variant="info" />
+        <Spinner animation="border" variant="danger" />
       </div>
     );
   }
