@@ -6,6 +6,7 @@ import ticketRoute from "./ticket.route";
 import roomTypeRoute from "./roomType.route";
 import customerRoute from "./customer.route";
 import userRoute from "./user.route";
+import bookingRoute from "./booking.route";
 
 const router = express.Router();
 
@@ -39,13 +40,11 @@ const defaultRoutes = [
         route: userRoute,
     },
     {
-        path: "/api",
-        route: (req, res) => {
-            res.json("Welcome to the API");
-        }
+        path: "/api/booking",
+        route: bookingRoute,
     },
     {
-        path: "/",
+        path: "/api",
         route: (req, res) => {
             res.json("Welcome to the API");
         }

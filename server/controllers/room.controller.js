@@ -1,5 +1,6 @@
 import Room from "../models/room.model";
 import Charge from "../models/charge.model";
+
 export const getRoom = async (req, res) => {
   try {
     const room = await Room.find({ user: req.userId }).populate("charge");
