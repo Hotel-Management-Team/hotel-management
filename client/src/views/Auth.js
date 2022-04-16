@@ -1,7 +1,7 @@
+import React, { useContext } from 'react'
 import LoginForm from '../components/auth/LoginForm'
 import RegisterForm from '../components/auth/RegisterForm'
 import { AuthContext } from '../contexts/AuthContext'
-import { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
 

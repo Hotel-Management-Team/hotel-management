@@ -1,5 +1,5 @@
+import React, { useContext } from "react";
 import { Navigate } from "react-router-dom";
-import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Spinner from "react-bootstrap/esm/Spinner";
 import NavbarMenu from "../layout/NavbarMenu";

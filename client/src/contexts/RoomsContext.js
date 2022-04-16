@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import { roomsReducer } from "../reducers/roomsReducer";
 import { apiUrl } from "./constants";
 import axios from "axios";
@@ -14,12 +14,12 @@ const RoomsContextProvider = ({ children }) => {
   // Get all rooms
   const getRooms = async () => {
     try {
-      const res = await axios.get(`${apiUrl}/rooms`);
+      const res = await axios.get(`${apiUrl}/room`);
       if (res.data.success) {
         roomsDispatch({
           type: "GET_ROOMS_SUCCESS",
           payload: {
-            rooms: res.data.rooms,
+            rooms: res.data.data,
             roomsLoading: false,
           },
         });

@@ -4,7 +4,7 @@ import { getRoom, postRoom, putRoom, deleteRoom } from "../controllers/room.cont
 
 const router = Router();
 
-router.get('/', verifyToken, getRoom);
+router.get('/', getRoom);
 
 router.post('/', verifyToken, postRoom);
 
