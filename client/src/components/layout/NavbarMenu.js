@@ -18,9 +18,8 @@ const NavbarMenu = () => {
 
   const [isSelect, setIsSelect] = useState([{}, {}, {}, {}]);
 
-  //'border-bottom': '1px solid white'
   return (
-    <Navbar expand="lg" bg="primary" variant="dark" className="shadow px-4">
+    <Navbar style={{ background: "#78c2ad" }} expand="lg" variant="dark" className="shadow px-4">
       <Navbar.Brand
         className="font-weight-bolder text-white border border-white p-1 "
         to="/dashboard"
@@ -87,7 +86,7 @@ const NavbarMenu = () => {
             Welcome {username}
           </Nav.Link>
           <Button
-            variant="secondary"
+            variant="danger"
             className="font-weight-bolder text-white"
             size="sm"
             onClick={logout}

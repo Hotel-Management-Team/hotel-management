@@ -11,76 +11,79 @@ import System from "./views/System";
 import Rooms from "./views/Rooms";
 import Account from "./views/Account";
 import RoomsContextProvider from "./contexts/RoomsContext";
+import BookingsContextProvider from "./contexts/BookingsContext";
 
 function App() {
   return (
     <AuthContextProvider>
       <RoomsContextProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route exact path="/login" element={<Auth authRoute="login" />} />
-            <Route
-              exact
-              path="/register"
-              element={<Auth authRoute="register" />}
-            />
-            <Route
-              exact
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/booking"
-              element={
-                <ProtectedRoute>
-                  <Booking />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/system-management"
-              element={
-                <ProtectedRoute>
-                  <System />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/revenue-management"
-              element={
-                <ProtectedRoute>
-                  <Revenue />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/account-management"
-              element={
-                <ProtectedRoute>
-                  <Account />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              exact
-              path="/rooms"
-              element={
-                <ProtectedRoute>
-                  <Rooms />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </Router>
+        <BookingsContextProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route exact path="/login" element={<Auth authRoute="login" />} />
+              <Route
+                exact
+                path="/register"
+                element={<Auth authRoute="register" />}
+              />
+              <Route
+                exact
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                exact
+                path="/booking"
+                element={
+                  <ProtectedRoute>
+                    <Booking />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                exact
+                path="/system-management"
+                element={
+                  <ProtectedRoute>
+                    <System />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                exact
+                path="/revenue-management"
+                element={
+                  <ProtectedRoute>
+                    <Revenue />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                exact
+                path="/account-management"
+                element={
+                  <ProtectedRoute>
+                    <Account />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                exact
+                path="/rooms"
+                element={
+                  <ProtectedRoute>
+                    <Rooms />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </Router>
+        </BookingsContextProvider>
       </RoomsContextProvider>
     </AuthContextProvider>
   );

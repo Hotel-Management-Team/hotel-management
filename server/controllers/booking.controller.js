@@ -11,12 +11,24 @@ export const getBooking = async (req, res) => {
         for (let i = 0; i < ticket.length; i++) {
             const room = await Room.findById(ticket[i].room);
             const charge = await Charge.findById(room.charge);
+            let startDate = new Date(ticket[i].startDate);
+            // format date to dd/mm/yyyy
+            let date = startDate.getDate();
+            let month = startDate.getMonth() + 1;
+            let year = startDate.getFullYear();
+            let hours = startDate.getHours();
+            let minutes = startDate.getMinutes();
+            let seconds = startDate.getSeconds();
+            let formattedDate = date + '/' + month + '/' + year;
+            let formattedTime = hours + ':' + minutes + ':' + seconds;
+
 
             results.push({
-                ID: ticket[i]._id,
+                number: i + 1,
+                id: ticket[i]._id,
                 customerName: ticket[i].customer.name,
                 roomName: room.name,
-                startDate: ticket[i].startDate,
+                startDate: formattedDate + ' ' + formattedTime,
                 price: JSON.parse(JSON.stringify(charge)).FirstBlockCharge,
             });
         }
