@@ -1,6 +1,6 @@
 .landing {
 	position: relative;
-	/* background: url('./assets/landing.jpg') no-repeat center center/cover; */
+	background: url('./assets/landing.jpg') no-repeat center center/cover;
 	height: 100vh;
 }
 
@@ -38,27 +38,27 @@
 	transform: translateX(-50%) translateY(-50%);
 }
 
-/* Post button */
-.post-button {
+/* action button */
+.action-button {
 	padding-top: 0;
 	background: transparent;
 	border: none;
 }
 
-.post-button:hover {
+.action-button:hover {
 	background: transparent;
 }
 
-a.post-button.btn:focus,
-a.post-button.btn:active {
+a.action-button.btn:focus,
+a.action-button.btn:active {
 	outline: none;
 	background: transparent;
 	border: none;
 	box-shadow: none;
 }
 
-button.post-button.btn:focus,
-button.post-button.btn:active {
+button.action-button.btn:focus,
+button.action-button.btn:active {
 	outline: none;
 	background: transparent;
 	border: none;

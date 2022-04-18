@@ -4,7 +4,8 @@ import logoutIcon from "../../assets/logout.svg";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { useLocation } from "react-router-dom";
 
 const NavbarMenu = () => {
   const {
@@ -16,7 +17,7 @@ const NavbarMenu = () => {
 
   const logout = () => logoutUser();
 
-  const [isSelect, setIsSelect] = useState([{}, {}, {}, {}]);
+  const location = useLocation();
 
   //'border-bottom': '1px solid white'
   return (
@@ -38,45 +39,49 @@ const NavbarMenu = () => {
         <Nav className="mr-auto">
           <Nav.Link
             className="font-weight-bolder text-white mx-2"
-            style={isSelect[0]}
+            style={
+              location.pathname.includes("/booking")
+                ? { borderBottom: "2px solid white" }
+                : {}
+            }
             to="/booking"
             as={Link}
-            onClick={() =>
-              setIsSelect([{ borderBottom: "2px solid white" }, {}, {}, {}])
-            }
           >
             ĐẶT PHÒNG
           </Nav.Link>
           <Nav.Link
             className="font-weight-bolder text-white  mx-2"
-            style={isSelect[1]}
+            style={
+              location.pathname.includes("/system-management")
+                ? { borderBottom: "2px solid white" }
+                : {}
+            }
             to="/system-management"
             as={Link}
-            onClick={() =>
-              setIsSelect([{}, { borderBottom: "2px solid white" }, {}, {}])
-            }
           >
             QUẢN LÝ HỆ THỐNG
           </Nav.Link>
           <Nav.Link
             className="font-weight-bolder text-white mx-2"
-            style={isSelect[2]}
+            style={
+              location.pathname.includes("/revenue-management")
+                ? { borderBottom: "2px solid white" }
+                : {}
+            }
             to="/revenue-management"
             as={Link}
-            onClick={() =>
-              setIsSelect([{}, {}, { borderBottom: "2px solid white" }, {}])
-            }
           >
             QUẢN LÝ THU CHI
           </Nav.Link>
           <Nav.Link
             className="font-weight-bolder text-white  mx-2"
-            style={isSelect[3]}
+            style={
+              location.pathname.includes("/account-management")
+                ? { borderBottom: "2px solid white" }
+                : {}
+            }
             to="/account-management"
             as={Link}
-            onClick={() =>
-              setIsSelect([{}, {}, {}, { borderBottom: "2px solid white" }])
-            }
           >
             TÀI KHOẢN
           </Nav.Link>
