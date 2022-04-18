@@ -55,11 +55,11 @@ const ActionButton = ({ children, _id }) => {
     <>
       <ModalDelete postId={_id} />
       <div className="d-flex justify-content-between">
-        <Button className="action-button" onClick={choosePost.bind(this, _id)}>
+        <Button className="action-button border-0 bg-light" onClick={choosePost.bind(this, _id)}>
           <img src={editIcon} alt="edit" width="24" height="24" />
         </Button>
         {children}
-        <Button className="action-button" onClick={() => setShow(true)}>
+        <Button className="action-button border-0 bg-light" onClick={() => setShow(true)}>
           <img src={deleteIcon} alt="delete" width="24" height="24" />
         </Button>
       </div>

@@ -107,7 +107,7 @@ const Rooms = () => {
           }
         >
           <Button
-            className="btn-floating"
+            className="btn-floating border-0 bg-white"
             onClick={setShowAddRoomModal.bind(this, true)}
           >
             <img src={addIcon} alt="add-post" width="60" height="60" />
