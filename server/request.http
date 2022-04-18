@@ -20,20 +20,21 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-    "email":"ntneik152@gmail.com",
+    "email":"ntneik15@gmail.com",
     "password":"123456"
 }
 
 ###
 POST  http://localhost:5000/api/room
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTc1MjUwNSwiZXhwIjoxNjUwMDExNzA1fQ.N9SSL3dNSKYg-irhVGg8XcfNhbFM6O8I9FX4TAus0-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY1MDExNjkzNiwiZXhwIjoxNjUwMzc2MTM2fQ.KDdtRBtFRck2oSctzWkqd6kraZT3lz1V6Q8tkDpX3ts
 
 {
-    "name": "Phòng 2.2",
-    "type": "Single",
-    "charge": 1000,
-    "description": "create"
+    "name": "Phòng 112",
+    "roomtype": "625192936804590ec7d86661",
+    "charge": "625191366804590ec7d86660",
+    "description": "create",
+    "status":"Waiting"
 }
 
 ###
@@ -42,24 +43,24 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTU2OWJiOWIxZTQxNjhhZmNhNzc3NSIsImlhdCI6MTY0OTg0OTA3OCwiZXhwIjoxNjUwMTA4Mjc4fQ.6AVZLNBHbz8fuqvX5eCfrKDPh_tAcD9_6woVqFQJreY
 
 ###
-PUT  http://localhost:5000/api/room/6251496854b6a63896ae4cbf
+PUT  http://localhost:5000/api/room/625c753e9069c3c7962d0a35
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY1MDExNjkzNiwiZXhwIjoxNjUwMzc2MTM2fQ.KDdtRBtFRck2oSctzWkqd6kraZT3lz1V6Q8tkDpX3ts
 
 {
-    "_id": "6251496854b6a63896ae4cbf",
+    "_id": "625c753e9069c3c7962d0a35",
     "name": "Phòng 1.1",
-    "type": "Double",
-    "charge": 1000,
+    "roomtype": "625192936804590ec7d86661",
+    "charge":"625191366804590ec7d86660",
     "description": "create",
-    "status": "Available",
-    "__v": 0
+    "status": "Booked",
+    "__v": 1
 }
 
 ###
-DELETE http://localhost:5000/api/room/62514b89e3e4efae4fcda9b7
+DELETE http://localhost:5000/api/room/625c80cb531bb42720ee81e1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY0OTQ5NDg3MiwiZXhwIjoxNjQ5NzU0MDcyfQ.8orKhuSHV3XH6gUD_BkQN60ekApHoFy1k53gme90MSg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY1MDExNjkzNiwiZXhwIjoxNjUwMzc2MTM2fQ.KDdtRBtFRck2oSctzWkqd6kraZT3lz1V6Q8tkDpX3ts
 
 ###
 GET http://localhost:5000/api/invoice
@@ -101,6 +102,10 @@ Content-Type: application/json
     "room": "6251496854b6a63896ae4cbf",
     "startDate": "2022-04-14T07:30:27.610+00:00"
 }
+
+###
+GET http://localhost:5000/api/roomType
+Content-Type: application/json
 
 ###
 POST http://localhost:5000/api/roomType
@@ -149,4 +154,14 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:5000/api/user/6257eafd874ffd5f1df66e85
+Content-Type: application/json
+
+###
+
+GET http://localhost:5000/api/roomType
+Content-Type: application/json
+
+
+###
+GET http://localhost:5000/api/charge
 Content-Type: application/json

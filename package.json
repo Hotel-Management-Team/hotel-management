@@ -3,5 +3,11 @@
     "server": "npm start --prefix server",
     "client": "npm start --prefix client",
     "start": "concurrently \"npm run server\" \"npm run client\""
+<<<<<<< HEAD
+=======
+  },
+  "dependencies": {
+    "concurrently": "^7.1.0"
+>>>>>>> origin
   }
 }

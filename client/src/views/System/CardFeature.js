@@ -9,7 +9,6 @@ const CardFeature = ({ feature }) => {
       <Card
         style={{ width: "15rem", cursor: "pointer" }}
         onClick={() => {
-          console.log("Clicked");
           navigate(feature.href);
         }}
       >
