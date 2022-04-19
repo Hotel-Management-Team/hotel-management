@@ -5,11 +5,7 @@ import logoutIcon from "../../assets/logout.svg";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
-<<<<<<< HEAD
-=======
-import { useContext } from "react";
 import { useLocation } from "react-router-dom";
->>>>>>> origin
 
 const NavbarMenu = () => {
   const {

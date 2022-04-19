@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { createContext, useReducer, useEffect } from "react";
-=======
 import { createContext, useReducer, useState } from "react";
->>>>>>> origin
 import { roomsReducer } from "../reducers/roomsReducer";
 import { apiUrl } from "./constants";
 import axios from "axios";
