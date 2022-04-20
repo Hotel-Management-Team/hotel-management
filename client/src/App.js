@@ -10,6 +10,7 @@ import Revenue from "./views/Revenue";
 import System from "./views/System/index";
 import Rooms from "./components/Rooms/index";
 import Account from "./views/Account";
+import RoomType from "./views/System/RoomType/index";
 import RoomsContextProvider from "./contexts/RoomsContext";
 import RoomTypeContextProvider from "./contexts/RoomTypeContext";
 import ChargeContextProvider from "./contexts/ChargeContext";
@@ -97,7 +98,7 @@ function App() {
                   <Route
                     exact
                     path="/system-management/room-types"
-                    element={<ProtectedRoute></ProtectedRoute>}
+                    element={<ProtectedRoute><RoomType /></ProtectedRoute>}
                   />
                   <Route
                     exact

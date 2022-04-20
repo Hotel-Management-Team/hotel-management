@@ -8,6 +8,7 @@ export const getBooking = async (req, res) => {
     try {
         // ID ticket, Customer Name, Room Name, Start Date, Hours, Status, Price
         const ticket = await Ticket.find().populate('room').populate('customer');//.populate('charge');
+        //console.log(ticket);
         for (let i = 0; i < ticket.length; i++) {
             const room = await Room.findById(ticket[i].room);
             const charge = await Charge.findById(room.charge);
@@ -24,7 +25,6 @@ export const getBooking = async (req, res) => {
 
 
             results.push({
-                number: i + 1,
                 id: ticket[i]._id,
                 customerName: ticket[i].customer.name,
                 roomName: room.name,

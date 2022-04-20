@@ -1,20 +1,20 @@
 export const roomTypeReducer = (state, action) => {
   const {
     type,
-    payload: { roomType, roomTypeLoading },
+    payload: { roomTypes, roomTypeLoading },
   } = action;
 
   switch (type) {
     case "GET_ROOM_TYPE_SUCCESS":
       return {
         ...state,
-        roomType,
+        roomTypes,
         roomTypeLoading,
       };
     case "GET_ROOM_TYPE_FAILURE":
       return {
         ...state,
-        roomType,
+        roomTypes,
         roomTypeLoading,
       };
 

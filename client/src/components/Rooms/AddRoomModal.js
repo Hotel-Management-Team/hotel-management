@@ -13,8 +13,8 @@ const AddRoomModal = () => {
     useContext(RoomsContext);
 
   const {
-    roomTypeState: { roomType, roomTypeLoading },
-    getRoomType,
+    roomTypeState: { roomTypes, roomTypeLoading },
+    getRoomTypes,
   } = useContext(RoomTypeContext);
 
   const {
@@ -23,8 +23,8 @@ const AddRoomModal = () => {
   } = useContext(ChargeContext);
 
   useEffect(() => {
-    if (roomType.length === 0) {
-      getRoomType();
+    if (roomTypes.length === 0) {
+      getRoomTypes();
     }
     if (charges.length === 0) {
       getCharges();
@@ -88,7 +88,7 @@ const AddRoomModal = () => {
             <Form.Group as={Col}>
               <Form.Select name="roomtype" onChange={onChangeNewRoomForm}>
                 <option value={null}>Chọn loại phòng</option>
-                {roomType.map((item) => (
+                {roomTypes.map((item) => (
                   <option key={item._id} value={item._id}>
                     {item.name}
                   </option>
