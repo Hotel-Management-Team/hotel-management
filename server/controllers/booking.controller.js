@@ -1,6 +1,5 @@
 import Ticket from '../models/ticket.model';
 import Room from '../models/room.model';
-import Customer from '../models/customer.model';
 import Charge from '../models/charge.model';
 
 export const getBooking = async (req, res) => {
@@ -22,7 +21,6 @@ export const getBooking = async (req, res) => {
             let seconds = startDate.getSeconds();
             let formattedDate = date + '/' + month + '/' + year;
             let formattedTime = hours + ':' + minutes + ':' + seconds;
-
 
             results.push({
                 id: ticket[i]._id,

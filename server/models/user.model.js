@@ -37,10 +37,22 @@ const userSchema = new mongoose.Schema({
             default: false
         }
     },
-    createAt: {
+    createdAt: {
         type: Date,
         default: Date.now
     },
+    phoneNumber: {
+        type: String,
+        required: true
+    },
+    role: {
+        type: String,
+        default: 'user'
+    },
+    fullName: {
+        type: String,
+        required: true
+    }
 });
 
 const User = mongoose.model('User', userSchema);

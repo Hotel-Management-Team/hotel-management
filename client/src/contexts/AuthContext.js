@@ -73,7 +73,7 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  // register user
+  // // register user
   const registerUser = async (userForm) => {
     try {
       const res = await axios.post(`${apiUrl}/auth/register`, userForm);
@@ -96,9 +96,6 @@ const AuthContextProvider = ({ children }) => {
       payload: { isAuthenticated: false, user: null }
     })
   }
-
-
-
 
   const authContextValue = { loginUser, authState, registerUser, logoutUser };
 

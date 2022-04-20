@@ -6,7 +6,32 @@ export const getAuth = async (req, res) => {
     try {
         const user = await User.findById(req.userId).select('-password');
         if (!user) return res.status(404).json({ success: false, message: 'User not found' });
-        res.json({ success: true, user });
+        // user.createdAt
+        // parse date to dd/mm/yyyy hh:mm:ss
+        const date = new Date(user.createdAt);
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        const second = date.getSeconds();
+        const dateString = `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+
+        const result = {
+            success: true,
+            user: {
+                id: user.id,
+                role: user.role,
+                username: user.username,
+                email: user.email,
+                createdAt: dateString,
+                permissons: user.permissons,
+                phoneNumber: user.phoneNumber,
+                fullName: user.fullName
+            }
+        };
+
+        return res.status(200).json(result);
     } catch (error) {
         console.error(error.message);
         res.status(500).send('Server Error');
@@ -38,6 +63,7 @@ export const postLogin = async (req, res) => {
             res.json({
                 success: true,
                 token: token,
+                id: user._id,
                 msg: 'User logged in'
             });
         }
