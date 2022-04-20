@@ -31,25 +31,34 @@ const AuthContextProvider = ({ children }) => {
           },
         });
       }
+      else {
+        authDispatch({
+          type: "SET_AUTH",
+          payload: {
+            user: null,
+            isAuthenticated: false,
+          },
+        });
+      }
     } catch (error) {
       console.log(error);
       localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
       setAuthToken(null);
-        authDispatch({
-            type: "SET_AUTH",
-            payload: {
-                user: null,
-                isAuthenticated: false,
-            },
-        });
+      authDispatch({
+        type: "SET_AUTH",
+        payload: {
+          user: null,
+          isAuthenticated: false,
+        },
+      });
     }
   };
 
   useEffect(() => {
     authenticate();
-    }, []);
+  }, []);
 
-    // login user
+  // login user
   const loginUser = async (userForm) => {
     try {
       const res = await axios.post(`${apiUrl}/auth/login`, userForm);
@@ -65,34 +74,31 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  // register user
-    const registerUser = async (userForm) => {
-        try {
-            const res = await axios.post(`${apiUrl}/auth/register`, userForm);
-            if (res.data.success) {
-                localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, res.data.token);
-            }
-            await authenticate();
-            return res.data;
-        } catch (error) {
-            if (error.response.data) return error.response.data;
-            else return { success: false, msg: error.message };
-        }
-    };
+  // // register user
+  const registerUser = async (userForm) => {
+    try {
+      const res = await axios.post(`${apiUrl}/auth/register`, userForm);
+      if (res.data.success) {
+        localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, res.data.token);
+      }
+      await authenticate();
+      return res.data;
+    } catch (error) {
+      if (error.response.data) return error.response.data;
+      else return { success: false, msg: error.message };
+    }
+  };
 
-    // Logout
-	const logoutUser = () => {
-		localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
-		authDispatch({
-			type: 'SET_AUTH',
-			payload: { isAuthenticated: false, user: null }
-		})
-	}
+  // Logout
+  const logoutUser = () => {
+    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
+    authDispatch({
+      type: 'SET_AUTH',
+      payload: { isAuthenticated: false, user: null }
+    })
+  }
 
-
-
-
-  const authContextValue = { loginUser , authState, registerUser, logoutUser };
+  const authContextValue = { loginUser, authState, registerUser, logoutUser };
 
   return (
     <AuthContext.Provider value={authContextValue}>

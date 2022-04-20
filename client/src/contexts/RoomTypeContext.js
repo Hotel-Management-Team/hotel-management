@@ -7,19 +7,19 @@ export const RoomTypeContext = createContext();
 
 const RoomTypeContextProvider = ({ children }) => {
   const [roomTypeState, roomTypeDispatch] = useReducer(roomTypeReducer, {
-    roomType: [],
+    roomTypes: [],
     roomTypeLoading: true,
   });
 
   // Get all rooms
-  const getRoomType = async () => {
+  const getRoomTypes = async () => {
     try {
       const res = await axios.get(`${apiUrl}/roomType`);
       if (res.data.success) {
         roomTypeDispatch({
           type: "GET_ROOM_TYPE_SUCCESS",
           payload: {
-            roomType: res.data.data,
+            roomTypes: res.data.data,
             roomTypeLoading: false,
           },
         });
@@ -29,7 +29,7 @@ const RoomTypeContextProvider = ({ children }) => {
       roomTypeDispatch({
         type: "GET_ROOM_TYPE_FAILURE",
         payload: {
-          roomType: [],
+          roomTypes: [],
           roomTypeLoading: false,
         },
       });
@@ -39,7 +39,7 @@ const RoomTypeContextProvider = ({ children }) => {
   const RoomTypeContextValue = {
     roomTypeState,
     roomTypeDispatch,
-    getRoomType,
+    getRoomTypes,
   };
 
   return (

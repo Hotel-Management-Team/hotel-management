@@ -92,16 +92,15 @@ const NavbarMenu = () => {
           </Nav.Link>
           <Button
             variant="danger"
-            className="font-weight-bolder text-white"
+            className="font-weight-bolder text-white p-"
             size="sm"
-            onClick={logout}
-          >
+            onClick={logout}>
             <img
               src={logoutIcon}
               alt="logoutIcon"
               width="32"
               height="32"
-              className="mr-2"
+              className="p-1"
             />
             Logout
           </Button>
