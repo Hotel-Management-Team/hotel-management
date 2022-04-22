@@ -11,7 +11,6 @@ const ActionButton = ({ children, _id }) => {
   const [show, setShow] = useState(false);
 
   const choosePost = (postId) => {
-    console.log(postId);
     findRoom(postId);
     setShowUpdateRoomModal(true);
   };
@@ -25,10 +24,10 @@ const ActionButton = ({ children, _id }) => {
         }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Delete Post</Modal.Title>
+          <Modal.Title>Xoá phòng</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h5>Are you sure you want to delete ?</h5>
+          <h5>Bạn có muốn xoá không ?</h5>
           {children}
         </Modal.Body>
         <Modal.Footer>
