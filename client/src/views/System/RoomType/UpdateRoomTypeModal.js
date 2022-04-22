@@ -3,33 +3,23 @@ import { useState, useEffect, useContext } from "react";
 import { Form, Modal, Button } from "react-bootstrap";
 import { RoomTypeContext } from "../../../contexts/RoomTypeContext";
 
-const AddRoomTypeModal = () => {
+const UpdateRoomTypeModal = () => {
   const {
-    showAddRoomTypeModal,
-    setShowAddRoomTypeModal,
-    addRoomType,
+    showUpdateRoomTypeModal,
+    setShowUpdateRoomTypeModal,
+    updateRoomType,
     showToast,
+    roomTypeState: { roomType },
     setShowToast,
   } = useContext(RoomTypeContext);
 
-  const [newRoomType, setNewRoomType] = useState({
-    name: "",
-    description: "",
-  });
+  const [newRoomType, setNewRoomType] = useState(roomType);
 
-  const { name, description } = newRoomType;
-
-  const resetAddRomTypeData = () => {
-    setNewRoomType({
-      name: "",
-      description: "",
-    });
-    setShowAddRoomTypeModal(false);
-  };
+  const { name, description, numberOfRoom } = newRoomType;
 
   const closeDialog = () => {
-    setShowAddRoomTypeModal(false);
-    resetAddRomTypeData();
+    setShowUpdateRoomTypeModal(false);
+    setNewRoomType(roomType);
   };
 
   const onChangeNewRoomTypeForm = (e) => {
@@ -39,17 +29,22 @@ const AddRoomTypeModal = () => {
     });
   };
 
+  useEffect(() => {
+    setNewRoomType(roomType);
+  }, [roomType]);
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    const { success, msg } = await addRoomType(newRoomType);
+    const { success, msg } = await updateRoomType(newRoomType);
     setShowToast({ show: true, msg, type: success ? "success" : "danger" });
-    resetAddRomTypeData();
+    console.log(newRoomType);
+    closeDialog();
   };
 
   return (
-    <Modal show={showAddRoomTypeModal} onHide={closeDialog} size="lg">
+    <Modal show={showUpdateRoomTypeModal} onHide={closeDialog} size="lg">
       <Modal.Header closeButton>
-        <Modal.Title>Nhập thông tin loại phòng cần thêm mới</Modal.Title>
+        <Modal.Title>Nhập thông tin loại phòng cần chỉnh sửa</Modal.Title>
       </Modal.Header>
       <Form onSubmit={onSubmit}>
         <Modal.Body>
@@ -82,7 +77,7 @@ const AddRoomTypeModal = () => {
             type="submit"
             disabled={name === "" || description === ""}
           >
-            Thêm mới
+            Xác nhận
           </Button>
         </Modal.Footer>
       </Form>
@@ -90,4 +85,4 @@ const AddRoomTypeModal = () => {
   );
 };
 
-export default AddRoomTypeModal;
+export default UpdateRoomTypeModal;

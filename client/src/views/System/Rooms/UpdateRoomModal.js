@@ -21,7 +21,7 @@ const UpdateRoomModal = () => {
   const [updatedRoomData, setUpdatedRoomData] = useState(room);
 
   const {
-    roomTypeState: { roomType, roomTypeLoading },
+    roomTypeState: { roomTypes, roomTypeLoading },
     getRoomType,
   } = useContext(RoomTypeContext);
 
@@ -31,7 +31,7 @@ const UpdateRoomModal = () => {
   } = useContext(ChargesContext);
 
   useEffect(() => {
-    if (roomType.length === 0) {
+    if (roomTypes.length === 0) {
       getRoomType();
     }
     if (charges.length === 0) {
@@ -49,7 +49,6 @@ const UpdateRoomModal = () => {
       ...updatedRoomData,
       [e.target.name]: e.target.value,
     });
-    console.log(updatedRoomData);
   };
   const closeDialog = () => {
     setUpdatedRoomData(room);
@@ -92,7 +91,7 @@ const UpdateRoomModal = () => {
                 onChange={onChangeUpdateRoomForm}
               >
                 <option value={null}>Chọn loại phòng</option>
-                {roomType.map((item) => (
+                {roomTypes.map((item) => (
                   <option key={item._id} value={item._id}>
                     {item.name}
                   </option>
