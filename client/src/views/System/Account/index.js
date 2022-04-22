@@ -1,38 +1,38 @@
-import React from 'react'
-import { Form, Button, Spinner, Table } from 'react-bootstrap';
+import React from "react";
+import { Form, Button, Spinner, Table } from "react-bootstrap";
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 //import { AccountContext } from '../../../contexts/AccountContext';
 import { AuthContext } from "../../../contexts/AuthContext";
 
 const Account = () => {
-  const {
-    authState: {
-      user: { username, email, role, createdAt, phoneNumber, fullName },
-    },
-  } = useContext(AuthContext);
+  // const {
+  //   authState: {
+  //     user: { username, email, role, createdAt, phoneNumber, fullName },
+  //   },
+  // } = useContext(AuthContext);
 
-  const edit = async (e) => {
-    e.preventDefault();
-    try {
-      const editResult = await loginUser(loginForm);
-      if (!loginData.success) {
-        setAlert({
-          type: "danger",
-          msg: loginData.msg,
-        });
-        setTimeout(() => {
-          setAlert(null);
-        }, 5000);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const edit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const editResult = await loginUser(loginForm);
+  //     if (!loginData.success) {
+  //       setAlert({
+  //         type: "danger",
+  //         msg: loginData.msg,
+  //       });
+  //       setTimeout(() => {
+  //         setAlert(null);
+  //       }, 5000);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>
-      <div className="container mt-5 text-dark">
+      {/* <div className="container mt-5 text-dark">
         <div className="row">
           <div className="col-md-3">
             <div className="card border border-info border">
@@ -103,9 +103,9 @@ const Account = () => {
             </div>
           </div>
         </div>
-      </div >
+      </div > */}
     </>
   );
-}
+};
 
 export default Account;

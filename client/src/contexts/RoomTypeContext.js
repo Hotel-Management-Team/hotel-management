@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useState } from "react";
 import { roomTypeReducer } from "../reducers/roomTypeReducer";
 import { apiUrl } from "./constants";
 import axios from "axios";
@@ -7,9 +7,14 @@ export const RoomTypeContext = createContext();
 
 const RoomTypeContextProvider = ({ children }) => {
   const [roomTypeState, roomTypeDispatch] = useReducer(roomTypeReducer, {
+    roomType: null,
     roomTypes: [],
     roomTypeLoading: true,
   });
+
+  // show modal
+  const [showAddRoomTypeModal, setShowAddRoomTypeModal] = useState(false);
+  const [showUpdateRoomTypeModal, setShowUpdateRoomTypeModal] = useState(false);
 
   // Get all rooms
   const getRoomTypes = async () => {
@@ -40,6 +45,8 @@ const RoomTypeContextProvider = ({ children }) => {
     roomTypeState,
     roomTypeDispatch,
     getRoomTypes,
+    showAddRoomTypeModal,
+    setShowAddRoomTypeModal,
   };
 
   return (

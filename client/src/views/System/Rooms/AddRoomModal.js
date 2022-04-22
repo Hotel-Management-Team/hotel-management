@@ -4,9 +4,9 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useContext, useState, useEffect } from "react";
-import { RoomsContext } from "../../contexts/RoomsContext";
-import { RoomTypeContext } from "../../contexts/RoomTypeContext";
-import { ChargeContext } from "../../contexts/ChargeContext";
+import { RoomsContext } from "../../../contexts/RoomsContext";
+import { RoomTypeContext } from "../../../contexts/RoomTypeContext";
+import { ChargeContext } from "../../../contexts/ChargeContext";
 const AddRoomModal = () => {
   // context
   const { showAddRoomModal, setShowAddRoomModal, addRoom, setShowToast } =
