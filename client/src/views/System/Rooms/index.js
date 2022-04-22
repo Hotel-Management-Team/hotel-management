@@ -67,7 +67,7 @@ const Rooms = () => {
           </Button>
           <FormControl
             type="search"
-            placeholder="Search"
+            placeholder="Tìm kiếm"
             value={search}
             onFocus={() => {
               getRooms();
@@ -80,7 +80,7 @@ const Rooms = () => {
             aria-label="Search"
           />
           <Button variant="outline-success" type="submit">
-            Search
+            Tìm kiếm
           </Button>
         </Form>
       </div>

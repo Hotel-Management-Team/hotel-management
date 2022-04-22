@@ -20,8 +20,8 @@ const CardRoom = ({ Room }) => {
                 Room.status === "Booked"
                   ? "danger"
                   : Room.status === "NeedClean"
-                  ? "warning"
-                  : "success"
+                    ? "warning"
+                    : "success"
               }
             >
               {Room.status}

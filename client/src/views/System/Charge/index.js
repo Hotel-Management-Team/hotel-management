@@ -1,17 +1,20 @@
 import React from "react";
-import { useContext, useState, useEffect } from "react";
-import { ChargeContext } from "../../../contexts/ChargeContext";
-import { Spinner, Table, Button } from "react-bootstrap";
+import { useContext, useEffect } from "react";
+import { ChargesContext } from "../../../contexts/ChargesContext";
+import { Spinner, Table, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import EditIcon from "../../../assets/pencil.svg";
-
-const columns = ["#", "Tên loại phí", "Block đầu", "Giá block đầu", "Giá giờ sau", "Giá qua đêm", "Giá ngày", "Giá phụ thu quá giờ"];
+import addIcon from "../../../assets/plus-circle-fill.svg";
+import DeleteIcon from "../../../assets/trash.svg";
+import AddChargeModal from "./AddChargeModal";
+const columns = ["#", "Tên loại phí", "Block đầu", "Giá block đầu", "Giá giờ sau", "Giá qua đêm", "Giá ngày", "Giá phụ thu quá giờ", "Thay đổi"];
 
 const Charge = () => {
 
     const {
         chargeState: { chargeLoading, charges },
         getCharges,
-    } = useContext(ChargeContext);
+        setShowAddChargeModal,
+    } = useContext(ChargesContext);
 
     useEffect(() => {
         if (charges.length === 0) {
@@ -19,6 +22,7 @@ const Charge = () => {
         }
     }, []);
 
+    // handle add charge modal
 
     if (chargeLoading) {
         return (
@@ -51,10 +55,19 @@ const Charge = () => {
                                 <td>{charge.DateCharge}</td>
                                 <td>{charge.SurCharge}</td>
                                 <td>
-                                    <Button className="action-button border-0" onClick={() => {
-                                        console.log("edit");
-                                    }}>
+                                    <Button className="border-0 bg-transparent"
+                                    // onClick={() =>
+                                    //     //editBooking(index)
+                                    // }
+                                    >
                                         <img src={EditIcon} alt="edit" width="24" height="24" />
+                                    </Button>
+                                    <Button className="border-0 bg-transparent"
+                                    //  onClick={() => 
+                                    // deleteBooking(index)
+                                    // }
+                                    >
+                                        <img src={DeleteIcon} alt="edit" width="24" height="24" />
                                     </Button>
                                 </td>
                             </tr>
@@ -63,6 +76,24 @@ const Charge = () => {
                     </tbody>
                 </Table>
             </div>
+            <div>
+                <OverlayTrigger
+                    placement="top"
+                    overlay={
+                        <Tooltip id="tooltip-top">
+                            <strong>Thêm mới</strong>
+                        </Tooltip>
+                    }
+                >
+                    <Button
+                        className="btn-floating border-0 bg-white"
+                        onClick={setShowAddChargeModal.bind(this, true)}
+                    >
+                        <img src={addIcon} alt="add-post" width="60" height="60" />
+                    </Button>
+                </OverlayTrigger>
+            </div>
+            <AddChargeModal />
         </>
     );
 }

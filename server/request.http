@@ -165,3 +165,18 @@ Content-Type: application/json
 ###
 GET http://localhost:5000/api/charge
 Content-Type: application/json
+
+###
+POST http://localhost:5000/api/charge
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWZkYzI2ZDIxNjI2YzZiNTE4NGM0MCIsImlhdCI6MTY1MDU5ODg3NSwiZXhwIjoxNjUwODU4MDc1fQ.MUa1brI_26fU1Sj2gJo_cl3BpHhWZDOWoykEi9zfMMI
+
+{
+    "name": "Phòng VIP",
+    "FirstBlock": "3",
+    "FirstBlockCharge": "300000",
+    "OvertimeCharge": "300000",
+    "OverNightCharge": "300000",
+    "DateCharge": "300000",
+    "SurCharge": "300000"
+}

@@ -3,9 +3,13 @@ import { useContext, useState, useEffect } from "react";
 import { BookingsContext } from "../contexts/BookingsContext";
 import Spinner from "react-bootstrap/esm/Spinner";
 import { useNavigate } from "react-router-dom";
-import Table from "react-bootstrap/Table";
+import { Table, Button, Modal } from "react-bootstrap";
+import EditIcon from "../assets/pencil.svg";
+import DeleteIcon from "../assets/trash.svg";
 
-const columns = ["#", "Tên khách hàng", "Tên phòng", "Ngày đến", "Giá phòng"];
+const columns = ["#", "Tên khách hàng", "Tên phòng", "Ngày đến", "Giá phòng", "Thay đổi"];
+
+
 
 const Bookings = () => {
   const {
@@ -29,6 +33,14 @@ const Bookings = () => {
     );
   }
 
+  const editBooking = (index) => {
+    console.log(bookings[index]);
+  };
+
+  const deleteBooking = (index) => {
+    console.log(bookings[index]);
+  };
+
   return (
     <>
       <div className="mt-5 mx-5 text-center">
@@ -48,6 +60,14 @@ const Bookings = () => {
                 <td>{booking.roomName}</td>
                 <td>{booking.startDate}</td>
                 <td>{booking.price}</td>
+                <td>
+                  <Button className="border-0 bg-transparent" onClick={() => editBooking(index)} >
+                    <img src={EditIcon} alt="edit" width="24" height="24" />
+                  </Button>
+                  <Button className="border-0 bg-transparent" onClick={() => deleteBooking(index)}>
+                    <img src={DeleteIcon} alt="edit" width="24" height="24" />
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>

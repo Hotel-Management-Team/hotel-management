@@ -14,7 +14,7 @@ import RoomType from "./views/System/RoomType/index";
 import Charge from "./views/System/Charge/index";
 import RoomsContextProvider from "./contexts/RoomsContext";
 import RoomTypeContextProvider from "./contexts/RoomTypeContext";
-import ChargeContextProvider from "./contexts/ChargeContext";
+import ChargeContextProvider from "./contexts/ChargesContext";
 import BookingsContextProvider from "./contexts/BookingsContext";
 import AccountContextProvider from "./contexts/AccountContext";
 

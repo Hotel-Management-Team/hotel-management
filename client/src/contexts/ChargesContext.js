@@ -1,9 +1,9 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect, useContext, useState } from "react";
 import { chargeReducer } from "../reducers/chargeReducer";
 import { apiUrl } from "./constants";
 import axios from "axios";
 
-export const ChargeContext = createContext();
+export const ChargesContext = createContext();
 
 const ChargeContextProvider = ({ children }) => {
   const [chargeState, chargeDispatch] = useReducer(chargeReducer, {
@@ -11,6 +11,14 @@ const ChargeContextProvider = ({ children }) => {
     chargeLoading: true,
   });
 
+  // handal click
+
+  const [showAddChargeModal, setShowAddChargeModal] = useState(false);
+  const [showToast, setShowToast] = useState({
+    show: false,
+    msg: "",
+    type: null,
+  });
   // Get all charge
   const getCharges = async () => {
     try {
@@ -36,16 +44,37 @@ const ChargeContextProvider = ({ children }) => {
     }
   };
 
+  // Add new charge
+  const addCharge = async (charge) => {
+    try {
+      const res = await axios.post(`${apiUrl}/charge`, charge);
+      if (res.data.success) {
+        chargeDispatch({
+          type: "ADD_CHARGE",
+          payload: res.data.data,
+        });
+      }
+      return res.data;
+    } catch (error) {
+      return error ? error : { success: false, msg: "Server error" };
+    }
+  };
+
   const RoomTypeContextValue = {
     chargeState,
     chargeDispatch,
     getCharges,
+    addCharge,
+    showAddChargeModal,
+    setShowAddChargeModal,
+    showToast,
+    setShowToast,
   };
 
   return (
-    <ChargeContext.Provider value={RoomTypeContextValue}>
+    <ChargesContext.Provider value={RoomTypeContextValue}>
       {children}
-    </ChargeContext.Provider>
+    </ChargesContext.Provider>
   );
 };
 

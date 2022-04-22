@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import { useContext, useState, useEffect } from "react";
 import { RoomsContext } from "../../../contexts/RoomsContext";
 import { RoomTypeContext } from "../../../contexts/RoomTypeContext";
-import { ChargeContext } from "../../../contexts/ChargeContext";
+import { ChargesContext } from "../../../contexts/ChargesContext";
 
 const UpdateRoomModal = () => {
   // context
@@ -28,7 +28,7 @@ const UpdateRoomModal = () => {
   const {
     chargeState: { charges, chargeLoading },
     getCharges,
-  } = useContext(ChargeContext);
+  } = useContext(ChargesContext);
 
   useEffect(() => {
     if (roomType.length === 0) {

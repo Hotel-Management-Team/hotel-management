@@ -36,10 +36,35 @@ const AccountContextProvider = ({ children }) => {
         }
     };
 
+    const updateAccount = async () => {
+        try {
+            const res = await axios.put(`${apiUrl}/user`);
+            if (res.data.success) {
+                accountDispatch({
+                    type: "UPDATE_ACCOUNT_SUCCESS",
+                    payload: {
+                        account: res.data.data,
+                        accountLoading: false,
+                    },
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            accountDispatch({
+                type: "UPDATE_ACCOUNT_FAILURE",
+                payload: {
+                    account: [],
+                    accountLoading: false,
+                },
+            });
+        }
+    };
+
     const AccountContextValue = {
         accountState,
         accountDispatch,
         getAccount,
+        updateAccount,
     };
 
     return (
