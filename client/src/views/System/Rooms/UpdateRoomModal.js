@@ -4,9 +4,9 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useContext, useState, useEffect } from "react";
-import { RoomsContext } from "../../contexts/RoomsContext";
-import { RoomTypeContext } from "../../contexts/RoomTypeContext";
-import { ChargeContext } from "../../contexts/ChargeContext";
+import { RoomsContext } from "../../../contexts/RoomsContext";
+import { RoomTypeContext } from "../../../contexts/RoomTypeContext";
+import { ChargesContext } from "../../../contexts/ChargesContext";
 
 const UpdateRoomModal = () => {
   // context
@@ -21,17 +21,17 @@ const UpdateRoomModal = () => {
   const [updatedRoomData, setUpdatedRoomData] = useState(room);
 
   const {
-    roomTypeState: { roomType, roomTypeLoading },
+    roomTypeState: { roomTypes, roomTypeLoading },
     getRoomType,
   } = useContext(RoomTypeContext);
 
   const {
     chargeState: { charges, chargeLoading },
     getCharges,
-  } = useContext(ChargeContext);
+  } = useContext(ChargesContext);
 
   useEffect(() => {
-    if (roomType.length === 0) {
+    if (roomTypes.length === 0) {
       getRoomType();
     }
     if (charges.length === 0) {
@@ -49,7 +49,6 @@ const UpdateRoomModal = () => {
       ...updatedRoomData,
       [e.target.name]: e.target.value,
     });
-    console.log(updatedRoomData);
   };
   const closeDialog = () => {
     setUpdatedRoomData(room);
@@ -92,7 +91,7 @@ const UpdateRoomModal = () => {
                 onChange={onChangeUpdateRoomForm}
               >
                 <option value={null}>Chọn loại phòng</option>
-                {roomType.map((item) => (
+                {roomTypes.map((item) => (
                   <option key={item._id} value={item._id}>
                     {item.name}
                   </option>

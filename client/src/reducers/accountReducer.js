@@ -18,6 +18,20 @@ export const accountReducer = (state, action) => {
                 accountLoading,
             };
 
+        case "UPDATE_ACCOUNT_SUCCESS":
+            return {
+                ...state,
+                account,
+                accountLoading,
+            };
+
+        case "UPDATE_ACCOUNT_FAILURE":
+            return {
+                ...state,
+                account,
+                accountLoading,
+            };
+
         default:
             return state;
     }

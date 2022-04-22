@@ -6,27 +6,27 @@ const chargeSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    firstBlock: {
+    FirstBlock: {
         type: Number,
         required: true
     },
-    firstBlockCharge: {
+    FirstBlockCharge: {
         type: Number,
         required: true
     },
-    overTimeCharge: {
+    OvertimeCharge: {
         type: Number,
         required: true
     },
-    overNightCharge: {
+    OverNightCharge: {
         type: Number,
         required: true
     },
-    OnDayCharge: {
+    DateCharge: {
         type: Number,
         required: true
     },
-    Surcharge: {
+    SurCharge: {
         type: Number,
         required: true
     }

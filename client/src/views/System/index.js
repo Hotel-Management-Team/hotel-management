@@ -1,6 +1,6 @@
 import React from "react";
 import IMG_ROOM from "../../assets/img-room.png";
-import IMG_ROOM_TYPE from "../../assets/img-room-type.png";
+import IMG_ROOM_TYPE from "../../assets/img-room-type.jpg";
 import IMG_PRICE_TYPE from "../../assets/img-price-type.png";
 import IMG_SUB_ACCOUNT from "../../assets/img-sub-account.png";
 import CardFeature from "./CardFeature";

@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext, useState, useEffect } from "react";
-import { RoomsContext } from "../../contexts/RoomsContext";
+import { RoomsContext } from "../../../contexts/RoomsContext";
 import Spinner from "react-bootstrap/esm/Spinner";
 import CardRoom from "./CardRoom";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ import {
   Form,
   FormControl,
 } from "react-bootstrap";
-import addIcon from "../../assets/plus-circle-fill.svg";
+import addIcon from "../../../assets/plus-circle-fill.svg";
 import AddRoomModal from "./AddRoomModal";
 import UpdateRoomModal from "./UpdateRoomModal";
 
@@ -67,7 +67,7 @@ const Rooms = () => {
           </Button>
           <FormControl
             type="search"
-            placeholder="Search"
+            placeholder="Tìm kiếm"
             value={search}
             onFocus={() => {
               getRooms();
@@ -80,7 +80,7 @@ const Rooms = () => {
             aria-label="Search"
           />
           <Button variant="outline-success" type="submit">
-            Search
+            Tìm kiếm
           </Button>
         </Form>
       </div>

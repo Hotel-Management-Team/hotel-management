@@ -16,3 +16,21 @@ export const getCharge = async (req, res) => {
     });
   }
 };
+
+// add new charge
+export const addCharge = async (req, res) => {
+  try {
+    const charge = new Charge(req.body);
+    await charge.save();
+    res.json({
+      success: true,
+      data: charge,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({
+      success: false,
+      msg: "Server Error",
+    });
+  }
+};

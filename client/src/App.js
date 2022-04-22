@@ -9,13 +9,13 @@ import ProtectedRoute from "./components/routing/ProtectedRoute";
 import Booking from "./views/Booking";
 import Revenue from "./views/Revenue";
 import System from "./views/System/index";
-import Rooms from "./components/Rooms/index";
+import Rooms from "./views/System/Rooms/index";
 import Account from "./views/System/Account/index";
 import RoomType from "./views/System/RoomType/index";
 import Charge from "./views/System/Charge/index";
 import RoomsContextProvider from "./contexts/RoomsContext";
 import RoomTypeContextProvider from "./contexts/RoomTypeContext";
-import ChargeContextProvider from "./contexts/ChargeContext";
+import ChargeContextProvider from "./contexts/ChargesContext";
 import BookingsContextProvider from "./contexts/BookingsContext";
 import AccountContextProvider from "./contexts/AccountContext";
 
@@ -97,14 +97,20 @@ function App() {
                     <Route
                       exact
                       path="/system-management/charge-calculations"
-                      element={<ProtectedRoute>
-                        <Charge />
-                      </ProtectedRoute>}
+                      element={
+                        <ProtectedRoute>
+                          <Charge />
+                        </ProtectedRoute>
+                      }
                     />
                     <Route
                       exact
                       path="/system-management/room-types"
-                      element={<ProtectedRoute><RoomType /></ProtectedRoute>}
+                      element={
+                        <ProtectedRoute>
+                          <RoomType />
+                        </ProtectedRoute>
+                      }
                     />
                     <Route
                       exact
