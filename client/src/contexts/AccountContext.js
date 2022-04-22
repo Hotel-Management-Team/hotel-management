@@ -36,9 +36,9 @@ const AccountContextProvider = ({ children }) => {
         }
     };
 
-    const updateAccount = async () => {
+    const updateAccount = async (accountInfo) => {
         try {
-            const res = await axios.put(`${apiUrl}/user`);
+            const res = await axios.put(`${apiUrl}/user`, accountInfo);
             if (res.data.success) {
                 accountDispatch({
                     type: "UPDATE_ACCOUNT_SUCCESS",
