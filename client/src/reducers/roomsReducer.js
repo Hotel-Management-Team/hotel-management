@@ -44,6 +44,16 @@ export const roomsReducer = (state, action) => {
         rooms: newRooms,
         roomsLoading: false,
       };
+    case "GET_ROOMS_TICKETS_SUCCESS":
+      return {
+        rooms: payload.rooms,
+        roomsLoading: payload.roomsLoading,
+      };
+    case "GET_ROOMS_TICKETS_FAILURE":
+      return {
+        rooms: [],
+        roomsLoading: false,
+      };
 
     case "SEARCH_ROOM":
       return {

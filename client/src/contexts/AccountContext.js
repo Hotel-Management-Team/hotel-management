@@ -48,6 +48,7 @@ const AccountContextProvider = ({ children }) => {
                     },
                 });
             }
+            return res.data;
         } catch (error) {
             console.log(error);
             accountDispatch({
@@ -57,6 +58,7 @@ const AccountContextProvider = ({ children }) => {
                     accountLoading: false,
                 },
             });
+            return error ? error : { success: false, msg: "Server error" };
         }
     };
 

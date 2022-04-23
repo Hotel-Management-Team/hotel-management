@@ -14,7 +14,7 @@ const AddChargeModal = () => {
         useContext(ChargesContext);
 
     const {
-        chargeState: { charges, chargeLoading },
+        chargeState: { charges },
         getCharges,
     } = useContext(ChargesContext);
 
@@ -27,12 +27,12 @@ const AddChargeModal = () => {
     // state
     const [newCharge, setNewCharge] = useState({
         name: "",
-        FirstBlock: null,
-        FirstBlockCharge: null,
-        OvertimeCharge: null,
-        OverNightCharge: null,
-        DateCharge: null,
-        SurCharge: null,
+        FirstBlock: "",
+        FirstBlockCharge: "",
+        OvertimeCharge: "",
+        OverNightCharge: "",
+        DateCharge: "",
+        SurCharge: "",
     });
 
     const { name, FirstBlock, FirstBlockCharge, OvertimeCharge, OverNightCharge, DateCharge, SurCharge } = newCharge;
@@ -49,12 +49,12 @@ const AddChargeModal = () => {
     const resetAddChargeData = () => {
         setNewCharge({
             name: "",
-            FirstBlock: null,
-            FirstBlockCharge: null,
-            OvertimeCharge: null,
-            OverNightCharge: null,
-            DateCharge: null,
-            SurCharge: null,
+            FirstBlock: "",
+            FirstBlockCharge: "",
+            OvertimeCharge: "",
+            OverNightCharge: "",
+            DateCharge: "",
+            SurCharge: "",
         });
         setShowAddChargeModal(false);
     };
@@ -87,7 +87,7 @@ const AddChargeModal = () => {
                             <Form.Select name="FirstBlock" onChange={onChangeNewChargeForm}>
                                 <option value={null}> Chọn block đầu </option>
                                 {firstBlock.map((item) => (
-                                    <option key={item} value={FirstBlock}>
+                                    <option key={item} value={item}>
                                         {item}
                                     </option>
                                 ))}

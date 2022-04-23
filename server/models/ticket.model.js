@@ -11,8 +11,13 @@ const ticketSchema = new mongoose.Schema({
         ref: 'Room',
         required: true
     },
-    startDate: {
+    arrivalDate: {
         // date new Date("<YYYY-mm-dd>"
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    departureDate: {
         type: Date,
         required: true,
         default: Date.now

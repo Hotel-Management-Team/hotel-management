@@ -8,6 +8,7 @@ export const ChargesContext = createContext();
 const ChargeContextProvider = ({ children }) => {
   const [chargeState, chargeDispatch] = useReducer(chargeReducer, {
     charges: [],
+    charge: null,
     chargeLoading: true,
   });
 
@@ -99,7 +100,6 @@ const ChargeContextProvider = ({ children }) => {
       type: "FIND_CHARGE",
       payload: selectedCharge,
     });
-    return selectedCharge;
   };
 
   const ChargesContextValue = {

@@ -38,7 +38,7 @@ const Account = () => {
     if (isEmpty || !isPwdMatch) {
       setAlert({
         type: "danger",
-        msg: (isEmpty) ? "No field was changed" : "Passwords do not match",
+        msg: (isEmpty) ? "Không có thông tin nào thay đổi" : "Mât khẩu không khớp",
       });
       setTimeout(() => {
         setAlert(null);
@@ -49,19 +49,16 @@ const Account = () => {
   };
 
   const editAccount = async (e) => {
-    e.preventDefault();
     setLoading(true);
     try {
       const updateResult = await updateAccount(updateForm);
-      if (!updateResult.success) {
-        setAlert({
-          type: "danger",
-          msg: updateResult.msg,
-        });
-        setTimeout(() => {
-          setAlert(null);
-        }, 5000);
-      }
+      setAlert({
+        type: (updateResult.success) ? "success" : "danger",
+        msg: updateResult.msg,
+      });
+      setTimeout(() => {
+        setAlert(null);
+      }, 5000);
     } catch (error) {
       console.log(error);
     }

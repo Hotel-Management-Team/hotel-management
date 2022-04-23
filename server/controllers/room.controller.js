@@ -1,6 +1,7 @@
 import Room from "../models/room.model";
 import Charge from "../models/charge.model";
 import RoomType from "../models/roomType.model";
+import Ticket from "../models/ticket.model";
 export const getRoom = async (req, res) => {
   try {
     const room = await Room.find().populate("charge").populate("roomtype");
@@ -164,6 +165,27 @@ export const deleteRoom = async (req, res) => {
       msg: "Room deleted successfully",
       data: room,
     });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+export const findRoom = async (req, res) => {
+  try {
+    let rooms = await Room.find().lean();
+    const tickets = await Ticket.find();
+
+    for (const room of rooms) {
+      room.tickets = tickets.filter((ticket) => {
+        return ticket.room.toString() === room._id.toString();
+      });
+    }
+    res.json({
+      success: true,
+      data: rooms,
+    });
+
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");

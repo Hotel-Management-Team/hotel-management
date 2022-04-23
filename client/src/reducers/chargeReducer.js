@@ -17,7 +17,7 @@ export const chargeReducer = (state, action) => {
     case "ADD_CHARGE":
       return {
         ...state,
-        charge: [...state.charges, payload],
+        charges: [...state.charges, payload],
       };
     case "UPDATE_CHARGE":
       const newCharges = state.charges.map((charge) => {
@@ -31,6 +31,16 @@ export const chargeReducer = (state, action) => {
         ...state,
         charges: newCharges,
         chargesLoading: false,
+      };
+    case "FIND_CHARGE":
+      return {
+        ...state,
+        charge: payload,
+      };
+    case "DELETE_CHARGE":
+      return {
+        ...state,
+        charges: state.charges.filter((charge) => charge._id !== payload),
       };
     default:
       return state;

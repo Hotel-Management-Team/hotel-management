@@ -1,10 +1,12 @@
 import { Router } from "express";
 import verifyToken from '../middlewares/auth.middleware';
-import { getRoom, postRoom, putRoom, deleteRoom } from "../controllers/room.controller";
+import { getRoom, postRoom, putRoom, deleteRoom, findRoom } from "../controllers/room.controller";
 
 const router = Router();
 
 router.get('/', getRoom);
+
+router.get('/findRoom', verifyToken, findRoom);
 
 router.post('/', verifyToken, postRoom);
 
