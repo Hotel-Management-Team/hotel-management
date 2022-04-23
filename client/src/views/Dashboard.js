@@ -1,14 +1,15 @@
 import React from "react";
 import { useContext, useState, useEffect } from "react";
 import { RoomsContext } from "../contexts/RoomsContext";
-import { Spinner, Form } from "react-bootstrap";
+import { Spinner, Form, Col, Row } from "react-bootstrap";
 import Select from "react-select";
 
 const Dashboard = () => {
+
   const options = [
-    { value: "Waiting", label: "Waiting" },
-    { value: "Booked", label: "Booked" },
-    { value: "NeedClean", label: "Need Clean" },
+    { value: "Available", label: "Khả dụng" },
+    { value: "Waiting", label: "Đang chờ" },
+    { value: "NeedClean", label: "Cần dọn" },
   ];
 
   const {
@@ -16,7 +17,9 @@ const Dashboard = () => {
     getRoomsTickets,
   } = useContext(RoomsContext);
 
-  // const [selectedOption, setSelectedOption] = useState("Waiting");
+
+
+  const [selectedOption, setSelectedOption] = useState(null);
   const [dateArrival, setDateArrival] = useState("");
   const [dateDeparture, setDateDeparture] = useState("");
   const [filteredRooms, setFilteredRooms] = useState(rooms);
@@ -26,11 +29,12 @@ const Dashboard = () => {
   }, []);
 
 
-  const filterByDate = (date) => {
+  const filterByDate = (date, selectedOption) => {
     const dateArrival_ = new Date(date.arrival);
     const dateDeparture_ = new Date(date.departure);
 
-    if (!date.arrival || !date.departure || dateArrival_.getTime() > dateDeparture_.getTime()) {
+    if (!date.arrival || !date.departure || dateArrival_.getTime() > dateDeparture_.getTime() || date.arrival === date.departure ||
+      date.arrival < new Date().toISOString() || date.departure < new Date().toISOString()) {
       setFilteredRooms([]);
     } else {
       const result = rooms.filter((room) => {
@@ -46,7 +50,19 @@ const Dashboard = () => {
         return true;
       });
 
-      setFilteredRooms(result);
+      const result2 = result.filter((room) => {
+        // if selectedOption is null, return all rooms
+        if (!selectedOption) {
+          return true;
+        }
+        for (const option of selectedOption) {
+          if (room.status === option.value) {
+            return true;
+          }
+        }
+        return false;
+      });
+      setFilteredRooms(result2);
     };
   };
 
@@ -60,108 +76,135 @@ const Dashboard = () => {
 
   return (
     <>
-      <h1>Dashboard</h1>
-      {/* <div className="container"> */}
-      {/* <Select options={options} /> */}
-      {/* <Select
-          closeMenuOnSelect={false}
-          isMulti
-          options={options}
-          placeholder="Select status"
-          selectedValue={selectedOption}
-          // get option selected
-          onChange={(selectedOption) => {
-            setSelectedOption(selectedOption);
-          }}
-        /> */}
-      {/* </div> */}
-      <Form>
-        <Form.Group controlId="arrival">
-          <Form.Label>Chọn ngày giờ đến</Form.Label>
-          <Form.Control
-            type="datetime-local"
-            name="arrival"
-            value={dateArrival}
-            format="yyyy-MM-dd HH:mm"
-            onChange={(date) => {
-              setDateArrival(date.target.value);
-              filterByDate({ arrival: date.target.value, departure: dateDeparture });
+      <div className="container d-flex flex-column p-4">
+        <div className="p-3">
+          <h3 className="text-center">Loại phòng</h3>
+          <Select
+            closeMenuOnSelect={false}
+            isMulti
+            options={options}
+            placeholder="Select status"
+            selectedValue={selectedOption}
+            // get option selected
+            onChange={(selectedOption) => {
+              setSelectedOption(selectedOption);
+              filterByDate({ arrival: dateArrival, departure: dateDeparture }, selectedOption);
             }}
           />
-        </Form.Group>
-        <Form.Group controlId="departure">
-          <Form.Label>Chọn ngày giờ rời</Form.Label>
-          <Form.Control
-            type="datetime-local"
-            name="departure"
-            value={dateDeparture}
-            format="yyyy-MM-dd HH:mm"
-            onChange={(date) => {
-              setDateDeparture(date.target.value);
-              filterByDate({ arrival: dateArrival, departure: date.target.value });
-            }}
-          />
-        </Form.Group>
-      </Form>
+        </div>
+        <Form className="p-3">
+          <Row>
+            <Col>
+              <Form.Group controlId="arrival">
+                <Form.Label>Chọn ngày giờ đến</Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  name="arrival"
+                  value={dateArrival}
+                  format="yyyy-MM-dd HH:mm"
+                  onChange={(date) => {
+                    setDateArrival(date.target.value);
+                    filterByDate({ arrival: date.target.value, departure: dateDeparture }, selectedOption);
+                  }}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="departure">
+                <Form.Label>Chọn ngày giờ rời</Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  name="departure"
+                  value={dateDeparture}
+                  format="yyyy-MM-dd HH:mm"
+                  onChange={(date) => {
+                    setDateDeparture(date.target.value);
+                    filterByDate({ arrival: dateArrival, departure: date.target.value }, selectedOption);
+                  }}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+        </Form>
 
-      <div className="container">
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Room Name</th>
-              <th scope="col">Status</th>
-              <th scope="col">Action</th>
-              <th scope="col">Arrival</th>
-              <th scope="col">Departure</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {rooms.map((room, index) => {
-              //filter by status
-              if (
-                selectedOption === null ||
-                selectedOption.length === 0 ||
-                selectedOption.find((option) => option.value === room.status)
-              ) {
-                return (
-                  <tr key={index}>
-                    <th scope="row">{index + 1}</th>
-                    <td>{room.name}</td>
-                    <td>{room.status}</td>
-                    <td>
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => console.log("Clicked")}
-                      >
-                        Edit
-                      </button>
-                    </td>
-                  </tr>
-                );
-              }
-            })} */}
-            {filteredRooms.map((room, index) => {
-              return (
-                <tr key={index}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{room.name}</td>
-                  <td>{room.status}</td>
-                  <td>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => console.log("Clicked")}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                  <td>{room.arrivalDate}</td>
-                  <td>{room.departureDate}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className="p-3">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Room Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Arrival</th>
+                <th scope="col">Departure</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredRooms.map((room, index) => {
+                if (room.tickets.length === 0) {
+                  return (
+                    <tr key={index}>
+                      <th scope="row">{index + 1}</th>
+                      <td>{room.name}</td>
+                      <td>{
+                        room.status === "Available" ? "Khả dụng" : room.status === "Waiting" ? "Đang chờ" : "Cần dọn"
+                      }</td>
+                      <td>Khả dụng</td>
+                      <td>Khả dụng</td>
+                      <td>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => console.log("Clicked")}
+                        >
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                } else {
+                  for (const ticket of room.tickets) {
+                    return (
+                      <tr key={index}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{room.name}</td>
+                        <td>{
+                          room.status === "Available" ? "Khả dụng" : room.status === "Waiting" ? "Đang chờ" : "Cần dọn"
+                        }</td>
+                        <td>{
+                          new Date(ticket.arrivalDate).toLocaleString("en-US", {
+                            hour12: true,
+                            hour: "numeric",
+                            minute: "numeric",
+                            day: "numeric",
+                            month: "numeric",
+                            year: "numeric",
+                          })
+                        }</td>
+                        <td>{
+                          new Date(ticket.departureDate).toLocaleString("en-US", {
+                            hour12: true,
+                            hour: "numeric",
+                            minute: "numeric",
+                            day: "numeric",
+                            month: "numeric",
+                            year: "numeric",
+                          })}</td>
+                        <td>
+                          <button
+                            className="btn btn-primary"
+                            onClick={() => console.log("Clicked")}
+                          >
+                            Edit
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  }
+                }
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

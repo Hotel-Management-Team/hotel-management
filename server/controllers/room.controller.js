@@ -181,6 +181,7 @@ export const findRoom = async (req, res) => {
         return ticket.room.toString() === room._id.toString();
       });
     }
+
     res.json({
       success: true,
       data: rooms,

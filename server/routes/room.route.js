@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/', getRoom);
 
-router.get('/findRoom', verifyToken, findRoom);
+router.get('/findRoom', findRoom);
 
 router.post('/', verifyToken, postRoom);
 
