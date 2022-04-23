@@ -35,7 +35,7 @@ const RoomType = () => {
     getRoomTypes();
     getRooms();
     console.log("RoomType");
-  }, [rooms.length]);
+  }, []);
 
   if (roomTypeLoading) {
     return (
