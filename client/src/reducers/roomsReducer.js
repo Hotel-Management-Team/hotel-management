@@ -14,7 +14,6 @@ export const roomsReducer = (state, action) => {
         rooms: [],
         roomsLoading: false,
       };
-
     case "ADD_ROOM":
       return {
         ...state,

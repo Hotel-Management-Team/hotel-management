@@ -41,6 +41,7 @@ const AddRoomModal = () => {
   });
 
   const { name, roomtype, charge, description, status } = newRoom;
+
   const onChangeNewRoomForm = (e) => {
     setNewRoom({
       ...newRoom,

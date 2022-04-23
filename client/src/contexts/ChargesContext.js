@@ -12,8 +12,8 @@ const ChargeContextProvider = ({ children }) => {
   });
 
   // handal click
-
   const [showAddChargeModal, setShowAddChargeModal] = useState(false);
+  const [showUpdateChargeModal, setShowUpdateChargeModal] = useState(false);
   const [showToast, setShowToast] = useState({
     show: false,
     msg: "",
@@ -60,7 +60,49 @@ const ChargeContextProvider = ({ children }) => {
     }
   };
 
-  const RoomTypeContextValue = {
+  // delete charge
+  const deleteCharge = async (id) => {
+    try {
+      const res = await axios.delete(`${apiUrl}/charge/${id}`);
+      if (res.data.success) {
+        chargeDispatch({
+          type: "DELETE_CHARGE",
+          payload: id,
+        });
+      }
+      return res.data;
+    } catch (error) {
+      return error ? error : { success: false, msg: "Server error" };
+    }
+  };
+
+  // update charge
+  const updateCharge = async (id, charge) => {
+    try {
+      const res = await axios.put(`${apiUrl}/charge/${id}`, charge);
+      if (res.data.success) {
+        chargeDispatch({
+          type: "UPDATE_CHARGE",
+          payload: res.data.data,
+        });
+      }
+      return res.data;
+    } catch (error) {
+      return error ? error : { success: false, msg: "Server error" };
+    }
+  };
+
+  // find charge
+  const findCharge = async (id) => {
+    const selectedCharge = chargeState.charges.find((charge) => charge._id === id);
+    chargeDispatch({
+      type: "FIND_CHARGE",
+      payload: selectedCharge,
+    });
+    return selectedCharge;
+  };
+
+  const ChargesContextValue = {
     chargeState,
     chargeDispatch,
     getCharges,
@@ -69,10 +111,15 @@ const ChargeContextProvider = ({ children }) => {
     setShowAddChargeModal,
     showToast,
     setShowToast,
+    deleteCharge,
+    updateCharge,
+    findCharge,
+    setShowUpdateChargeModal,
+    showUpdateChargeModal,
   };
 
   return (
-    <ChargesContext.Provider value={RoomTypeContextValue}>
+    <ChargesContext.Provider value={ChargesContextValue}>
       {children}
     </ChargesContext.Provider>
   );

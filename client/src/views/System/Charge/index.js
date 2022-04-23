@@ -1,11 +1,13 @@
 import React from "react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ChargesContext } from "../../../contexts/ChargesContext";
-import { Spinner, Table, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Spinner, Table, Button, OverlayTrigger, Tooltip, Toast, Modal } from "react-bootstrap";
 import EditIcon from "../../../assets/pencil.svg";
 import addIcon from "../../../assets/plus-circle-fill.svg";
 import DeleteIcon from "../../../assets/trash.svg";
 import AddChargeModal from "./AddChargeModal";
+import UpdateChargeModal from "./UpdateChargeModal";
+
 const columns = ["#", "Tên loại phí", "Block đầu", "Giá block đầu", "Giá giờ sau", "Giá qua đêm", "Giá ngày", "Giá phụ thu quá giờ", "Thay đổi"];
 
 const Charge = () => {
@@ -13,8 +15,55 @@ const Charge = () => {
     const {
         chargeState: { chargeLoading, charges },
         getCharges,
+        findCharge,
         setShowAddChargeModal,
+        setShowUpdateChargeModal,
+        showToast: { show, msg, type },
+        setShowToast,
+        deleteCharge,
     } = useContext(ChargesContext);
+
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+    const ModalDelete = ({ postId }) => {
+        return (
+            <Modal
+                show={showDeleteConfirm}
+                onHide={() => {
+                    setShowDeleteConfirm(false);
+                }}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Xoá cách tính tiền</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h5>Bạn có muốn xoá không ?</h5>
+                    {/* {children} */}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="danger"
+                        onClick={async () => {
+                            const { success, msg } = await deleteCharge(postId);
+                            setShowToast({
+                                show: true,
+                                msg,
+                                type: success ? "success" : "danger",
+                            });
+                            setShowDeleteConfirm(false);
+                        }}
+                    >
+                        YES
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    };
+
+    const choosePost = (charge) => {
+        findCharge(charge);
+        setShowUpdateChargeModal(true);
+    };
 
     useEffect(() => {
         if (charges.length === 0) {
@@ -56,19 +105,17 @@ const Charge = () => {
                                 <td>{charge.SurCharge}</td>
                                 <td>
                                     <Button className="border-0 bg-transparent"
-                                    // onClick={() =>
-                                    //     //editBooking(index)
-                                    // }
+                                        onClick={choosePost.bind(this, charge)}
                                     >
                                         <img src={EditIcon} alt="edit" width="24" height="24" />
                                     </Button>
                                     <Button className="border-0 bg-transparent"
-                                    //  onClick={() => 
-                                    // deleteBooking(index)
-                                    // }
+                                        onClick={() => setShowDeleteConfirm(true)
+                                        }
                                     >
                                         <img src={DeleteIcon} alt="edit" width="24" height="24" />
                                     </Button>
+                                    <ModalDelete postId={charge._id} />
                                 </td>
                             </tr>
                         ))}
@@ -94,7 +141,25 @@ const Charge = () => {
                 </OverlayTrigger>
             </div>
             <AddChargeModal />
+            <UpdateChargeModal />
+            <Toast
+                show={show}
+                style={{ position: "fixed", top: "20%", right: "10px" }}
+                className={`bg-${type} text-white`}
+                onClose={setShowToast.bind(this, {
+                    show: false,
+                    msg: "",
+                    type: null,
+                })}
+                delay={3000}
+                autohide
+            >
+                <Toast.Body>
+                    <strong>{msg}</strong>
+                </Toast.Body>
+            </Toast>
         </>
     );
 }
+
 export default Charge;
