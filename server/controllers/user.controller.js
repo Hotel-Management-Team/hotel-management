@@ -18,8 +18,34 @@ export const getUsers = async (req, res) => {
     }
 };
 
-
 export const putUser = async (req, res) => {
+    const { fullName, email, username, phoneNumber, password } = req.body;
+    try {
+        const user = await User.findById(req.userId);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                msg: 'User not found'
+            });
+        }
+        if (fullName) user.fullName = fullName;
+        if (email) user.email = email;
+        if (username) user.username = username;
+        if (phoneNumber) user.phoneNumber = phoneNumber;
+        if (password) user.password = await argon2.hash(password);
+        await user.save();
+        res.json({
+            success: true,
+            data: user,
+            msg: 'User updated'
+        });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({
+            success: false,
+            msg: 'Server Error'
+        });
+    }
 };
 
 export const deleteUser = async (req, res) => {

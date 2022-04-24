@@ -194,3 +194,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWZkYzI2Z
 ###
 GET http://localhost:5000/api/user
 Content-Type: application/json
+
+###
+GET http://localhost:5000/api/room/findroom
+Content-Type: application/json

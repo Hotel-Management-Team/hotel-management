@@ -23,7 +23,7 @@ const RoomsContextProvider = ({ children }) => {
   // Get all rooms
   const getRooms = async () => {
     try {
-      const res = await axios.get(`${apiUrl}/room`);
+      const res = await axios.get(`${apiUrl}/rooms`);
       if (res.data.success) {
         roomsDispatch({
           type: "GET_ROOMS_SUCCESS",
@@ -37,6 +37,30 @@ const RoomsContextProvider = ({ children }) => {
       console.log(error);
       roomsDispatch({
         type: "GET_ROOMS_FAILURE",
+        payload: {
+          rooms: [],
+          roomsLoading: false,
+        },
+      });
+    }
+  };
+
+  const getRoomsTickets = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/room/findRoom`);
+      if (res.data.success) {
+        roomsDispatch({
+          type: "GET_ROOMS_TICKETS_SUCCESS",
+          payload: {
+            rooms: res.data.data,
+            roomsLoading: false,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      roomsDispatch({
+        type: "GET_ROOMS_TICKETS_FAILURE",
         payload: {
           rooms: [],
           roomsLoading: false,
@@ -105,6 +129,7 @@ const RoomsContextProvider = ({ children }) => {
     roomsState,
     roomsDispatch,
     getRooms,
+    getRoomsTickets,
     showAddRoomModal,
     setShowAddRoomModal,
     showUpdateRoomModal,

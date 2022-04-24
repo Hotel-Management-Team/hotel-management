@@ -10,7 +10,7 @@ const UpdateChargeModal = () => {
     const firstBlock = [1, 2, 3, 4, 5];
     // context
     const {
-        chargeState: { charges },
+        chargeState: { charges, charge },
         getCharges,
         showUpdateChargeModal,
         setShowUpdateChargeModal,
@@ -18,8 +18,7 @@ const UpdateChargeModal = () => {
         setShowToast,
     } = useContext(ChargesContext);
 
-    const [updatedChargeData, setUpdatedChargeData] = useState(charges);
-    console.log(charges);
+    const [updatedChargeData, setUpdatedChargeData] = useState(charge);
 
     useEffect(() => {
         if (charges.length === 0) {
@@ -28,8 +27,8 @@ const UpdateChargeModal = () => {
     }, []);
 
     useEffect(() => {
-        setUpdatedChargeData(charges);
-    }, [charges]);
+        setUpdatedChargeData(charge);
+    }, [charge]);
 
     const { name, FirstBlock, FirstBlockCharge, OvertimeCharge, OverNightCharge, DateCharge, SurCharge } = updatedChargeData;
 
@@ -40,13 +39,13 @@ const UpdateChargeModal = () => {
         });
     };
     const closeDialog = () => {
-        setUpdatedChargeData(charges);
+        setUpdatedChargeData(charge);
         setShowUpdateChargeModal(false);
     };
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const { success, msg } = await updateCharge(updatedChargeData);
+        const { success, msg } = await updateCharge(updatedChargeData._id, updatedChargeData);
         setShowUpdateChargeModal(false);
         setShowToast({
             show: true,
@@ -157,7 +156,7 @@ const UpdateChargeModal = () => {
                             SurCharge < 0
                         }
                     >
-                        Thêm mới
+                        Cập nhập
                     </Button>
                 </Modal.Footer>
             </Form>

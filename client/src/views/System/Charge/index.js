@@ -1,19 +1,19 @@
 import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { ChargesContext } from "../../../contexts/ChargesContext";
-import { Spinner, Table, Button, OverlayTrigger, Tooltip, Toast, Modal } from "react-bootstrap";
+import { Spinner, Table, Button, Toast, Modal } from "react-bootstrap";
 import EditIcon from "../../../assets/pencil.svg";
-import addIcon from "../../../assets/plus-circle-fill.svg";
 import DeleteIcon from "../../../assets/trash.svg";
 import AddChargeModal from "./AddChargeModal";
 import UpdateChargeModal from "./UpdateChargeModal";
+import ControlBar from "../../../components/common/ControlBar";
 
 const columns = ["#", "Tên loại phí", "Block đầu", "Giá block đầu", "Giá giờ sau", "Giá qua đêm", "Giá ngày", "Giá phụ thu quá giờ", "Thay đổi"];
 
 const Charge = () => {
 
     const {
-        chargeState: { chargeLoading, charges },
+        chargeState: { chargeLoading, charges, charge },
         getCharges,
         findCharge,
         setShowAddChargeModal,
@@ -25,7 +25,7 @@ const Charge = () => {
 
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-    const ModalDelete = ({ postId }) => {
+    const ModalDelete = () => {
         return (
             <Modal
                 show={showDeleteConfirm}
@@ -44,7 +44,7 @@ const Charge = () => {
                     <Button
                         variant="danger"
                         onClick={async () => {
-                            const { success, msg } = await deleteCharge(postId);
+                            const { success, msg } = await deleteCharge(charge._id);
                             setShowToast({
                                 show: true,
                                 msg,
@@ -60,10 +60,12 @@ const Charge = () => {
         );
     };
 
-    const choosePost = (charge) => {
-        findCharge(charge);
+    const choosePost = (id) => {
+        findCharge(id);
         setShowUpdateChargeModal(true);
     };
+
+    const [isDelete, setIsDelete] = useState("");
 
     useEffect(() => {
         if (charges.length === 0) {
@@ -83,6 +85,10 @@ const Charge = () => {
 
     return (
         <>
+            <ControlBar
+                Link="/system-management"
+                onClickAdd={setShowAddChargeModal.bind(this, true)}
+            />
             <div className="mt-5 mx-5 text-center">
                 <Table responsive bordered hover>
                     <thead>
@@ -105,17 +111,18 @@ const Charge = () => {
                                 <td>{charge.SurCharge}</td>
                                 <td>
                                     <Button className="border-0 bg-transparent"
-                                        onClick={choosePost.bind(this, charge)}
+                                        onClick={choosePost.bind(this, charge._id)}
                                     >
                                         <img src={EditIcon} alt="edit" width="24" height="24" />
                                     </Button>
                                     <Button className="border-0 bg-transparent"
-                                        onClick={() => setShowDeleteConfirm(true)
-                                        }
+                                        onClick={() => {
+                                            findCharge(charge._id);
+                                            setShowDeleteConfirm(true);
+                                        }}
                                     >
                                         <img src={DeleteIcon} alt="edit" width="24" height="24" />
                                     </Button>
-                                    <ModalDelete postId={charge._id} />
                                 </td>
                             </tr>
                         ))}
@@ -123,25 +130,9 @@ const Charge = () => {
                     </tbody>
                 </Table>
             </div>
-            <div>
-                <OverlayTrigger
-                    placement="top"
-                    overlay={
-                        <Tooltip id="tooltip-top">
-                            <strong>Thêm mới</strong>
-                        </Tooltip>
-                    }
-                >
-                    <Button
-                        className="btn-floating border-0 bg-white"
-                        onClick={setShowAddChargeModal.bind(this, true)}
-                    >
-                        <img src={addIcon} alt="add-post" width="60" height="60" />
-                    </Button>
-                </OverlayTrigger>
-            </div>
-            <AddChargeModal />
-            <UpdateChargeModal />
+            {<AddChargeModal />}
+            {charge !== null && < UpdateChargeModal />}
+            {charge !== null && <ModalDelete />}
             <Toast
                 show={show}
                 style={{ position: "fixed", top: "20%", right: "10px" }}

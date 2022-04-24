@@ -11,23 +11,15 @@ const ticketSchema = new mongoose.Schema({
     ref: "Room",
     required: true,
   },
-  startDate: {
-    // date and time
-    type: Date,
-    required: true,
-  },
-  endDate: {
+  arrivalDate: {
     // date new Date("<YYYY-mm-dd>"
     type: Date,
     required: true,
+    default: Date.now,
   },
-  status: {
-    type: String,
-    enum: ["checkin", "checkout", "cancel", "pending"],
-    default: "pending",
-  },
-  createdAt: {
+  departureDate: {
     type: Date,
+    required: true,
     default: Date.now,
   },
 });
