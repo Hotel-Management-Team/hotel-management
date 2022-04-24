@@ -118,9 +118,11 @@ const UpdateRoomModal = () => {
                 defaultValue={status}
                 onChange={onChangeUpdateRoomForm}
               >
+                {/* ["Waiting", "Using", "Available", "NeedClean"], */}
                 <option value={null}>Chọn loại trang thái</option>
-                <option value="Booked">Booked</option>
                 <option value="Waiting">Waiting</option>
+                <option value="Using">Using</option>
+                <option value="Available">Available</option>
                 <option value="NeedClean">Need Clean</option>
               </Form.Select>
             </Form.Group>

@@ -17,11 +17,13 @@ const CardRoom = ({ Room }) => {
           <h5 className="d-flex justify-content-end">
             <Badge
               bg={
-                Room.status === "Booked"
+                Room.status === "Waiting"
                   ? "danger"
                   : Room.status === "NeedClean"
-                    ? "warning"
-                    : "success"
+                  ? "warning"
+                  : Room.status === "Using"
+                  ? "success"
+                  : "info"
               }
             >
               {Room.status}
