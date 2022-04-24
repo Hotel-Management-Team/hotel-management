@@ -190,3 +190,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNWZkYzI2Z
     "DateCharge": "300000",
     "SurCharge": "300000"
 }
+
+###
+GET http://localhost:5000/api/user
+Content-Type: application/json

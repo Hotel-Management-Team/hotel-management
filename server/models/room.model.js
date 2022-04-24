@@ -24,7 +24,7 @@ const roomSchema = new mongoose.Schema({
     type: String,
     default: "Waiting",
     required: true,
-    enum: ["Booked", "Waiting", "NeedClean"],
+    enum: ["Waiting", "Using", "Available", "NeedClean"],
   },
 });
 
