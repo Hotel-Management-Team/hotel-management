@@ -2,16 +2,18 @@ import React from "react";
 import { useContext, useEffect } from "react";
 import { SubAccountContext } from "../../../contexts/SubAccountContext";
 import ControlBar from "../../../components/common/ControlBar";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Toast } from "react-bootstrap";
 import CardSubAccount from "./CardSubAccount";
+import AddSubAccountModal from "./AddSubAccountModal";
 
 const SubAccount = () => {
   const {
     subAccountState: { subAccountLoading, subAccounts },
     getSubAccounts,
-    // setShowAddSubAccountModal,
-    // showToast: { show, msg, type },
-    // setShowToast,
+    setShowAddSubAccountModal,
+    showAddSubAccountModal,
+    showToast: { show, msg, type },
+    setShowToast,
     findSubAccount,
     // setShowDeleteSubAccountModal,
     // setShowUpdateSubAccountModal,
@@ -52,8 +54,30 @@ const SubAccount = () => {
 
   return (
     <>
-      <ControlBar Link="/system-management" onClickAdd={() => {}} />
+      <AddSubAccountModal />
+      <ControlBar
+        Link="/system-management"
+        onClickAdd={() => {
+          setShowAddSubAccountModal(true);
+        }}
+      />
       {body}
+      <Toast
+        show={show}
+        style={{ position: "fixed", top: "20%", right: "10px" }}
+        className={`bg-${type} text-white`}
+        onClose={setShowToast.bind(this, {
+          show: false,
+          msg: "",
+          type: null,
+        })}
+        delay={3000}
+        autohide
+      >
+        <Toast.Body>
+          <strong>{msg}</strong>
+        </Toast.Body>
+      </Toast>
     </>
   );
 };

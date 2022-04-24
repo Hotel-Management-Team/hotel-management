@@ -5,7 +5,6 @@ import { Spinner, Form, Col, Row } from "react-bootstrap";
 import Select from "react-select";
 
 const Dashboard = () => {
-
   const options = [
     { value: "Available", label: "Khả dụng" },
     { value: "Waiting", label: "Đang chờ" },
@@ -17,8 +16,6 @@ const Dashboard = () => {
     getRoomsTickets,
   } = useContext(RoomsContext);
 
-
-
   const [selectedOption, setSelectedOption] = useState(null);
   const [dateArrival, setDateArrival] = useState("");
   const [dateDeparture, setDateDeparture] = useState("");
@@ -28,21 +25,28 @@ const Dashboard = () => {
     getRoomsTickets();
   }, []);
 
-
   const filterByDate = (date, selectedOption) => {
     const dateArrival_ = new Date(date.arrival);
     const dateDeparture_ = new Date(date.departure);
 
-    if (!date.arrival || !date.departure || dateArrival_.getTime() > dateDeparture_.getTime() || date.arrival === date.departure ||
-      date.arrival < new Date().toISOString() || date.departure < new Date().toISOString()) {
+    if (
+      !date.arrival ||
+      !date.departure ||
+      dateArrival_.getTime() > dateDeparture_.getTime() ||
+      date.arrival === date.departure ||
+      date.arrival < new Date().toISOString() ||
+      date.departure < new Date().toISOString()
+    ) {
       setFilteredRooms([]);
     } else {
       const result = rooms.filter((room) => {
         for (const ticket of room.tickets) {
           let ticketArrival = new Date(ticket.arrivalDate);
           let ticketDeparture = new Date(ticket.departureDate);
-          if ((dateArrival_.getTime() >= ticketDeparture.getTime()) ||
-            (dateDeparture_.getTime() <= ticketArrival.getTime())) {
+          if (
+            dateArrival_.getTime() >= ticketDeparture.getTime() ||
+            dateDeparture_.getTime() <= ticketArrival.getTime()
+          ) {
             continue;
           }
           return false;
@@ -63,7 +67,7 @@ const Dashboard = () => {
         return false;
       });
       setFilteredRooms(result2);
-    };
+    }
   };
 
   if (roomLoading) {
@@ -88,7 +92,10 @@ const Dashboard = () => {
             // get option selected
             onChange={(selectedOption) => {
               setSelectedOption(selectedOption);
-              filterByDate({ arrival: dateArrival, departure: dateDeparture }, selectedOption);
+              filterByDate(
+                { arrival: dateArrival, departure: dateDeparture },
+                selectedOption
+              );
             }}
           />
         </div>
@@ -104,7 +111,10 @@ const Dashboard = () => {
                   format="yyyy-MM-dd HH:mm"
                   onChange={(date) => {
                     setDateArrival(date.target.value);
-                    filterByDate({ arrival: date.target.value, departure: dateDeparture }, selectedOption);
+                    filterByDate(
+                      { arrival: date.target.value, departure: dateDeparture },
+                      selectedOption
+                    );
                   }}
                 />
               </Form.Group>
@@ -119,7 +129,10 @@ const Dashboard = () => {
                   format="yyyy-MM-dd HH:mm"
                   onChange={(date) => {
                     setDateDeparture(date.target.value);
-                    filterByDate({ arrival: dateArrival, departure: date.target.value }, selectedOption);
+                    filterByDate(
+                      { arrival: dateArrival, departure: date.target.value },
+                      selectedOption
+                    );
                   }}
                 />
               </Form.Group>
@@ -146,9 +159,13 @@ const Dashboard = () => {
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
                       <td>{room.name}</td>
-                      <td>{
-                        room.status === "Available" ? "Khả dụng" : room.status === "Waiting" ? "Đang chờ" : "Cần dọn"
-                      }</td>
+                      <td>
+                        {room.status === "Available"
+                          ? "Khả dụng"
+                          : room.status === "Waiting"
+                          ? "Đang chờ"
+                          : "Cần dọn"}
+                      </td>
                       <td>Khả dụng</td>
                       <td>Khả dụng</td>
                       <td>
@@ -167,28 +184,39 @@ const Dashboard = () => {
                       <tr key={index}>
                         <th scope="row">{index + 1}</th>
                         <td>{room.name}</td>
-                        <td>{
-                          room.status === "Available" ? "Khả dụng" : room.status === "Waiting" ? "Đang chờ" : "Cần dọn"
-                        }</td>
-                        <td>{
-                          new Date(ticket.arrivalDate).toLocaleString("en-US", {
-                            hour12: true,
-                            hour: "numeric",
-                            minute: "numeric",
-                            day: "numeric",
-                            month: "numeric",
-                            year: "numeric",
-                          })
-                        }</td>
-                        <td>{
-                          new Date(ticket.departureDate).toLocaleString("en-US", {
-                            hour12: true,
-                            hour: "numeric",
-                            minute: "numeric",
-                            day: "numeric",
-                            month: "numeric",
-                            year: "numeric",
-                          })}</td>
+                        <td>
+                          {room.status === "Available"
+                            ? "Khả dụng"
+                            : room.status === "Waiting"
+                            ? "Đang chờ"
+                            : "Cần dọn"}
+                        </td>
+                        <td>
+                          {new Date(ticket.arrivalDate).toLocaleString(
+                            "en-US",
+                            {
+                              hour12: true,
+                              hour: "numeric",
+                              minute: "numeric",
+                              day: "numeric",
+                              month: "numeric",
+                              year: "numeric",
+                            }
+                          )}
+                        </td>
+                        <td>
+                          {new Date(ticket.departureDate).toLocaleString(
+                            "en-US",
+                            {
+                              hour12: true,
+                              hour: "numeric",
+                              minute: "numeric",
+                              day: "numeric",
+                              month: "numeric",
+                              year: "numeric",
+                            }
+                          )}
+                        </td>
                         <td>
                           <button
                             className="btn btn-primary"

@@ -1,8 +1,17 @@
 import React from "react";
 import { Card, Badge, Button } from "react-bootstrap";
+import { useContext, useEffect, useState } from "react";
+import { SubAccountContext } from "../../../contexts/SubAccountContext";
 
 const CardSubAccount = ({ SubAccount }) => {
-  console.log(SubAccount);
+  const {
+    subAccountState: { subAccountLoading, subAccounts },
+    banSubAccount,
+  } = useContext(SubAccountContext);
+
+  //   const [showBanModal, setShowBanModal] = useState(false);
+
+  //   const BanSubAccountModal = () => {
 
   return (
     <>
@@ -24,23 +33,43 @@ const CardSubAccount = ({ SubAccount }) => {
         </Card.Header>
         <Card.Body>
           <Card.Text>
-            <h6>Email: {SubAccount.email}</h6>
-            <h6>Username: {SubAccount.username}</h6>
-            <h6>Số điện thoại: {SubAccount.phoneNumber}</h6>
-            <h6>
+            <span>Email: {SubAccount.email}</span>
+            <br></br>
+            <span>Username: {SubAccount.username}</span>
+            <br></br>
+            <span>Số điện thoại: {SubAccount.phoneNumber}</span>
+            <br></br>
+            <span>
               Ngày tạo: {new Date(SubAccount.createdAt).toLocaleDateString()}
-            </h6>
+            </span>{" "}
+            <br></br>
+            <span>
+              <span>Tình trạng:</span>
+              <Badge
+                className="mx-3"
+                variant={SubAccount.isBanned == true ? "danger" : "success"}
+              >
+                {SubAccount.isBanned == true ? "Banned" : "Active"}
+              </Badge>
+            </span>
           </Card.Text>
-          <h5 className="d-flex justify-content-end">
-            <Badge bg={SubAccount.isOnline === true ? "success" : "danger"}>
-              {SubAccount.status}
-            </Badge>
-          </h5>
+
+          {SubAccount.role.toString() !== "Admin" && (
+            <div className="d-flex justify-content-end">
+              <Button className="mx-2" variant="outline-info">
+                Sửa
+              </Button>
+              <Button
+                variant="outline-danger"
+                onClick={() => {
+                  banSubAccount(SubAccount._id);
+                }}
+              >
+                {SubAccount.isBanned == true ? "Mở khóa" : "Khóa"}
+              </Button>
+            </div>
+          )}
         </Card.Body>
-        <Card.Footer className="d-flex justify-content-end">
-          <Button variant="primary">Edit</Button>
-          <Button variant="danger">Ban</Button>
-        </Card.Footer>
       </Card>
     </>
   );

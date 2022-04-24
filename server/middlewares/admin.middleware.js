@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model";
 
-const verifyToken = async (req, res, next) => {
+const verifyAdmin = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (!token)
@@ -19,13 +19,13 @@ const verifyToken = async (req, res, next) => {
         msg: "User not found",
       });
     }
-    if (user.isBanned) {
+    console.log(user);
+    if (!user.permissons.isAdmin) {
       return res.json({
         success: false,
-        msg: "Access denied. You are banned.",
+        msg: "Access denied. You are not an admin.",
       });
     }
-
     next();
   } catch (error) {
     console.error(error.message);
@@ -33,4 +33,4 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-export default verifyToken;
+export default verifyAdmin;

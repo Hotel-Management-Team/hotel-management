@@ -23,7 +23,7 @@ const RoomsContextProvider = ({ children }) => {
   // Get all rooms
   const getRooms = async () => {
     try {
-      const res = await axios.get(`${apiUrl}/rooms`);
+      const res = await axios.get(`${apiUrl}/room`);
       if (res.data.success) {
         roomsDispatch({
           type: "GET_ROOMS_SUCCESS",

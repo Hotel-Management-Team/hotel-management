@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer, useState, useEffect } from "react";
 import { SubAccountReducer } from "../reducers/SubAccountReducer";
 import { apiUrl } from "./constants";
 import axios from "axios";
@@ -11,6 +11,17 @@ const SubAccountContextProvider = ({ children }) => {
     subAccounts: [],
     subAccountLoading: true,
   });
+
+  const [showAddSubAccountModal, setShowAddSubAccountModal] = useState(false);
+  const [showToast, setShowToast] = useState({
+    show: false,
+    msg: "",
+    type: "",
+  });
+  const [showDeleteSubAccountModal, setShowDeleteSubAccountModal] =
+    useState(false);
+  const [showUpdateSubAccountModal, setShowUpdateSubAccountModal] =
+    useState(false);
 
   // Get all subAccounts
   const getSubAccounts = async () => {
@@ -41,15 +52,17 @@ const SubAccountContextProvider = ({ children }) => {
   // Add subAccount
   const addSubAccount = async (subAccount) => {
     try {
-      const res = await axios.post(`${apiUrl}/sub-account`, subAccount);
+      const res = await axios.post(`${apiUrl}/user`, subAccount);
       if (res.data.success) {
         subAccountDispatch({
           type: "ADD_SUB_ACCOUNT",
           payload: res.data.data,
         });
       }
+      return res.data;
     } catch (error) {
       console.log(error);
+      return error ? error.response.data : error;
     }
   };
 
@@ -68,12 +81,35 @@ const SubAccountContextProvider = ({ children }) => {
     }
   };
 
+  const banSubAccount = async (id) => {
+    try {
+      const res = await axios.put(`${apiUrl}/permissions/banned/${id}`);
+      if (res.data.success) {
+        subAccountDispatch({
+          type: "UPDATE_SUB_ACCOUNT",
+          payload: res.data.data,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const SubAccountContextValue = {
     subAccountState,
     subAccountDispatch,
     getSubAccounts,
     addSubAccount,
     findSubAccount,
+    banSubAccount,
+    showAddSubAccountModal,
+    setShowAddSubAccountModal,
+    showToast,
+    setShowToast,
+    showDeleteSubAccountModal,
+    setShowDeleteSubAccountModal,
+    showUpdateSubAccountModal,
+    setShowUpdateSubAccountModal,
   };
 
   return (
