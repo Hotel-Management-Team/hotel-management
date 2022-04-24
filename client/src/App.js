@@ -10,7 +10,7 @@ import Booking from "./views/Booking";
 import Revenue from "./views/Revenue";
 import System from "./views/System/index";
 import Rooms from "./views/System/Rooms/index";
-import Account from "./views/System/Account/index";
+import Account from "./views/Account";
 import RoomType from "./views/System/RoomType/index";
 import Charge from "./views/System/Charge/index";
 import SubAccount from "./views/System/SubAccount";

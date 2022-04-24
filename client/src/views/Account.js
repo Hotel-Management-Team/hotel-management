@@ -1,9 +1,9 @@
 import React from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import { useContext, useState } from "react";
-import { AccountContext } from "../../../contexts/AccountContext";
-import { AuthContext } from "../../../contexts/AuthContext";
-import AlertMessage from "../../../components/layout/AlertMessage";
+import { AccountContext } from "../contexts/AccountContext";
+import { AuthContext } from "../contexts/AuthContext";
+import AlertMessage from "../components/layout/AlertMessage";
 
 const Account = () => {
   const {
