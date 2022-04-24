@@ -7,8 +7,9 @@ import Select from "react-select";
 const Dashboard = () => {
 
   const options = [
-    { value: "Available", label: "Khả dụng" },
     { value: "Waiting", label: "Đang chờ" },
+    { value: "Using", label: "Đang sử dụng" },
+    { value: "Available", label: "Khả dụng" },
     { value: "NeedClean", label: "Cần dọn" },
   ];
 
@@ -146,7 +147,7 @@ const Dashboard = () => {
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
                       <td>{room.name}</td>
-                      <td>{
+                      <td className="text-danger">{
                         room.status === "Available" ? "Khả dụng" : room.status === "Waiting" ? "Đang chờ" : "Cần dọn"
                       }</td>
                       <td>Khả dụng</td>
@@ -167,11 +168,11 @@ const Dashboard = () => {
                       <tr key={index}>
                         <th scope="row">{index + 1}</th>
                         <td>{room.name}</td>
-                        <td>{
+                        <td className="text-danger">{
                           room.status === "Available" ? "Khả dụng" : room.status === "Waiting" ? "Đang chờ" : "Cần dọn"
                         }</td>
                         <td>{
-                          new Date(ticket.arrivalDate).toLocaleString("en-US", {
+                          new Date(ticket.arrivalDate).toLocaleString("en-GB", {
                             hour12: true,
                             hour: "numeric",
                             minute: "numeric",
@@ -181,7 +182,7 @@ const Dashboard = () => {
                           })
                         }</td>
                         <td>{
-                          new Date(ticket.departureDate).toLocaleString("en-US", {
+                          new Date(ticket.departureDate).toLocaleString("en-GB", {
                             hour12: true,
                             hour: "numeric",
                             minute: "numeric",
