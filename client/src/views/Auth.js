@@ -5,13 +5,12 @@ import { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
 
-
 const Auth = ({ authRoute }) => {
 	const {
 		authState: { authLoading, isAuthenticated }
 	} = useContext(AuthContext)
 
-	let body
+	let body;
 
 	if (authLoading)
 		body = (

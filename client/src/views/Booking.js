@@ -1,7 +1,8 @@
 import React from "react";
 import { useContext, useState, useEffect } from "react";
 import { RoomsContext } from "../contexts/RoomsContext";
-import { Spinner, Form, Col, Row } from "react-bootstrap";
+import { BookingsContext } from "../contexts/BookingsContext";
+import { Spinner, Form, Col, Row, Modal, Button } from "react-bootstrap";
 import Select from "react-select";
 
 const Dashboard = () => {
@@ -18,54 +19,26 @@ const Dashboard = () => {
     getRoomsTickets,
   } = useContext(RoomsContext);
 
+  const {
+    bookingsState: { bookings, bookingsLoading },
+    filterByDate,
+  } = useContext(BookingsContext);
 
+  const [customer, setCustomer] = useState({ name: "", phone: "", email: "", address: "", ID: "", type: "" });
+
+  // const onCustomerChange = (e) => {
+  //   setCustomer({ ...customer, [e.target.name]: e.target.value });
+  // }
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [dateArrival, setDateArrival] = useState("");
   const [dateDeparture, setDateDeparture] = useState("");
-  const [filteredRooms, setFilteredRooms] = useState(rooms);
+  const [selectedType, setSelectedType] = useState("");
 
   useEffect(() => {
     getRoomsTickets();
   }, []);
 
-
-  const filterByDate = (date, selectedOption) => {
-    const dateArrival_ = new Date(date.arrival);
-    const dateDeparture_ = new Date(date.departure);
-
-    if (!date.arrival || !date.departure || dateArrival_.getTime() > dateDeparture_.getTime() || date.arrival === date.departure ||
-      date.arrival < new Date().toISOString() || date.departure < new Date().toISOString()) {
-      setFilteredRooms([]);
-    } else {
-      const result = rooms.filter((room) => {
-        for (const ticket of room.tickets) {
-          let ticketArrival = new Date(ticket.arrivalDate);
-          let ticketDeparture = new Date(ticket.departureDate);
-          if ((dateArrival_.getTime() >= ticketDeparture.getTime()) ||
-            (dateDeparture_.getTime() <= ticketArrival.getTime())) {
-            continue;
-          }
-          return false;
-        }
-        return true;
-      });
-
-      const result2 = result.filter((room) => {
-        // if selectedOption is null, return all rooms
-        if (!selectedOption) {
-          return true;
-        }
-        for (const option of selectedOption) {
-          if (room.status === option.value) {
-            return true;
-          }
-        }
-        return false;
-      });
-      setFilteredRooms(result2);
-    };
-  };
 
   if (roomLoading) {
     return (
@@ -77,7 +50,130 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="container d-flex flex-column p-4">
+      {/* <Modal show={true}>
+        <Modal.Header>
+          <Modal.Title>
+            <h1>Chọn khách hàng</h1>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <div className="col-md-8">
+              <h4 className="text-center">Nhập thông tin khách hàng</h4>
+              <Form>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label htmlFor="">Tên</label>
+                      <input
+                        name="fullName"
+                        onChange={onCustomerChange}
+                        type="text"
+                        className="form-control text-success"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label htmlFor="">Email</label>
+                      <input
+                        type="email"
+                        name="email"
+                        onChange={onCustomerChange}
+                        className="form-control text-success"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label htmlFor="">CMT/Passport</label>
+                      <input
+                        type="text"
+                        name="id"
+                        onChange={onCustomerChange}
+                        className="form-control text-success"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <Select
+                        options={[{ value: "local", label: "Nội địa" }, { value: "foreign", label: "Nước ngoài" }]}
+                        selectedValue={selectedType}
+                        name="type"
+                        onChange={(selected) => {
+                          setSelectedType(selected.value);
+                          console.log(selectedType);
+                        }}
+                      />
+
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label htmlFor="">Mật khẩu</label>
+                      <input
+                        placeholder="********"
+                        type="password"
+                        name="password"
+                        // onChange={onInputChange}
+                        className="form-control text-success"
+                      />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-group">
+                      <label htmlFor="">Nhập lại mật khẩu</label>
+                      <input
+                        placeholder="********"
+                        type="password"
+                        name="confirmPassword"
+                        // onChange={onInputChange}
+                        className="form-control text-success"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 text-center">
+                  {/* <Button variant="secondary" onClick={handleClose} disabled={loading}>
+                        Huỷ
+                      </Button> */}
+      {/* <Button
+        variant="success"
+        type="button"
+        size="md"
+      //  onClick={validateForm}
+      >
+        Thay đổi
+      </Button> */}
+      {/* </div>
+              </Form >
+            </div > */}
+
+      {/* 
+      <Form.Group as={Row}>
+        <Button variant="primary" onClick={() => {
+        }
+        }>
+          Thêm mới
+        </Button>
+      </Form.Group>
+
+    </Form >
+        </Modal.Body >
+  <Modal.Footer> */}
+      {/* <button className="btn-primary" onClick={() => filterByDate({ arrival: dateArrival, departure: dateDeparture }, selectedOption, rooms)}>
+        Tìm kiếm
+      </button>
+    </Modal.Footer>
+      </Modal > * /} */}
+
+
+      < div className="container d-flex flex-column p-4" >
         <div className="p-3">
           <h3 className="text-center">Loại phòng</h3>
           <Select
@@ -89,7 +185,7 @@ const Dashboard = () => {
             // get option selected
             onChange={(selectedOption) => {
               setSelectedOption(selectedOption);
-              filterByDate({ arrival: dateArrival, departure: dateDeparture }, selectedOption);
+              filterByDate({ arrival: dateArrival, departure: dateDeparture }, selectedOption, rooms);
             }}
           />
         </div>
@@ -105,7 +201,7 @@ const Dashboard = () => {
                   format="yyyy-MM-dd HH:mm"
                   onChange={(date) => {
                     setDateArrival(date.target.value);
-                    filterByDate({ arrival: date.target.value, departure: dateDeparture }, selectedOption);
+                    filterByDate({ arrival: date.target.value, departure: dateDeparture }, selectedOption, rooms);
                   }}
                 />
               </Form.Group>
@@ -120,7 +216,7 @@ const Dashboard = () => {
                   format="yyyy-MM-dd HH:mm"
                   onChange={(date) => {
                     setDateDeparture(date.target.value);
-                    filterByDate({ arrival: dateArrival, departure: date.target.value }, selectedOption);
+                    filterByDate({ arrival: dateArrival, departure: date.target.value }, selectedOption, rooms);
                   }}
                 />
               </Form.Group>
@@ -141,23 +237,23 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredRooms.map((room, index) => {
+              {bookings.map((room, index) => {
                 if (room.tickets.length === 0) {
                   return (
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
                       <td>{room.name}</td>
                       <td className="text-danger">{
-                        room.status === "Available" ? "Khả dụng" : room.status === "Waiting" ? "Đang chờ" : "Cần dọn"
+                        room.status === "Available" ? "Khả dụng" : room.status === "NeedClean" ? "Cần dọn" : room.status === "Using" ? "Đang sử dụng" : "Đang chờ"
                       }</td>
                       <td>Khả dụng</td>
                       <td>Khả dụng</td>
                       <td>
                         <button
-                          className="btn btn-primary"
+                          className="btn btn-danger"
                           onClick={() => console.log("Clicked")}
                         >
-                          Edit
+                          Book
                         </button>
                       </td>
                     </tr>
@@ -169,7 +265,7 @@ const Dashboard = () => {
                         <th scope="row">{index + 1}</th>
                         <td>{room.name}</td>
                         <td className="text-danger">{
-                          room.status === "Available" ? "Khả dụng" : room.status === "Waiting" ? "Đang chờ" : "Cần dọn"
+                          room.status === "Available" ? "Khả dụng" : room.status === "NeedClean" ? "Cần dọn" : room.status === "Using" ? "Đang sử dụng" : "Đang chờ"
                         }</td>
                         <td>{
                           new Date(ticket.arrivalDate).toLocaleString("en-GB", {
@@ -192,10 +288,10 @@ const Dashboard = () => {
                           })}</td>
                         <td>
                           <button
-                            className="btn btn-primary"
+                            className="btn btn-danger"
                             onClick={() => console.log("Clicked")}
                           >
-                            Edit
+                            Book
                           </button>
                         </td>
                       </tr>

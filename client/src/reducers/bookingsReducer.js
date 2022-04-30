@@ -17,7 +17,18 @@ export const bookingsReducer = (state, action) => {
                 bookings,
                 bookingsLoading,
             };
-
+        case "FILTER_BY_DATE":
+            return {
+                ...state,
+                bookings: bookings,
+                bookingsLoading: bookingsLoading,
+            };
+        case "FILTER_BY_DATE_FAILURE":
+            return {
+                ...state,
+                bookings: bookings,
+                bookingsLoading: bookingsLoading,
+            };
         default:
             return state;
     }
