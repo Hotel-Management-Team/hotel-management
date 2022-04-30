@@ -5,6 +5,7 @@ import Auth from "./views/Auth";
 import Dashboard from "./views/Dashboard";
 import AuthContextProvider from "./contexts/AuthContext";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
+import ProtecteAdmin from "./components/routing/ProtectedAdmin";
 import Booking from "./views/Booking";
 import Revenue from "./views/Revenue";
 import System from "./views/System/index";
@@ -119,7 +120,9 @@ function App() {
                         path="/system-management/sub-accounts"
                         element={
                           <ProtectedRoute>
-                            <SubAccount />
+                            <ProtecteAdmin>
+                              <SubAccount />
+                            </ProtecteAdmin>
                           </ProtectedRoute>
                         }
                       />
