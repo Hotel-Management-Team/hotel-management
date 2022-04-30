@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useState } from "react";
 import { bookingsReducer } from "../reducers/bookingsReducer";
 import { apiUrl } from "./constants";
 import axios from "axios";
@@ -11,11 +11,15 @@ const BookingsContextProvider = ({ children }) => {
         bookingsLoading: true,
     });
 
+    // handle click
+    const [showAddBookingModal, setShowAddBookingModal] = useState(false);
+    const [showToast, setShowToast] = useState({
+        show: false,
+        msg: "",
+        type: null,
+    });
+
     const filterByDate = (date, selectedOption, rooms) => {
-        console.log("filterByDate");
-        console.log(date);
-        console.log(selectedOption);
-        console.log(rooms);
         let result2 = [];
         const dateArrival_ = new Date(date.arrival);
         const dateDeparture_ = new Date(date.departure);
@@ -42,19 +46,20 @@ const BookingsContextProvider = ({ children }) => {
                 return true;
             });
 
-            result2 = result.filter((room) => {
-                // if selectedOption is null, return all rooms
-                if (!selectedOption) {
-                    return true;
-                }
-                for (const option of selectedOption) {
-                    if (room.status === option.value) {
-                        return true;
+            if (selectedOption === null) {
+                result2 = result;
+            } else if (selectedOption.length === 0) {
+                result2 = result;
+            } else {
+                result2 = result.filter((room) => {
+                    for (const option of selectedOption) {
+                        if (room.status === option.value) {
+                            return true;
+                        }
                     }
-                }
-                return false;
-            });
-            //setFilteredRooms(result2);
+                    return false;
+                });
+            };
         };
         bookingsDispatch({
             type: "FILTER_BY_DATE",
@@ -95,6 +100,10 @@ const BookingsContextProvider = ({ children }) => {
         bookingsDispatch,
         getBookings,
         filterByDate,
+        showAddBookingModal,
+        setShowAddBookingModal,
+        showToast,
+        setShowToast,
     };
 
     return (

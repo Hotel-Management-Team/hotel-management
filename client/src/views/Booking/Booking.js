@@ -1,11 +1,13 @@
 import React from "react";
 import { useContext, useState, useEffect } from "react";
-import { RoomsContext } from "../contexts/RoomsContext";
-import { BookingsContext } from "../contexts/BookingsContext";
-import { Spinner, Form, Col, Row, Modal, Button } from "react-bootstrap";
+import { RoomsContext } from "../../contexts/RoomsContext";
+import { BookingsContext } from "../../contexts/BookingsContext";
+import { Spinner, Form, Col, Row } from "react-bootstrap";
+import { AddBookingModal } from "./AddBookingModal";
 import Select from "react-select";
+import ControlBar from "../../components/common/ControlBar";
 
-const Dashboard = () => {
+const Booking = () => {
 
   const options = [
     { value: "Waiting", label: "Đang chờ" },
@@ -20,25 +22,21 @@ const Dashboard = () => {
   } = useContext(RoomsContext);
 
   const {
-    bookingsState: { bookings, bookingsLoading },
+    bookingsState: { bookings },
     filterByDate,
+    showAddBookingModal,
+    setShowAddBookingModal,
   } = useContext(BookingsContext);
-
-  const [customer, setCustomer] = useState({ name: "", phone: "", email: "", address: "", ID: "", type: "" });
-
-  // const onCustomerChange = (e) => {
-  //   setCustomer({ ...customer, [e.target.name]: e.target.value });
-  // }
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [dateArrival, setDateArrival] = useState("");
   const [dateDeparture, setDateDeparture] = useState("");
-  const [selectedType, setSelectedType] = useState("");
 
   useEffect(() => {
-    getRoomsTickets();
+    if (rooms.length === 0) {
+      getRoomsTickets();
+    }
   }, []);
-
 
   if (roomLoading) {
     return (
@@ -50,129 +48,11 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* <Modal show={true}>
-        <Modal.Header>
-          <Modal.Title>
-            <h1>Chọn khách hàng</h1>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <div className="col-md-8">
-              <h4 className="text-center">Nhập thông tin khách hàng</h4>
-              <Form>
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="">Tên</label>
-                      <input
-                        name="fullName"
-                        onChange={onCustomerChange}
-                        type="text"
-                        className="form-control text-success"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="">Email</label>
-                      <input
-                        type="email"
-                        name="email"
-                        onChange={onCustomerChange}
-                        className="form-control text-success"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="">CMT/Passport</label>
-                      <input
-                        type="text"
-                        name="id"
-                        onChange={onCustomerChange}
-                        className="form-control text-success"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <Select
-                        options={[{ value: "local", label: "Nội địa" }, { value: "foreign", label: "Nước ngoài" }]}
-                        selectedValue={selectedType}
-                        name="type"
-                        onChange={(selected) => {
-                          setSelectedType(selected.value);
-                          console.log(selectedType);
-                        }}
-                      />
-
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="">Mật khẩu</label>
-                      <input
-                        placeholder="********"
-                        type="password"
-                        name="password"
-                        // onChange={onInputChange}
-                        className="form-control text-success"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label htmlFor="">Nhập lại mật khẩu</label>
-                      <input
-                        placeholder="********"
-                        type="password"
-                        name="confirmPassword"
-                        // onChange={onInputChange}
-                        className="form-control text-success"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-3 text-center">
-                  {/* <Button variant="secondary" onClick={handleClose} disabled={loading}>
-                        Huỷ
-                      </Button> */}
-      {/* <Button
-        variant="success"
-        type="button"
-        size="md"
-      //  onClick={validateForm}
-      >
-        Thay đổi
-      </Button> */}
-      {/* </div>
-              </Form >
-            </div > */}
-
-      {/* 
-      <Form.Group as={Row}>
-        <Button variant="primary" onClick={() => {
-        }
-        }>
-          Thêm mới
-        </Button>
-      </Form.Group>
-
-    </Form >
-        </Modal.Body >
-  <Modal.Footer> */}
-      {/* <button className="btn-primary" onClick={() => filterByDate({ arrival: dateArrival, departure: dateDeparture }, selectedOption, rooms)}>
-        Tìm kiếm
-      </button>
-    </Modal.Footer>
-      </Modal > * /} */}
-
-
+      <ControlBar
+        Link="/dashboard"
+        onClickAdd={setShowAddBookingModal.bind(this, true)}
+      />
+      {<AddBookingModal />}
       < div className="container d-flex flex-column p-4" >
         <div className="p-3">
           <h3 className="text-center">Loại phòng</h3>
@@ -307,4 +187,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Booking;

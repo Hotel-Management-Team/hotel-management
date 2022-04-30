@@ -65,8 +65,6 @@ const Charge = () => {
         setShowUpdateChargeModal(true);
     };
 
-    const [isDelete, setIsDelete] = useState("");
-
     useEffect(() => {
         if (charges.length === 0) {
             getCharges();

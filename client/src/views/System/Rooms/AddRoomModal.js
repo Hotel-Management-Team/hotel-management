@@ -13,12 +13,12 @@ const AddRoomModal = () => {
     useContext(RoomsContext);
 
   const {
-    roomTypeState: { roomTypes, roomTypeLoading },
+    roomTypeState: { roomTypes },
     getRoomTypes,
   } = useContext(RoomTypeContext);
 
   const {
-    chargeState: { charges, chargeLoading },
+    chargeState: { charges },
     getCharges,
   } = useContext(ChargesContext);
 
