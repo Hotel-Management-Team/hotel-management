@@ -175,6 +175,7 @@ Content-Type: application/json
 ###
 GET http://localhost:5000/api/charge
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNmUxOTdlY2YwNzlmZTYyNmQxZTE5MyIsImlhdCI6MTY1MTQxOTY5MCwiZXhwIjoxNjUxNjc4ODkwfQ.RSt59BHJgr-aTHlKugn_0yeHjdChfwcLpbOEVNNx-KU
 
 ###
 POST http://localhost:5000/api/charge
