@@ -19,7 +19,6 @@ const verifyAdmin = async (req, res, next) => {
         msg: "User not found",
       });
     }
-    console.log(user);
     if (!user.permissons.isAdmin) {
       return res.json({
         success: false,

@@ -7,6 +7,9 @@ const CardSubAccount = ({ SubAccount }) => {
   const {
     subAccountState: { subAccountLoading, subAccounts },
     banSubAccount,
+    setShowEditSubAccountModal,
+    findSubAccount,
+    showEditSubAccountModal,
   } = useContext(SubAccountContext);
 
   //   const [showBanModal, setShowBanModal] = useState(false);
@@ -33,7 +36,15 @@ const CardSubAccount = ({ SubAccount }) => {
         </Card.Header>
         <Card.Body>
           <Card.Text>
-            <span>Email: {SubAccount.email}</span>
+            <span>
+              Email:{" "}
+              {
+                // if email length is greater than 20, then show only first 20 characters
+                SubAccount.email.length > 25
+                  ? SubAccount.email.substring(0, 25) + "..."
+                  : SubAccount.email
+              }
+            </span>
             <br></br>
             <span>Username: {SubAccount.username}</span>
             <br></br>
@@ -47,7 +58,9 @@ const CardSubAccount = ({ SubAccount }) => {
               <span>Tình trạng:</span>
               <Badge
                 className="mx-3"
-                variant={SubAccount.isBanned == true ? "danger" : "success"}
+                pill
+                //color based on status
+                bg={SubAccount.isBanned ? "danger" : "success"}
               >
                 {SubAccount.isBanned == true ? "Banned" : "Active"}
               </Badge>
@@ -56,7 +69,14 @@ const CardSubAccount = ({ SubAccount }) => {
 
           {SubAccount.role.toString() !== "Admin" && (
             <div className="d-flex justify-content-end">
-              <Button className="mx-2" variant="outline-info">
+              <Button
+                className="mx-2"
+                variant="outline-info"
+                onClick={() => {
+                  findSubAccount(SubAccount._id);
+                  setShowEditSubAccountModal(true);
+                }}
+              >
                 Sửa
               </Button>
               <Button

@@ -5,25 +5,20 @@ import ControlBar from "../../../components/common/ControlBar";
 import { Spinner, Toast } from "react-bootstrap";
 import CardSubAccount from "./CardSubAccount";
 import AddSubAccountModal from "./AddSubAccountModal";
+import EditPermissionsModal from "./EditPermissionsModal";
 
 const SubAccount = () => {
   const {
-    subAccountState: { subAccountLoading, subAccounts },
+    subAccountState: { subAccountLoading, subAccounts, subAccount },
     getSubAccounts,
     setShowAddSubAccountModal,
-    showAddSubAccountModal,
     showToast: { show, msg, type },
     setShowToast,
-    findSubAccount,
-    // setShowDeleteSubAccountModal,
-    // setShowUpdateSubAccountModal,
   } = useContext(SubAccountContext);
 
   useEffect(() => {
     getSubAccounts();
   }, []);
-
-  //   console.log(subAccounts);
 
   if (subAccountLoading) {
     return (
@@ -54,6 +49,7 @@ const SubAccount = () => {
 
   return (
     <>
+      {subAccount !== null && <EditPermissionsModal />}
       <AddSubAccountModal />
       <ControlBar
         Link="/system-management"

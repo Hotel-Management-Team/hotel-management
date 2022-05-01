@@ -198,3 +198,16 @@ Content-Type: application/json
 ###
 GET http://localhost:5000/api/room/findroom
 Content-Type: application/json
+
+###
+PUT http://localhost:5000/api/permissons/625fdc26d21626c6b5184c40
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY1MTM3MDU4OCwiZXhwIjoxNjUxNjI5Nzg4fQ.hVDeiVJOt9XOsk4XThrb0HFKG2DfvAqWMs0oJ4pQ56M
+
+{
+    "hasPrice": false,
+    "hasRental": false,
+    "hasRoom": true,
+    "hasType": false,
+    "isAdmin": false,
+}

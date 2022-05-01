@@ -16,13 +16,14 @@ const ProtecteRoute = ({ children }) => {
       </div>
     );
   }
-  return isAuthenticated ?
-   (
+  return isAuthenticated ? (
     <>
-        <NavbarMenu/>
-        {children}
+      <NavbarMenu />
+      {children}
     </>
-   ) : <Navigate to="/login" />;
+  ) : (
+    <Navigate to="/login" />
+  );
 };
 
 export default ProtecteRoute;

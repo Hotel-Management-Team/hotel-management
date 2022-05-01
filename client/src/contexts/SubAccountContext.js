@@ -18,10 +18,7 @@ const SubAccountContextProvider = ({ children }) => {
     msg: "",
     type: "",
   });
-  const [showDeleteSubAccountModal, setShowDeleteSubAccountModal] =
-    useState(false);
-  const [showUpdateSubAccountModal, setShowUpdateSubAccountModal] =
-    useState(false);
+  const [showEditSubAccountModal, setShowEditSubAccountModal] = useState(false);
 
   // Get all subAccounts
   const getSubAccounts = async () => {
@@ -68,17 +65,13 @@ const SubAccountContextProvider = ({ children }) => {
 
   // Find subAccount
   const findSubAccount = async (id) => {
-    try {
-      const res = await axios.get(`${apiUrl}/sub-account/${id}`);
-      if (res.data.success) {
-        subAccountDispatch({
-          type: "FIND_SUB_ACCOUNT",
-          payload: res.data.data,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    const selectedSubAccount = subAccountState.subAccounts.find(
+      (subAccount) => subAccount._id === id
+    );
+    subAccountDispatch({
+      type: "FIND_SUB_ACCOUNT",
+      payload: selectedSubAccount,
+    });
   };
 
   const banSubAccount = async (id) => {
@@ -95,6 +88,23 @@ const SubAccountContextProvider = ({ children }) => {
     }
   };
 
+  // edit permission of subAccount
+  const editPermissions = async (id, permissions) => {
+    try {
+      const res = await axios.put(`${apiUrl}/permissions/${id}`, permissions);
+      if (res.data.success) {
+        subAccountDispatch({
+          type: "UPDATE_SUB_ACCOUNT",
+          payload: res.data.data,
+        });
+      }
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return error ? error.response.data : error;
+    }
+  };
+
   const SubAccountContextValue = {
     subAccountState,
     subAccountDispatch,
@@ -106,10 +116,9 @@ const SubAccountContextProvider = ({ children }) => {
     setShowAddSubAccountModal,
     showToast,
     setShowToast,
-    showDeleteSubAccountModal,
-    setShowDeleteSubAccountModal,
-    showUpdateSubAccountModal,
-    setShowUpdateSubAccountModal,
+    showEditSubAccountModal,
+    setShowEditSubAccountModal,
+    editPermissions,
   };
 
   return (

@@ -5,7 +5,10 @@ import Auth from "./views/Auth";
 import Dashboard from "./views/Dashboard";
 import AuthContextProvider from "./contexts/AuthContext";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
-import ProtecteAdmin from "./components/routing/ProtectedAdmin";
+import ProtectedAdmin from "./components/routing/ProtectedAdmin";
+import ProtectedRoom from "./components/routing/ProtectedRoom";
+import ProtectedRoomType from "./components/routing/ProtectedRoomType";
+import ProtectedCharge from "./components/routing/ProtectedCharge";
 import Booking from "./views/Booking/Booking";
 import Revenue from "./views/Revenue";
 import System from "./views/System/index";
@@ -94,7 +97,9 @@ function App() {
                           path="/system-management/rooms"
                           element={
                             <ProtectedRoute>
-                              <Rooms />
+                              <ProtectedRoom>
+                                <Rooms />
+                              </ProtectedRoom>
                             </ProtectedRoute>
                           }
                         />
@@ -103,7 +108,9 @@ function App() {
                           path="/system-management/charge-calculations"
                           element={
                             <ProtectedRoute>
-                              <Charge />
+                              <ProtectedCharge>
+                                <Charge />
+                              </ProtectedCharge>
                             </ProtectedRoute>
                           }
                         />
@@ -112,7 +119,9 @@ function App() {
                           path="/system-management/room-types"
                           element={
                             <ProtectedRoute>
-                              <RoomType />
+                              <ProtectedRoomType>
+                                <RoomType />
+                              </ProtectedRoomType>
                             </ProtectedRoute>
                           }
                         />
@@ -121,9 +130,9 @@ function App() {
                           path="/system-management/sub-accounts"
                           element={
                             <ProtectedRoute>
-                              <ProtecteAdmin>
+                              <ProtectedAdmin>
                                 <SubAccount />
-                              </ProtecteAdmin>
+                              </ProtectedAdmin>
                             </ProtectedRoute>
                           }
                         />

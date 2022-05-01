@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import Spinner from "react-bootstrap/esm/Spinner";
 
-const ProtectedAdmin = ({ children }) => {
+const ProtecteRoomType = ({ children }) => {
   const {
     authState: { user, authLoading },
     showToastErrorPermission,
@@ -11,14 +11,14 @@ const ProtectedAdmin = ({ children }) => {
   } = useContext(AuthContext);
 
   useEffect(() => {
-    if (user.permissons.isAdmin === false) {
+    if (user.permissons.hasType === false) {
       setShowToastErrorPermission({
         show: true,
-        msg: "Bạn cần có quyền admin để truy cập trang này",
+        msg: "Bạn cần có quyền quản lý loại phòng để truy cập trang này",
         type: "danger",
       });
     }
-  }, [user.permissons.isAdmin]);
+  }, [user.permissons.hasType]);
 
   if (authLoading) {
     return (
@@ -28,11 +28,11 @@ const ProtectedAdmin = ({ children }) => {
     );
   }
 
-  if (user.permissons.isAdmin === true) {
+  if (user.permissons.hasType === true) {
     return children;
   } else {
     return <Navigate to="/system-management" />;
   }
 };
 
-export default ProtectedAdmin;
+export default ProtecteRoomType;

@@ -4,6 +4,7 @@ import IMG_ROOM_TYPE from "../../assets/img-room-type.jpg";
 import IMG_PRICE_TYPE from "../../assets/img-price-type.png";
 import IMG_SUB_ACCOUNT from "../../assets/img-sub-account.png";
 import CardFeature from "./CardFeature";
+import ToastErrorPermission from "./ToastErrorPermission";
 
 function System() {
   const features = [
@@ -31,6 +32,7 @@ function System() {
 
   let Body = (
     <>
+      <ToastErrorPermission />
       <div className="container my-5">
         <div className="row g-5">
           {features.map((feature) => (

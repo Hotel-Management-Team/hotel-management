@@ -34,7 +34,6 @@ const RoomType = () => {
   useEffect(() => {
     getRoomTypes();
     getRooms();
-    console.log("RoomType");
   }, []);
 
   if (roomTypeLoading) {

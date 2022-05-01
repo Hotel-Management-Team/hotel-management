@@ -95,8 +95,6 @@ export const deleteUser = async (req, res) => {
 
 export const postUser = async (req, res) => {
   try {
-    console.log(req.body);
-
     const {
       username,
       email,

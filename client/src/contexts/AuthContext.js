@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect, useState } from "react";
 import { authReducer } from "../reducers/authReducer";
 import { apiUrl, LOCAL_STORAGE_TOKEN_NAME } from "./constants";
 import setAuthToken from "../utils/setAuthToken";
@@ -12,6 +12,12 @@ const AuthContextProvider = ({ children }) => {
     isAuthenticated: false,
     user: null,
     error: null,
+  });
+
+  const [showToastErrorPermission, setShowToastErrorPermission] = useState({
+    show: false,
+    msg: "",
+    type: "",
   });
 
   // Authenticate user
@@ -29,8 +35,7 @@ const AuthContextProvider = ({ children }) => {
             isAuthenticated: true,
           },
         });
-      }
-      else {
+      } else {
         authDispatch({
           type: "SET_AUTH",
           payload: {
@@ -90,14 +95,21 @@ const AuthContextProvider = ({ children }) => {
 
   // Logout
   const logoutUser = () => {
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
+    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
     authDispatch({
-      type: 'SET_AUTH',
-      payload: { isAuthenticated: false, user: null }
-    })
-  }
+      type: "SET_AUTH",
+      payload: { isAuthenticated: false, user: null },
+    });
+  };
 
-  const authContextValue = { loginUser, authState, registerUser, logoutUser };
+  const authContextValue = {
+    loginUser,
+    authState,
+    registerUser,
+    logoutUser,
+    showToastErrorPermission,
+    setShowToastErrorPermission,
+  };
 
   return (
     <AuthContext.Provider value={authContextValue}>

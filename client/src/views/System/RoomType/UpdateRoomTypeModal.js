@@ -15,6 +15,8 @@ const UpdateRoomTypeModal = () => {
 
   const [newRoomType, setNewRoomType] = useState(roomType);
 
+  // console.log(newRoomType);
+
   const { name, description, numberOfRoom } = newRoomType;
 
   const closeDialog = () => {
