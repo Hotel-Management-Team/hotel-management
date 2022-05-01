@@ -1,15 +1,20 @@
 import { Router } from "express";
-import verifyToken from "../middlewares/auth.middleware";
-import { getCharge, addCharge, deleteCharge, updateCharge } from "../controllers/charge.controller";
+import verifyChargeManage from "../middlewares/charge.middleware";
+import {
+  getCharge,
+  addCharge,
+  deleteCharge,
+  updateCharge,
+} from "../controllers/charge.controller";
 
 const router = Router();
 
-router.get("/", getCharge);
+router.get("/", verifyChargeManage, getCharge);
 
-router.post("/", verifyToken, addCharge);
+router.post("/", verifyChargeManage, addCharge);
 
-router.delete("/:_id", verifyToken, deleteCharge);
+router.delete("/:_id", verifyChargeManage, deleteCharge);
 
-router.put("/:_id", verifyToken, updateCharge);
+router.put("/:_id", verifyChargeManage, updateCharge);
 
 export default router;

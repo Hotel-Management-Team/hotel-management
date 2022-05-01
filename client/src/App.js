@@ -9,6 +9,7 @@ import ProtectedAdmin from "./components/routing/ProtectedAdmin";
 import ProtectedRoom from "./components/routing/ProtectedRoom";
 import ProtectedRoomType from "./components/routing/ProtectedRoomType";
 import ProtectedCharge from "./components/routing/ProtectedCharge";
+import ProtectedBooking from "./components/routing/ProtectedBooking";
 import Booking from "./views/Booking/Booking";
 import Revenue from "./views/Revenue";
 import System from "./views/System/index";
@@ -61,7 +62,9 @@ function App() {
                           path="/booking"
                           element={
                             <ProtectedRoute>
-                              <Booking />
+                              <ProtectedBooking>
+                                <Booking />
+                              </ProtectedBooking>
                             </ProtectedRoute>
                           }
                         />

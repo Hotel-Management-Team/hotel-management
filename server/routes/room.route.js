@@ -1,17 +1,23 @@
 import { Router } from "express";
-import verifyToken from '../middlewares/auth.middleware';
-import { getRoom, postRoom, putRoom, deleteRoom, findRoom } from "../controllers/room.controller";
+import verifyRoomManage from "../middlewares/room.middleware";
+import {
+  getRoom,
+  postRoom,
+  putRoom,
+  deleteRoom,
+  findRoom,
+} from "../controllers/room.controller";
 
 const router = Router();
 
-router.get('/', getRoom);
+router.get("/", verifyRoomManage, getRoom);
 
-router.get('/findRoom', findRoom);
+router.get("/findRoom", verifyRoomManage, findRoom);
 
-router.post('/', verifyToken, postRoom);
+router.post("/", verifyRoomManage, postRoom);
 
-router.put('/:id', verifyToken, putRoom);
+router.put("/:id", verifyRoomManage, putRoom);
 
-router.delete('/:id', verifyToken, deleteRoom);
+router.delete("/:id", verifyRoomManage, deleteRoom);
 
 export default router;

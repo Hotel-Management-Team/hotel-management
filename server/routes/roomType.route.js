@@ -1,15 +1,20 @@
 import { Router } from "express";
-import verifyToken from '../middlewares/auth.middleware';
-import { getRoomType, postRoomType, putRoomType, deleteRoomType } from "../controllers/roomType.controller";
+import verifyRoomTypeManage from "../middlewares/roomType.middleware";
+import {
+  getRoomType,
+  postRoomType,
+  putRoomType,
+  deleteRoomType,
+} from "../controllers/roomType.controller";
 
 const router = Router();
 
-router.get("/", getRoomType);
+router.get("/", verifyRoomTypeManage, getRoomType);
 
-router.post("/", verifyToken, postRoomType);
+router.post("/", verifyRoomTypeManage, postRoomType);
 
-router.put("/:id", verifyToken, putRoomType);
+router.put("/:id", verifyRoomTypeManage, putRoomType);
 
-router.delete("/:id", verifyToken, deleteRoomType);
+router.delete("/:id", verifyRoomTypeManage, deleteRoomType);
 
 export default router;
