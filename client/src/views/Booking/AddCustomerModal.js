@@ -2,7 +2,7 @@ import { Form, Button, Row, Col, FormControl, Modal, Toast } from "react-bootstr
 import { useContext, useEffect, useState } from "react";
 import { BookingsContext } from "../../contexts/BookingsContext";
 import { CustomersContext } from "../../contexts/CustomersContext";
-
+import { CustomerModal } from "./CustomerModal";
 const CUSTOMER_TYPE = {
     "LOCAL": "local",
     "FOREIGN": "foreign"
@@ -10,7 +10,7 @@ const CUSTOMER_TYPE = {
 
 export const AddCustomerModal = () => {
 
-    const { showAddCustomerModal, setShowAddCustomerModal } = useContext(BookingsContext);
+    const { showAddCustomerModal, setShowAddCustomerModal, setShowCustomerModal } = useContext(BookingsContext);
 
     const {
         addCustomer,
@@ -36,10 +36,6 @@ export const AddCustomerModal = () => {
         });
     };
 
-    const closeDialog = () => {
-        resetCustomerData();
-    };
-
     const resetCustomerData = () => {
         setNewCustomer({
             name: "",
@@ -50,17 +46,22 @@ export const AddCustomerModal = () => {
             typeCustomer: "",
         });
         setShowAddCustomerModal(false);
+        setShowCustomerModal(true);
     };
 
     const onSubmit = async (e) => {
         e.preventDefault();
         const { success, msg } = await addCustomer(newCustomer);
         setShowToast({ show: true, msg, type: success ? "success" : "danger" });
+        if (success) {
+            resetCustomerData();
+        }
+
     };
 
     return (
         <>
-            <Modal show={showAddCustomerModal} onHide={closeDialog} size="lg">
+            <Modal show={showAddCustomerModal} onHide={resetCustomerData} size="lg">
                 <Toast
                     show={show}
                     style={{ position: "fixed", bottom: "10%", right: "10px" }}

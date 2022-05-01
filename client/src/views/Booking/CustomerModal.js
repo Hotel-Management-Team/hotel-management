@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { BookingsContext } from "../../contexts/BookingsContext";
 import { CustomersContext } from "../../contexts/CustomersContext";
-import { Form, Button, Row, Col, FormControl, Table, Modal } from "react-bootstrap";
+import { Form, Button, FormControl, Table, Modal } from "react-bootstrap";
 import addIcon from "../../assets/plus-circle-fill.svg";
 
 const CUSTOMER_TYPE = {
@@ -13,7 +13,7 @@ export const CustomerModal = () => {
 
     const columns = ["#", "Tên khách hàng", "CMT", "Số điện thoại", "Email", "Địa chỉ", "Loại khách"];
 
-    const { showAddBookingModal, showCustomerModal, setShowCustomerModal, showAddCustomerModal, setShowAddCustomerModal } = useContext(BookingsContext);
+    const { showCustomerModal, setShowCustomerModal, setShowAddCustomerModal } = useContext(BookingsContext);
 
     const { customerState: { customers }, getCustomers, customerDispatch } = useContext(CustomersContext);
 
@@ -21,7 +21,7 @@ export const CustomerModal = () => {
 
     useEffect(() => {
         getCustomers();
-    }, []);
+    });
 
     const onChangeNewBookingForm = (e) => {
         // setNewRoom({
@@ -85,7 +85,6 @@ export const CustomerModal = () => {
                             onClick={() => handleAddCustomer()}
                             className="btn bg-white mx-3">
                             <img src={addIcon} alt="add" />
-
                         </Button>
                     </Form>
                     <div className="mt-4 mx-5 text-center">
@@ -99,50 +98,37 @@ export const CustomerModal = () => {
                             </thead>
                             <tbody className="border border-info">
                                 {
-                                    // check if searchCustomer is empty
-                                    searchCustomer === "" ?
-                                        customers.map((customer, index) => (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{customer.name}</td>
-                                                <td>{customer.ID}</td>
-                                                <td>{customer.phone}</td>
-                                                <td>{customer.email}</td>
-                                                <td>{customer.address}</td>
-                                                <td>{customer.type === CUSTOMER_TYPE.LOCAL ? "Nội địa" : "Ngoại địa"}</td>
-                                            </tr>
-                                        )) : customers.filter(
-                                            (customer) =>
-                                                customer.name.toLocaleLowerCase().includes(searchCustomer.toLocaleLowerCase()) ||
-                                                customer.phone.toLocaleLowerCase().includes(searchCustomer.toLocaleLowerCase()) ||
-                                                customer.ID.toLocaleLowerCase().includes(searchCustomer.toLocaleLowerCase())
-                                        ).map((customer, index) => (
-                                            <tr key={index}>
-                                                <td>{index + 1}</td>
-                                                <td>{customer.name}</td>
-                                                <td>{customer.ID}</td>
-                                                <td>{customer.phone}</td>
-                                                <td>{customer.email}</td>
-                                                <td>{customer.address}</td>
-                                                <td>{customer.type === CUSTOMER_TYPE.LOCAL ? "Nội địa" : "Nước ngoài"}</td>
-                                                {/* handle click row */}
-                                                <td>
-                                                    <Button
-                                                        variant="primary"
-                                                        onClick={() => {
-                                                            console.log(customer._id);
-                                                            customerDispatch({
-                                                                type: "ADD_BOOKING",
-                                                                payload: customer,
-                                                            });
-                                                            resetCustomerData();
-                                                        }}
-                                                    >
-                                                        Chọn
-                                                    </Button>
-                                                </td>
-                                            </tr>
-                                        ))
+                                    customers.filter(
+                                        (customer) =>
+                                            customer.name.toLocaleLowerCase().includes(searchCustomer.toLocaleLowerCase()) ||
+                                            customer.phone.toLocaleLowerCase().includes(searchCustomer.toLocaleLowerCase()) ||
+                                            customer.ID.toLocaleLowerCase().includes(searchCustomer.toLocaleLowerCase())
+                                    ).map((customer, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>{customer.name}</td>
+                                            <td>{customer.ID}</td>
+                                            <td>{customer.phone}</td>
+                                            <td>{customer.email}</td>
+                                            <td>{customer.address}</td>
+                                            <td>{customer.type === CUSTOMER_TYPE.LOCAL ? "Nội địa" : "Nước ngoài"}</td>
+                                            <td>
+                                                <Button
+                                                    variant="primary"
+                                                    onClick={() => {
+                                                        console.log(customer._id);
+                                                        customerDispatch({
+                                                            type: "ADD_BOOKING",
+                                                            payload: customer,
+                                                        });
+                                                        resetCustomerData();
+                                                    }}
+                                                >
+                                                    Chọn
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))
                                 }
                             </tbody>
                         </Table>
