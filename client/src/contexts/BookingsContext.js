@@ -13,6 +13,8 @@ const BookingsContextProvider = ({ children }) => {
 
     // handle click
     const [showAddBookingModal, setShowAddBookingModal] = useState(false);
+    const [showCustomerModal, setShowCustomerModal] = useState(false);
+    const [showAddCustomerModal, setShowAddCustomerModal] = useState(false);
     const [showToast, setShowToast] = useState({
         show: false,
         msg: "",
@@ -95,6 +97,25 @@ const BookingsContextProvider = ({ children }) => {
         }
     };
 
+    const addBooking = async (id_room, id_customer, date) => {
+        const data = {
+            id_room,
+            id_customer,
+            date,
+        };
+
+        const res = await axios.post(`${apiUrl}/bookings`, data);
+        if (res.data.success) {
+            bookingsDispatch({
+                type: "ADD_BOOKING_SUCCESS",
+                payload: {
+                    bookings: res.data.data,
+                    bookingsLoading: false,
+                },
+            });
+        }
+    };
+
     const BookingsContextValue = {
         bookingsState,
         bookingsDispatch,
@@ -102,6 +123,10 @@ const BookingsContextProvider = ({ children }) => {
         filterByDate,
         showAddBookingModal,
         setShowAddBookingModal,
+        showCustomerModal,
+        setShowCustomerModal,
+        showAddCustomerModal,
+        setShowAddCustomerModal,
         showToast,
         setShowToast,
     };

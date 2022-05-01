@@ -19,7 +19,7 @@ const CustomerSchema = new mongoose.Schema({
     type: {
         type: String,
         required: true,
-        enum: ['Local', 'Foreign'],
+        enum: ['local', 'foreign'],
     }
 });
 

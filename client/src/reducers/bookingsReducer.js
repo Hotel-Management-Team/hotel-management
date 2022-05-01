@@ -29,6 +29,12 @@ export const bookingsReducer = (state, action) => {
                 bookings: bookings,
                 bookingsLoading: bookingsLoading,
             };
+        case "ADD_BOOKING_SUCCESS":
+            return {
+                ...state,
+                bookings: bookings,
+                bookingsLoading: bookingsLoading,
+            };
         default:
             return state;
     }

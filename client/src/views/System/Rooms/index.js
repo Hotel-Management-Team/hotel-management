@@ -27,10 +27,8 @@ const Rooms = () => {
   } = useContext(RoomsContext);
 
   useEffect(() => {
-    if (rooms.length === 0) {
-      getRooms();
-    }
-  }, []);
+    getRooms();
+  }, [rooms.length]);
 
   const [search, setSearch] = useState("");
 

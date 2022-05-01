@@ -9,7 +9,7 @@ import ProtectedAdmin from "./components/routing/ProtectedAdmin";
 import ProtectedRoom from "./components/routing/ProtectedRoom";
 import ProtectedRoomType from "./components/routing/ProtectedRoomType";
 import ProtectedCharge from "./components/routing/ProtectedCharge";
-import Booking from "./views/Booking/Booking";
+import Booking from "./views/Booking/index";
 import Revenue from "./views/Revenue";
 import System from "./views/System/index";
 import Rooms from "./views/System/Rooms/index";

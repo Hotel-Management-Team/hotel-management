@@ -18,13 +18,13 @@ export const getCustomer = async (req, res) => {
 
 export const postCustomer = async (req, res) => {
     try {
-        const { name, email, phone, address, type, ID } = req.body;
+        const { name, email, phone, address, typeCustomer, ID } = req.body;
         // add customer have id unique
         const customer = await Customer.findOne({ ID });
         if (customer) {
-            return res.status(400).json({
+            return res.json({
                 success: false,
-                msg: 'Customer ID already exists'
+                msg: 'Khách hàng đã tồn tại do ID không được trùng'
             });
         }
         const newCustomer = await Customer.create({
@@ -32,18 +32,19 @@ export const postCustomer = async (req, res) => {
             email,
             phone,
             address,
-            type,
+            type: typeCustomer,
             ID
         });
         res.json({
             success: true,
-            data: newCustomer
+            data: newCustomer,
+            msg: 'Thêm khách hàng thành công'
         });
     } catch (error) {
         console.error(error.message);
-        res.status(500).json({
+        res.json({
             success: false,
-            msg: 'Server Error'
+            msg: 'Có lỗi gì đó khi thêm khách hàng mới'
         });
     }
 };

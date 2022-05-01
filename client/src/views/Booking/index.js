@@ -2,10 +2,13 @@ import React from "react";
 import { useContext, useState, useEffect } from "react";
 import { RoomsContext } from "../../contexts/RoomsContext";
 import { BookingsContext } from "../../contexts/BookingsContext";
-import { Spinner, Form, Col, Row } from "react-bootstrap";
+import { CustomersContext } from "../../contexts/CustomersContext";
+import { Spinner, Form, Col, Row, Toast } from "react-bootstrap";
 import { AddBookingModal } from "./AddBookingModal";
+import { CustomerModal } from "./CustomerModal";
 import Select from "react-select";
-import ControlBar from "../../components/common/ControlBar";
+import { AddCustomerModal } from "./AddCustomerModal";
+
 
 const Booking = () => {
 
@@ -24,19 +27,23 @@ const Booking = () => {
   const {
     bookingsState: { bookings },
     filterByDate,
-    showAddBookingModal,
-    setShowAddBookingModal,
+    setShowCustomerModal,
+    showToast: { show, msg, type },
+    setShowToast,
   } = useContext(BookingsContext);
+  const { customerState: { customers }, getCustomers, customerDispatch } = useContext(CustomersContext);
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [dateArrival, setDateArrival] = useState("");
   const [dateDeparture, setDateDeparture] = useState("");
 
   useEffect(() => {
-    if (rooms.length === 0) {
-      getRoomsTickets();
-    }
-  }, []);
+    getRoomsTickets();
+  }, [rooms.length]);
+
+  const handleBooking = (room) => {
+    setShowCustomerModal(true);
+  };
 
   if (roomLoading) {
     return (
@@ -48,11 +55,9 @@ const Booking = () => {
 
   return (
     <>
-      <ControlBar
-        Link="/dashboard"
-        onClickAdd={setShowAddBookingModal.bind(this, true)}
-      />
-      {<AddBookingModal />}
+      {<AddCustomerModal />}
+      {customers !== null && <CustomerModal />}
+
       < div className="container d-flex flex-column p-4" >
         <div className="p-3">
           <h3 className="text-center">Loại phòng</h3>
@@ -62,7 +67,6 @@ const Booking = () => {
             options={options}
             placeholder="Select status"
             selectedValue={selectedOption}
-            // get option selected
             onChange={(selectedOption) => {
               setSelectedOption(selectedOption);
               filterByDate({ arrival: dateArrival, departure: dateDeparture }, selectedOption, rooms);
@@ -131,7 +135,7 @@ const Booking = () => {
                       <td>
                         <button
                           className="btn btn-danger"
-                          onClick={() => console.log("Clicked")}
+                          onClick={() => handleBooking(room)}
                         >
                           Book
                         </button>
@@ -169,7 +173,7 @@ const Booking = () => {
                         <td>
                           <button
                             className="btn btn-danger"
-                            onClick={() => console.log("Clicked")}
+                            onClick={() => handleBooking(room)}
                           >
                             Book
                           </button>
@@ -183,6 +187,22 @@ const Booking = () => {
           </table>
         </div>
       </div>
+      <Toast
+        show={show}
+        style={{ position: "fixed", top: "20%", right: "10px" }}
+        className={`bg-${type} text-white`}
+        onClose={setShowToast.bind(this, {
+          show: false,
+          msg: "",
+          type: null,
+        })}
+        delay={3000}
+        autohide
+      >
+        <Toast.Body>
+          <strong>{msg}</strong>
+        </Toast.Body>
+      </Toast>
     </>
   );
 };

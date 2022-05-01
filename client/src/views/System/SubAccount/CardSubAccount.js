@@ -26,7 +26,7 @@ const CardSubAccount = ({ SubAccount }) => {
               <Badge
                 className="p-1"
                 variant={
-                  SubAccount.role.toString() == "Admin" ? "danger" : "primary"
+                  SubAccount.role.toString() === "Admin" ? "danger" : "primary"
                 }
               >
                 {SubAccount.role}
@@ -62,7 +62,7 @@ const CardSubAccount = ({ SubAccount }) => {
                 //color based on status
                 bg={SubAccount.isBanned ? "danger" : "success"}
               >
-                {SubAccount.isBanned == true ? "Banned" : "Active"}
+                {SubAccount.isBanned === true ? "Banned" : "Active"}
               </Badge>
             </span>
           </Card.Text>
@@ -85,7 +85,7 @@ const CardSubAccount = ({ SubAccount }) => {
                   banSubAccount(SubAccount._id);
                 }}
               >
-                {SubAccount.isBanned == true ? "Mở khóa" : "Khóa"}
+                {SubAccount.isBanned === true ? "Mở khóa" : "Khóa"}
               </Button>
             </div>
           )}
