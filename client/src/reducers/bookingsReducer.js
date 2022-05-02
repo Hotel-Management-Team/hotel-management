@@ -35,6 +35,7 @@ export const bookingsReducer = (state, action) => {
                 bookings: bookings,
                 bookingsLoading: bookingsLoading,
             };
+
         default:
             return state;
     }

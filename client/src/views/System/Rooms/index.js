@@ -4,14 +4,7 @@ import { RoomsContext } from "../../../contexts/RoomsContext";
 import Spinner from "react-bootstrap/esm/Spinner";
 import CardRoom from "./CardRoom";
 import { useNavigate } from "react-router-dom";
-import {
-  OverlayTrigger,
-  Tooltip,
-  Button,
-  Toast,
-  Form,
-  FormControl,
-} from "react-bootstrap";
+import { OverlayTrigger, Tooltip, Button, Toast, Form, FormControl } from "react-bootstrap";
 import addIcon from "../../../assets/plus-circle-fill.svg";
 import AddRoomModal from "./AddRoomModal";
 import UpdateRoomModal from "./UpdateRoomModal";
@@ -28,7 +21,7 @@ const Rooms = () => {
 
   useEffect(() => {
     getRooms();
-  }, []);
+  }, [rooms.length]);
 
   const [search, setSearch] = useState("");
 
@@ -85,12 +78,12 @@ const Rooms = () => {
 
       <div className="container overflow-hidden my-5">
         <div className="row g-5">
-          {rooms.map((room) => (
+          {rooms.map((roomIter) => (
             <div
               className="col-md-4 d-flex justify-content-center"
-              key={room._id}
+              key={roomIter._id}
             >
-              <CardRoom Room={room} />
+              <CardRoom Room={roomIter} />
             </div>
           ))}
         </div>

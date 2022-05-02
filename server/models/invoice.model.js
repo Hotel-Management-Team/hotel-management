@@ -19,29 +19,11 @@ const invoiceSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    arriveDate: {
-        type: Date,
-        required: true
-    },
-    departureDate: {
-        type: Date,
+    ticket: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Ticket',
         required: true
     }
-    // user: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'user',
-    //     required: true
-    // },
-    // room: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'room',
-    //     required: true
-    // },
-    // charge: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'charge',
-    //     required: true
-    // }
 });
 
 const Invoice = mongoose.model('invoice', invoiceSchema);

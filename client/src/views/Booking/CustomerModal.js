@@ -13,7 +13,7 @@ export const CustomerModal = () => {
 
     const columns = ["#", "Tên khách hàng", "CMT", "Số điện thoại", "Email", "Địa chỉ", "Loại khách"];
 
-    const { showCustomerModal, setShowCustomerModal, setShowAddCustomerModal } = useContext(BookingsContext);
+    const { showCustomerModal, setShowCustomerModal, setShowAddCustomerModal, onChangeNewBookingForm } = useContext(BookingsContext);
 
     const { customerState: { customers }, getCustomers, customerDispatch } = useContext(CustomersContext);
 
@@ -22,13 +22,6 @@ export const CustomerModal = () => {
     useEffect(() => {
         getCustomers();
     }, [customers.length]);
-
-    const onChangeNewBookingForm = (e) => {
-        // setNewRoom({
-        //     ...newRoom,
-        //     [e.target.name]: e.target.value,
-        // });
-    };
 
     const closeDialog = () => {
         resetCustomerData();
@@ -99,7 +92,7 @@ export const CustomerModal = () => {
                                             <td>
                                                 <Button
                                                     variant="primary"
-                                                //onClick={() => onChangeNewBookingForm(customer, date, room)}
+                                                    onClick={() => onChangeNewBookingForm(customer, date, room)}
                                                 >
                                                     Chọn
                                                 </Button>

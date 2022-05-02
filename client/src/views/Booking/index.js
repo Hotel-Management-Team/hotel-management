@@ -145,10 +145,10 @@ const Booking = () => {
                         {room.status === "Available"
                           ? "Khả dụng"
                           : room.status === "NeedClean"
-                          ? "Cần dọn"
-                          : room.status === "Using"
-                          ? "Đang sử dụng"
-                          : "Đang chờ"}
+                            ? "Cần dọn"
+                            : room.status === "Using"
+                              ? "Đang sử dụng"
+                              : "Đang chờ"}
                       </td>
                       <td>Khả dụng</td>
                       <td>Khả dụng</td>
@@ -172,10 +172,10 @@ const Booking = () => {
                           {room.status === "Available"
                             ? "Khả dụng"
                             : room.status === "NeedClean"
-                            ? "Cần dọn"
-                            : room.status === "Using"
-                            ? "Đang sử dụng"
-                            : "Đang chờ"}
+                              ? "Cần dọn"
+                              : room.status === "Using"
+                                ? "Đang sử dụng"
+                                : "Đang chờ"}
                         </td>
                         <td>
                           {new Date(ticket.arrivalDate).toLocaleString(

@@ -7,6 +7,11 @@ export const BookingsContext = createContext();
 
 const BookingsContextProvider = ({ children }) => {
     const [bookingsState, bookingsDispatch] = useReducer(bookingsReducer, {
+        id_room,
+        id_customer,
+        id_ticket,
+        date_arrival,
+        date_departure,
         bookings: [],
         bookingsLoading: true,
     });
@@ -20,6 +25,8 @@ const BookingsContextProvider = ({ children }) => {
         msg: "",
         type: null,
     });
+
+
 
     const filterByDate = (date, selectedOption, rooms) => {
         let result2 = [];
@@ -101,7 +108,8 @@ const BookingsContextProvider = ({ children }) => {
         const data = {
             id_room,
             id_customer,
-            date,
+            arrivalDate: date.arrival,
+            departureDate: date.departure,
         };
 
         const res = await axios.post(`${apiUrl}/bookings`, data);
@@ -129,6 +137,7 @@ const BookingsContextProvider = ({ children }) => {
         setShowAddCustomerModal,
         showToast,
         setShowToast,
+        onChangeNewBookingForm,
     };
 
     return (
