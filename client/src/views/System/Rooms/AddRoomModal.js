@@ -109,8 +109,9 @@ const AddRoomModal = () => {
             <Form.Group as={Col}>
               <Form.Select name="status" onChange={onChangeNewRoomForm}>
                 <option value={null}>Chọn loại trang thái</option>
-                <option value="Booked">Booked</option>
                 <option value="Waiting">Waiting</option>
+                <option value="Using">Using</option>
+                <option value="Available">Available</option>
                 <option value="NeedClean">Need Clean</option>
               </Form.Select>
             </Form.Group>

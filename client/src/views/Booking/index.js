@@ -9,9 +9,7 @@ import { CustomerModal } from "./CustomerModal";
 import Select from "react-select";
 import { AddCustomerModal } from "./AddCustomerModal";
 
-
 const Booking = () => {
-
   const options = [
     { value: "Waiting", label: "Đang chờ" },
     { value: "Using", label: "Đang sử dụng" },
@@ -31,7 +29,12 @@ const Booking = () => {
     showToast: { show, msg, type },
     setShowToast,
   } = useContext(BookingsContext);
-  const { customerState: { customers }, getCustomers, customerDispatch } = useContext(CustomersContext);
+
+  const {
+    customerState: { customers },
+    getCustomers,
+    customerDispatch,
+  } = useContext(CustomersContext);
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [dateArrival, setDateArrival] = useState("");
@@ -58,7 +61,7 @@ const Booking = () => {
       {<AddCustomerModal />}
       {customers !== null && <CustomerModal />}
 
-      < div className="container d-flex flex-column p-4" >
+      <div className="container d-flex flex-column p-4">
         <div className="p-3">
           <h3 className="text-center">Loại phòng</h3>
           <Select
@@ -69,7 +72,11 @@ const Booking = () => {
             selectedValue={selectedOption}
             onChange={(selectedOption) => {
               setSelectedOption(selectedOption);
-              filterByDate({ arrival: dateArrival, departure: dateDeparture }, selectedOption, rooms);
+              filterByDate(
+                { arrival: dateArrival, departure: dateDeparture },
+                selectedOption,
+                rooms
+              );
             }}
           />
         </div>
@@ -85,7 +92,11 @@ const Booking = () => {
                   format="yyyy-MM-dd HH:mm"
                   onChange={(date) => {
                     setDateArrival(date.target.value);
-                    filterByDate({ arrival: date.target.value, departure: dateDeparture }, selectedOption, rooms);
+                    filterByDate(
+                      { arrival: date.target.value, departure: dateDeparture },
+                      selectedOption,
+                      rooms
+                    );
                   }}
                 />
               </Form.Group>
@@ -100,7 +111,11 @@ const Booking = () => {
                   format="yyyy-MM-dd HH:mm"
                   onChange={(date) => {
                     setDateDeparture(date.target.value);
-                    filterByDate({ arrival: dateArrival, departure: date.target.value }, selectedOption, rooms);
+                    filterByDate(
+                      { arrival: dateArrival, departure: date.target.value },
+                      selectedOption,
+                      rooms
+                    );
                   }}
                 />
               </Form.Group>
@@ -127,9 +142,15 @@ const Booking = () => {
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
                       <td>{room.name}</td>
-                      <td className="text-danger">{
-                        room.status === "Available" ? "Khả dụng" : room.status === "NeedClean" ? "Cần dọn" : room.status === "Using" ? "Đang sử dụng" : "Đang chờ"
-                      }</td>
+                      <td className="text-danger">
+                        {room.status === "Available"
+                          ? "Khả dụng"
+                          : room.status === "NeedClean"
+                          ? "Cần dọn"
+                          : room.status === "Using"
+                          ? "Đang sử dụng"
+                          : "Đang chờ"}
+                      </td>
                       <td>Khả dụng</td>
                       <td>Khả dụng</td>
                       <td>
@@ -148,28 +169,41 @@ const Booking = () => {
                       <tr key={index}>
                         <th scope="row">{index + 1}</th>
                         <td>{room.name}</td>
-                        <td className="text-danger">{
-                          room.status === "Available" ? "Khả dụng" : room.status === "NeedClean" ? "Cần dọn" : room.status === "Using" ? "Đang sử dụng" : "Đang chờ"
-                        }</td>
-                        <td>{
-                          new Date(ticket.arrivalDate).toLocaleString("en-GB", {
-                            hour12: true,
-                            hour: "numeric",
-                            minute: "numeric",
-                            day: "numeric",
-                            month: "numeric",
-                            year: "numeric",
-                          })
-                        }</td>
-                        <td>{
-                          new Date(ticket.departureDate).toLocaleString("en-GB", {
-                            hour12: true,
-                            hour: "numeric",
-                            minute: "numeric",
-                            day: "numeric",
-                            month: "numeric",
-                            year: "numeric",
-                          })}</td>
+                        <td className="text-danger">
+                          {room.status === "Available"
+                            ? "Khả dụng"
+                            : room.status === "NeedClean"
+                            ? "Cần dọn"
+                            : room.status === "Using"
+                            ? "Đang sử dụng"
+                            : "Đang chờ"}
+                        </td>
+                        <td>
+                          {new Date(ticket.arrivalDate).toLocaleString(
+                            "en-GB",
+                            {
+                              hour12: true,
+                              hour: "numeric",
+                              minute: "numeric",
+                              day: "numeric",
+                              month: "numeric",
+                              year: "numeric",
+                            }
+                          )}
+                        </td>
+                        <td>
+                          {new Date(ticket.departureDate).toLocaleString(
+                            "en-GB",
+                            {
+                              hour12: true,
+                              hour: "numeric",
+                              minute: "numeric",
+                              day: "numeric",
+                              month: "numeric",
+                              year: "numeric",
+                            }
+                          )}
+                        </td>
                         <td>
                           <button
                             className="btn btn-danger"

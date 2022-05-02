@@ -28,7 +28,7 @@ const Rooms = () => {
 
   useEffect(() => {
     getRooms();
-  }, [rooms.length]);
+  }, []);
 
   const [search, setSearch] = useState("");
 
@@ -113,7 +113,7 @@ const Rooms = () => {
         </OverlayTrigger>
       </div>
       <AddRoomModal />
-      {room !== null && <UpdateRoomModal />}
+      {room !== undefined && room !== null && <UpdateRoomModal />}
       <Toast
         show={show}
         style={{ position: "fixed", top: "20%", right: "10px" }}

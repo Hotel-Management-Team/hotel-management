@@ -18,17 +18,11 @@ const UpdateRoomModal = () => {
     setShowToast,
   } = useContext(RoomsContext);
 
-  const [updatedRoomData, setUpdatedRoomData] = useState({
-    name: "",
-    roomtype: "",
-    charge: "",
-    description: "",
-    status: "",
-  });
+  const [updatedRoomData, setUpdatedRoomData] = useState(room);
 
   const {
     roomTypeState: { roomTypes },
-    getRoomType,
+    getRoomTypes,
   } = useContext(RoomTypeContext);
 
   const {
@@ -37,13 +31,9 @@ const UpdateRoomModal = () => {
   } = useContext(ChargesContext);
 
   useEffect(() => {
-    if (roomTypes.length === 0) {
-      getRoomType();
-    }
-    if (charges.length === 0) {
-      getCharges();
-    }
-  }, []);
+    getRoomTypes();
+    getCharges();
+  }, [charges.length, roomTypes.length]);
 
   useEffect(() => {
     setUpdatedRoomData(room);
