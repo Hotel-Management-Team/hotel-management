@@ -2,7 +2,7 @@ import { Form, Button, Row, Col, FormControl, Modal, Toast } from "react-bootstr
 import { useContext, useEffect, useState } from "react";
 import { BookingsContext } from "../../contexts/BookingsContext";
 import { CustomersContext } from "../../contexts/CustomersContext";
-import { CustomerModal } from "./CustomerModal";
+
 const CUSTOMER_TYPE = {
     "LOCAL": "local",
     "FOREIGN": "foreign"

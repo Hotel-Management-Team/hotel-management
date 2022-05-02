@@ -21,7 +21,7 @@ export const CustomerModal = () => {
 
     useEffect(() => {
         getCustomers();
-    });
+    }, [customers.length]);
 
     const onChangeNewBookingForm = (e) => {
         // setNewRoom({
@@ -35,25 +35,8 @@ export const CustomerModal = () => {
     };
 
     const resetCustomerData = () => {
-        // setNewCharge({
-        //     name: "",
-        //     FirstBlock: "",
-        //     FirstBlockCharge: "",
-        //     OvertimeCharge: "",
-        //     OverNightCharge: "",
-        //     DateCharge: "",
-        //     SurCharge: "",
-        // });
         setShowCustomerModal(false);
     };
-    // const onSubmit = async (e) => {
-    //     e.preventDefault();
-    //     customerDispatch({
-    //         type: "ADD_BOOKING",
-    //         payload: searchCustomer.toLocaleLowerCase(),
-    //     });
-    //     resetAddBookingData();
-    // };
 
     const handleAddCustomer = () => {
         closeDialog();
@@ -73,9 +56,9 @@ export const CustomerModal = () => {
                             type="search"
                             placeholder="Nhập Tên hoặc SĐT hoặc CMT khách hàng"
                             value={searchCustomer}
-                            onFocus={() => {
-                                getCustomers();
-                            }}
+                            // onFocus={() => {
+                            //     getCustomers();
+                            // }}
                             onChange={(e) => {
                                 setSearchCustomer(e.target.value);
                             }}
@@ -104,6 +87,7 @@ export const CustomerModal = () => {
                                             customer.phone.toLocaleLowerCase().includes(searchCustomer.toLocaleLowerCase()) ||
                                             customer.ID.toLocaleLowerCase().includes(searchCustomer.toLocaleLowerCase())
                                     ).map((customer, index) => (
+
                                         <tr key={index}>
                                             <td>{index + 1}</td>
                                             <td>{customer.name}</td>
@@ -115,14 +99,7 @@ export const CustomerModal = () => {
                                             <td>
                                                 <Button
                                                     variant="primary"
-                                                    onClick={() => {
-                                                        console.log(customer._id);
-                                                        customerDispatch({
-                                                            type: "ADD_BOOKING",
-                                                            payload: customer,
-                                                        });
-                                                        resetCustomerData();
-                                                    }}
+                                                //onClick={() => onChangeNewBookingForm(customer, date, room)}
                                                 >
                                                     Chọn
                                                 </Button>

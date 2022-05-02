@@ -4,7 +4,6 @@ import { RoomsContext } from "../../contexts/RoomsContext";
 import { BookingsContext } from "../../contexts/BookingsContext";
 import { CustomersContext } from "../../contexts/CustomersContext";
 import { Spinner, Form, Col, Row, Toast } from "react-bootstrap";
-import { AddBookingModal } from "./AddBookingModal";
 import { CustomerModal } from "./CustomerModal";
 import Select from "react-select";
 import { AddCustomerModal } from "./AddCustomerModal";

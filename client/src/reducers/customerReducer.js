@@ -29,8 +29,14 @@ export const customerReducer = (state, action) => {
         case "ADD_CUSTOMER_SUCCESS":
             return {
                 ...state,
-                customers: [...state.customers, payload.customer],
+                customers: [...state.customers, payload],
                 customerLoading: payload.customerLoading,
+            };
+        case "ADD_CUSTOMER_FAILURE":
+            return {
+                ...state,
+                customerLoading: payload.customerLoading,
+                customers: [],
             };
         default:
             return state;
