@@ -45,6 +45,7 @@ export const postTicket = async (req, res) => {
     const roomAvailable = await Room.findById(room);
     if (!roomAvailable) {
         return res.json({
+            success: false,
             message: "Phòng không tồn tại",
         });
     }
@@ -56,13 +57,13 @@ export const postTicket = async (req, res) => {
         departureDate
     });
     await ticket.save();
-    const updatedRoom = await Room.findByIdAndUpdate(room, { status: "Booked" });
+    const updatedRoom = await Room.findByIdAndUpdate(room, { status: "Waiting" });
     await updatedRoom.save();
     res.json({
         success: true,
-        status: "Đặt phòng thành công",
+        msg: "Đặt phòng thành công",
+        ticketId: ticket._id,
     });
-
 };
 
 export const putTicket = async (req, res) => {

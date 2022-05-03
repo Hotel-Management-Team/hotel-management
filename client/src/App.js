@@ -10,7 +10,7 @@ import ProtectedRoom from "./components/routing/ProtectedRoom";
 import ProtectedRoomType from "./components/routing/ProtectedRoomType";
 import ProtectedCharge from "./components/routing/ProtectedCharge";
 import Booking from "./views/Booking/index";
-import BookByDate from "./views/Booking/BookByDate";
+import BookByDate from "./views/Booking/BookByDate/index";
 import ProtectedBooking from "./components/routing/ProtectedBooking";
 import Revenue from "./views/Revenue";
 import System from "./views/System/index";

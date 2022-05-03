@@ -11,7 +11,7 @@ const Booking = () => {
       href: "/booking/bookbydate",
     },
     {
-      name: "Thuê phòng ngay",
+      name: "Đặt phòng theo giờ",
       img: IMG_BOOK_BLOCK,
       href: "/system-management/room-types",
     },

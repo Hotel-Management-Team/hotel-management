@@ -7,11 +7,6 @@ export const BookingsContext = createContext();
 
 const BookingsContextProvider = ({ children }) => {
     const [bookingsState, bookingsDispatch] = useReducer(bookingsReducer, {
-        id_room,
-        id_customer,
-        id_ticket,
-        date_arrival,
-        date_departure,
         bookings: [],
         bookingsLoading: true,
     });
@@ -20,19 +15,21 @@ const BookingsContextProvider = ({ children }) => {
     const [showAddBookingModal, setShowAddBookingModal] = useState(false);
     const [showCustomerModal, setShowCustomerModal] = useState(false);
     const [showAddCustomerModal, setShowAddCustomerModal] = useState(false);
+    const [showInvoiceModal, setShowInvoiceModal] = useState(false);
     const [showToast, setShowToast] = useState({
         show: false,
         msg: "",
         type: null,
     });
+    const [dateArrival, setDateArrival] = useState("");
+    const [dateDeparture, setDateDeparture] = useState("");
+    const [roomId, setRoomId] = useState("");
+    const [customerId, setCustomerId] = useState("");
 
-
-
-    const filterByDate = (date, selectedOption, rooms) => {
-        let result2 = [];
+    const filterByDate = (date, rooms) => {
         const dateArrival_ = new Date(date.arrival);
         const dateDeparture_ = new Date(date.departure);
-
+        let result;
         if (!date.arrival || !date.departure || dateArrival_.getTime() > dateDeparture_.getTime() || date.arrival === date.departure) {
             bookingsDispatch({
                 type: "FILTER_BY_DATE_FAILURE",
@@ -42,7 +39,7 @@ const BookingsContextProvider = ({ children }) => {
                 }
             });
         } else {
-            const result = rooms.filter((room) => {
+            result = rooms.filter((room) => {
                 for (const ticket of room.tickets) {
                     let ticketArrival = new Date(ticket.arrivalDate);
                     let ticketDeparture = new Date(ticket.departureDate);
@@ -54,26 +51,11 @@ const BookingsContextProvider = ({ children }) => {
                 }
                 return true;
             });
-
-            if (selectedOption === null) {
-                result2 = result;
-            } else if (selectedOption.length === 0) {
-                result2 = result;
-            } else {
-                result2 = result.filter((room) => {
-                    for (const option of selectedOption) {
-                        if (room.status === option.value) {
-                            return true;
-                        }
-                    }
-                    return false;
-                });
-            };
         };
         bookingsDispatch({
             type: "FILTER_BY_DATE",
             payload: {
-                bookings: result2,
+                bookings: result,
                 bookingsLoading: false,
             },
         })
@@ -104,15 +86,15 @@ const BookingsContextProvider = ({ children }) => {
         }
     };
 
-    const addBooking = async (id_room, id_customer, date) => {
+    const addBooking = async (customerId, roomId, arrivalDate, departureDate) => {
         const data = {
-            id_room,
-            id_customer,
-            arrivalDate: date.arrival,
-            departureDate: date.departure,
+            customer: customerId,
+            room: roomId,
+            arrivalDate,
+            departureDate
         };
 
-        const res = await axios.post(`${apiUrl}/bookings`, data);
+        const res = await axios.post(`${apiUrl}/ticket`, data);
         if (res.data.success) {
             bookingsDispatch({
                 type: "ADD_BOOKING_SUCCESS",
@@ -121,6 +103,7 @@ const BookingsContextProvider = ({ children }) => {
                     bookingsLoading: false,
                 },
             });
+            return res.data;
         }
     };
 
@@ -135,9 +118,19 @@ const BookingsContextProvider = ({ children }) => {
         setShowCustomerModal,
         showAddCustomerModal,
         setShowAddCustomerModal,
+        showInvoiceModal,
+        setShowInvoiceModal,
         showToast,
         setShowToast,
-        onChangeNewBookingForm,
+        addBooking,
+        dateArrival,
+        setDateArrival,
+        dateDeparture,
+        setDateDeparture,
+        roomId,
+        setRoomId,
+        customerId,
+        setCustomerId,
     };
 
     return (
