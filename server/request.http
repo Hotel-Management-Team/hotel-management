@@ -212,3 +212,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzO
     "hasType": false,
     "isAdmin": false,
 }
+
+###
+GET http://localhost:5000/api/booking/bookbyblock
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY1MTM3MDU4OCwiZXhwIjoxNjUxNjI5Nzg4fQ.hVDeiVJOt9XOsk4XThrb0HFKG2DfvAqWMs0oJ4pQ56M

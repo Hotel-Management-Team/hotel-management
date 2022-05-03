@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { RoomsContext } from "../../../contexts/RoomsContext";
 import { BookingsContext } from "../../../contexts/BookingsContext";
 import { CustomersContext } from "../../../contexts/CustomersContext";
-import { Spinner, Form, Col, Row, Toast } from "react-bootstrap";
+import { Spinner, Form, Col, Row, Toast, Button } from "react-bootstrap";
 import { CustomerModal } from "../CustomerModal";
 import { AddCustomerModal } from "../AddCustomerModal";
 
@@ -49,9 +49,17 @@ const BookByDate = () => {
 
   return (
     <>
+      {/* back button */}
       {<AddCustomerModal />}
       {customers !== null && <CustomerModal />}
 
+      <Button
+        className="m-3"
+        variant="outline-success"
+        onClick={() => window.history.back()}
+      >
+        Trở về
+      </Button>
       <div className="container d-flex flex-column p-4">
         <Form className="p-3">
           <Row>

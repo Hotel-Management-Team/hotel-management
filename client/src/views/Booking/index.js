@@ -13,7 +13,7 @@ const Booking = () => {
     {
       name: "Thuê phòng ngay",
       img: IMG_BOOK_BLOCK,
-      href: "/system-management/room-types",
+      href: "/booking/bookbyblock",
     },
   ];
 

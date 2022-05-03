@@ -11,6 +11,7 @@ import ProtectedRoomType from "./components/routing/ProtectedRoomType";
 import ProtectedCharge from "./components/routing/ProtectedCharge";
 import Booking from "./views/Booking/index";
 import BookByDate from "./views/Booking/BookByDate";
+import BookByBlock from "./views/Booking/BookByBlock";
 import ProtectedBooking from "./components/routing/ProtectedBooking";
 import Revenue from "./views/Revenue";
 import System from "./views/System/index";
@@ -74,6 +75,17 @@ function App() {
                             <ProtectedRoute>
                               <ProtectedBooking>
                                 <BookByDate />
+                              </ProtectedBooking>
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          exact
+                          path="/booking/bookbyblock"
+                          element={
+                            <ProtectedRoute>
+                              <ProtectedBooking>
+                                <BookByBlock />
                               </ProtectedBooking>
                             </ProtectedRoute>
                           }
