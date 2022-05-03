@@ -13,22 +13,18 @@ export const CustomerModal = () => {
 
     const columns = ["#", "Tên khách hàng", "CMT", "Số điện thoại", "Email", "Địa chỉ", "Loại khách"];
 
-    const { showCustomerModal, setShowCustomerModal, setShowAddCustomerModal } = useContext(BookingsContext);
+    const { showCustomerModal, setShowCustomerModal, setShowAddCustomerModal, addBooking,
+        dateArrival, dateDeparture, roomId, setShowInvoiceModal, setShowToast, customerId, setCustomerId } = useContext(BookingsContext);
 
-    const { customerState: { customers }, getCustomers, customerDispatch } = useContext(CustomersContext);
+    const { customerState: { customers }, getCustomers } = useContext(CustomersContext);
 
     const [searchCustomer, setSearchCustomer] = useState("");
+
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     useEffect(() => {
         getCustomers();
     }, [customers.length]);
-
-    const onChangeNewBookingForm = (e) => {
-        // setNewRoom({
-        //     ...newRoom,
-        //     [e.target.name]: e.target.value,
-        // });
-    };
 
     const closeDialog = () => {
         resetCustomerData();
@@ -43,8 +39,47 @@ export const CustomerModal = () => {
         setShowAddCustomerModal(true);
     };
 
+    const onChangeNewBookingForm = async (customerId, roomId, arrivalDate, departureDate) => {
+        const { success, msg, ticketId } = await addBooking(customerId, roomId, arrivalDate, departureDate);
+        if (success) {
+            setShowInvoiceModal(true, ticketId);
+            setShowToast(true, msg);
+            setShowCustomerModal(false);
+        } else {
+            setShowToast({ show: true, msg, type: "danger" });
+        }
+    };
+
+    const closeDialogConfirmModal = () => {
+        setShowConfirmModal(false);
+    };
+
     return (
         <>
+            <Modal
+                show={showConfirmModal}
+                onHide={closeDialogConfirmModal}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Xác nhận thuê phòng</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button
+                        variant="danger"
+                        onClick={
+                            () => {
+                                onChangeNewBookingForm(customerId, roomId, dateArrival, dateDeparture);
+                                setShowConfirmModal(false);
+                            }
+                        }
+                    >
+                        YES
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             <Modal show={showCustomerModal} onHide={closeDialog} size="xl">
                 <Modal.Header closeButton>
                     <Modal.Title>Khách hàng</Modal.Title>
@@ -56,9 +91,6 @@ export const CustomerModal = () => {
                             type="search"
                             placeholder="Nhập Tên hoặc SĐT hoặc CMT khách hàng"
                             value={searchCustomer}
-                            // onFocus={() => {
-                            //     getCustomers();
-                            // }}
                             onChange={(e) => {
                                 setSearchCustomer(e.target.value);
                             }}
@@ -98,8 +130,13 @@ export const CustomerModal = () => {
                                             <td>{customer.type === CUSTOMER_TYPE.LOCAL ? "Nội địa" : "Nước ngoài"}</td>
                                             <td>
                                                 <Button
-                                                    variant="primary"
-                                                //onClick={() => onChangeNewBookingForm(customer, date, room)}
+                                                    variant="danger"
+                                                    onClick={() => {
+                                                        setCustomerId(customer._id);
+                                                        setShowConfirmModal(true);
+                                                        setShowCustomerModal(false);
+                                                    }
+                                                    }
                                                 >
                                                     Chọn
                                                 </Button>

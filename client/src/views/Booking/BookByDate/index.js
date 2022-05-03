@@ -6,6 +6,8 @@ import { CustomersContext } from "../../../contexts/CustomersContext";
 import { Spinner, Form, Col, Row, Toast, Button } from "react-bootstrap";
 import { CustomerModal } from "../CustomerModal";
 import { AddCustomerModal } from "../AddCustomerModal";
+import { TableBooking } from "../TableBooking";
+import { InvoiceModal } from "../InvoiceModal";
 
 const BookByDate = () => {
   const {
@@ -19,23 +21,25 @@ const BookByDate = () => {
     setShowCustomerModal,
     showToast: { show, msg, type },
     setShowToast,
+    dateArrival,
+    setDateArrival,
+    dateDeparture,
+    setDateDeparture,
+    setRoomId
   } = useContext(BookingsContext);
 
   const {
     customerState: { customers },
-    getCustomers,
-    customerDispatch,
   } = useContext(CustomersContext);
 
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [dateArrival, setDateArrival] = useState("");
-  const [dateDeparture, setDateDeparture] = useState("");
+
 
   useEffect(() => {
     getRoomsTickets();
   }, [rooms.length]);
 
   const handleBooking = (room) => {
+    setRoomId(room._id);
     setShowCustomerModal(true);
   };
 
@@ -52,6 +56,7 @@ const BookByDate = () => {
       {/* back button */}
       {<AddCustomerModal />}
       {customers !== null && <CustomerModal />}
+      {<InvoiceModal />}
 
       <Button
         className="m-3"
@@ -65,17 +70,17 @@ const BookByDate = () => {
           <Row>
             <Col>
               <Form.Group controlId="arrival">
-                <Form.Label>Chọn ngày giờ đến</Form.Label>
+                <Form.Label>Chọn ngày đến</Form.Label>
                 <Form.Control
-                  type="datetime-local"
+                  min={new Date().toISOString().split("T")[0]}
+                  type="date"
                   name="arrival"
                   value={dateArrival}
-                  format="yyyy-MM-dd HH:mm"
+                  format="yyyy-MM-dd"
                   onChange={(date) => {
                     setDateArrival(date.target.value);
                     filterByDate(
                       { arrival: date.target.value, departure: dateDeparture },
-                      selectedOption,
                       rooms
                     );
                   }}
@@ -84,17 +89,17 @@ const BookByDate = () => {
             </Col>
             <Col>
               <Form.Group controlId="departure">
-                <Form.Label>Chọn ngày giờ rời</Form.Label>
+                <Form.Label>Chọn ngày rời</Form.Label>
                 <Form.Control
-                  type="datetime-local"
+                  min={dateArrival.split("T")[0]}
+                  type="date"
                   name="departure"
                   value={dateDeparture}
-                  format="yyyy-MM-dd HH:mm"
+                  format="yyyy-MM-dd"
                   onChange={(date) => {
                     setDateDeparture(date.target.value);
                     filterByDate(
                       { arrival: dateArrival, departure: date.target.value },
-                      selectedOption,
                       rooms
                     );
                   }}
@@ -105,101 +110,7 @@ const BookByDate = () => {
         </Form>
 
         <div className="p-3">
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Room Name</th>
-                <th scope="col">Status</th>
-                <th scope="col">Arrival</th>
-                <th scope="col">Departure</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {bookings.map((room, index) => {
-                if (room.tickets.length === 0) {
-                  return (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{room.name}</td>
-                      <td className="text-danger">
-                        {room.status === "Available"
-                          ? "Khả dụng"
-                          : room.status === "NeedClean"
-                          ? "Cần dọn"
-                          : room.status === "Using"
-                          ? "Đang sử dụng"
-                          : "Đang chờ"}
-                      </td>
-                      <td>Khả dụng</td>
-                      <td>Khả dụng</td>
-                      <td>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleBooking(room)}
-                        >
-                          Book
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                } else {
-                  for (const ticket of room.tickets) {
-                    return (
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{room.name}</td>
-                        <td className="text-danger">
-                          {room.status === "Available"
-                            ? "Khả dụng"
-                            : room.status === "NeedClean"
-                            ? "Cần dọn"
-                            : room.status === "Using"
-                            ? "Đang sử dụng"
-                            : "Đang chờ"}
-                        </td>
-                        <td>
-                          {new Date(ticket.arrivalDate).toLocaleString(
-                            "en-GB",
-                            {
-                              hour12: true,
-                              hour: "numeric",
-                              minute: "numeric",
-                              day: "numeric",
-                              month: "numeric",
-                              year: "numeric",
-                            }
-                          )}
-                        </td>
-                        <td>
-                          {new Date(ticket.departureDate).toLocaleString(
-                            "en-GB",
-                            {
-                              hour12: true,
-                              hour: "numeric",
-                              minute: "numeric",
-                              day: "numeric",
-                              month: "numeric",
-                              year: "numeric",
-                            }
-                          )}
-                        </td>
-                        <td>
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => handleBooking(room)}
-                          >
-                            Book
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  }
-                }
-              })}
-            </tbody>
-          </table>
+          {<TableBooking bookings={bookings} handleBooking={handleBooking} />}
         </div>
       </div>
       <Toast

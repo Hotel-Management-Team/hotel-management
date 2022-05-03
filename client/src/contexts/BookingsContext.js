@@ -9,7 +9,6 @@ const BookingsContextProvider = ({ children }) => {
   const [bookingsState, bookingsDispatch] = useReducer(bookingsReducer, {
     bookings: [],
     bookingsLoading: true,
-    bookingsByBlock: [],
   });
 
   // handle click
@@ -124,30 +123,6 @@ const BookingsContextProvider = ({ children }) => {
     }
   };
 
-  const getBookByBlock = async () => {
-    try {
-      const res = await axios.get(`${apiUrl}/booking/byblock`);
-      if (res.data.success) {
-        bookingsDispatch({
-          type: "GET_BOOK_BY_BLOCK_SUCCESS",
-          payload: {
-            bookingsByBlock: res.data.data,
-            bookingsLoading: false,
-          },
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      bookingsDispatch({
-        type: "GET_BOOK_BY_BLOCK_FAILURE",
-        payload: {
-          bookingsByBlock: [],
-          bookingsLoading: false,
-        },
-      });
-    }
-  };
-
   const BookingsContextValue = {
     bookingsState,
     bookingsDispatch,
@@ -161,7 +136,6 @@ const BookingsContextProvider = ({ children }) => {
     setShowAddCustomerModal,
     showToast,
     setShowToast,
-    getBookByBlock,
   };
 
   return (
