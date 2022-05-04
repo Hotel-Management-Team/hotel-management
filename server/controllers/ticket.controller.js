@@ -40,29 +40,29 @@ export const getTicketList = async (req, res) => {
 };
 
 export const postTicket = async (req, res) => {
-    const { customer, room, arrivalDate, departureDate } = req.body;
-    // check if room is available and charge is valid
-    const roomAvailable = await Room.findById(room);
+    const { customerId, roomId, arrivalDate, departureDate } = req.body;
+
+    const roomAvailable = await Room.findById(roomId);
     if (!roomAvailable) {
         return res.json({
             success: false,
             message: "Phòng không tồn tại",
         });
     }
-    // save rentTicket and change status of room
-    const ticket = new Ticket({
-        customer,
-        room,
+
+    const newTicket = new Ticket({
+        customer: customerId,
+        room: roomId,
         arrivalDate,
-        departureDate
+        departureDate,
     });
-    await ticket.save();
-    const updatedRoom = await Room.findByIdAndUpdate(room, { status: "Waiting" });
+    await newTicket.save();
+    const updatedRoom = await Room.findByIdAndUpdate(roomId, { status: "Available" });
     await updatedRoom.save();
     res.json({
         success: true,
         msg: "Đặt phòng thành công",
-        ticketId: ticket._id,
+        ticketId: newTicket._id,
     });
 };
 

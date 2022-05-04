@@ -24,9 +24,10 @@ const BookingsContextProvider = ({ children }) => {
   });
   const [dateArrival, setDateArrival] = useState("");
   const [dateDeparture, setDateDeparture] = useState("");
-  const [roomId, setRoomId] = useState("");
-  const [customerId, setCustomerId] = useState("");
-
+  const [room, setRoom] = useState({});
+  const [customer, setCustomer] = useState({});
+  const [total, setTotal] = useState(0);
+  const [date, setDate] = useState(0);
   const filterByDate = (date, rooms) => {
     const dateArrival_ = new Date(date.arrival);
     const dateDeparture_ = new Date(date.departure);
@@ -96,8 +97,8 @@ const BookingsContextProvider = ({ children }) => {
 
   const addBooking = async (customerId, roomId, arrivalDate, departureDate) => {
     const data = {
-      customer: customerId,
-      room: roomId,
+      customerId,
+      roomId,
       arrivalDate,
       departureDate,
     };
@@ -159,11 +160,15 @@ const BookingsContextProvider = ({ children }) => {
     setDateArrival,
     dateDeparture,
     setDateDeparture,
-    roomId,
-    setRoomId,
-    customerId,
-    setCustomerId,
+    room,
+    setRoom,
+    customer,
+    setCustomer,
     getBookByBlock,
+    total,
+    setTotal,
+    date,
+    setDate,
   };
 
   return (
