@@ -37,7 +37,7 @@ const AddRoomModal = () => {
     roomtype: null,
     charge: null,
     description: "",
-    status: "Waiting",
+    status: "Available",
   });
 
   const { name, roomtype, charge, description, status } = newRoom;
@@ -104,15 +104,6 @@ const AddRoomModal = () => {
                     {item.name}
                   </option>
                 ))}
-              </Form.Select>
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Select name="status" onChange={onChangeNewRoomForm}>
-                <option value={null}>Chọn loại trang thái</option>
-                <option value="Waiting">Waiting</option>
-                <option value="Using">Using</option>
-                <option value="Available">Available</option>
-                <option value="NeedClean">Need Clean</option>
               </Form.Select>
             </Form.Group>
           </Row>

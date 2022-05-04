@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, Table, Badge } from "react-bootstrap";
 import { useContext, useState, useEffect, useRef } from "react";
 import { BookingsContext } from "../../../contexts/BookingsContext";
 
@@ -33,6 +33,7 @@ const BookByBlock = () => {
               <th>Loại phòng</th>
               <th>Loại giá</th>
               <th>Trạng thái</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody className="border border-info">
@@ -41,9 +42,26 @@ const BookByBlock = () => {
                 <tr key={room._id}>
                   <td>{index + 1}</td>
                   <td>{room.name}</td>
-                  <td></td>
-                  <td></td>
-                  <td>{room.status}</td>
+                  <td>{room.roomtype.name}</td>
+                  <td>
+                    {room.charge.name}
+                    <span> </span>
+                    <Badge bg="secondary">
+                      {room.charge.FirstBlockCharge}/
+                      <small>{room.charge.FirstBlock}h</small>
+                    </Badge>
+                  </td>
+                  <td>
+                    <Badge bg="info">{room.status}</Badge>
+                  </td>
+                  <td>
+                    <Button
+                      variant="success"
+                      onClick={() => window.history.back()}
+                    >
+                      Đặt ngay
+                    </Button>
+                  </td>
                 </tr>
               ))
             ) : (

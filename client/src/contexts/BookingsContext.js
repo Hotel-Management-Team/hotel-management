@@ -9,23 +9,28 @@ const BookingsContextProvider = ({ children }) => {
   const [bookingsState, bookingsDispatch] = useReducer(bookingsReducer, {
     bookings: [],
     bookingsLoading: true,
+    bookingsByBlock: [],
   });
 
   // handle click
   const [showAddBookingModal, setShowAddBookingModal] = useState(false);
   const [showCustomerModal, setShowCustomerModal] = useState(false);
   const [showAddCustomerModal, setShowAddCustomerModal] = useState(false);
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
   const [showToast, setShowToast] = useState({
     show: false,
     msg: "",
     type: null,
   });
+  const [dateArrival, setDateArrival] = useState("");
+  const [dateDeparture, setDateDeparture] = useState("");
+  const [roomId, setRoomId] = useState("");
+  const [customerId, setCustomerId] = useState("");
 
-  const filterByDate = (date, selectedOption, rooms) => {
-    let result2 = [];
+  const filterByDate = (date, rooms) => {
     const dateArrival_ = new Date(date.arrival);
     const dateDeparture_ = new Date(date.departure);
-
+    let result;
     if (
       !date.arrival ||
       !date.departure ||
@@ -40,7 +45,7 @@ const BookingsContextProvider = ({ children }) => {
         },
       });
     } else {
-      const result = rooms.filter((room) => {
+      result = rooms.filter((room) => {
         for (const ticket of room.tickets) {
           let ticketArrival = new Date(ticket.arrivalDate);
           let ticketDeparture = new Date(ticket.departureDate);
@@ -54,26 +59,11 @@ const BookingsContextProvider = ({ children }) => {
         }
         return true;
       });
-
-      if (selectedOption === null) {
-        result2 = result;
-      } else if (selectedOption.length === 0) {
-        result2 = result;
-      } else {
-        result2 = result.filter((room) => {
-          for (const option of selectedOption) {
-            if (room.status === option.value) {
-              return true;
-            }
-          }
-          return false;
-        });
-      }
     }
     bookingsDispatch({
       type: "FILTER_BY_DATE",
       payload: {
-        bookings: result2,
+        bookings: result,
         bookingsLoading: false,
       },
     });
@@ -104,19 +94,45 @@ const BookingsContextProvider = ({ children }) => {
     }
   };
 
-  const addBooking = async (id_room, id_customer, date) => {
+  const addBooking = async (customerId, roomId, arrivalDate, departureDate) => {
     const data = {
-      id_room,
-      id_customer,
-      date,
+      customer: customerId,
+      room: roomId,
+      arrivalDate,
+      departureDate,
     };
 
-    const res = await axios.post(`${apiUrl}/bookings`, data);
+    const res = await axios.post(`${apiUrl}/ticket`, data);
     if (res.data.success) {
       bookingsDispatch({
         type: "ADD_BOOKING_SUCCESS",
         payload: {
           bookings: res.data.data,
+          bookingsLoading: false,
+        },
+      });
+      return res.data;
+    }
+  };
+
+  const getBookByBlock = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/booking/byblock`);
+      if (res.data.success) {
+        bookingsDispatch({
+          type: "GET_BOOK_BY_BLOCK_SUCCESS",
+          payload: {
+            bookingsByBlock: res.data.data,
+            bookingsLoading: false,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      bookingsDispatch({
+        type: "GET_BOOK_BY_BLOCK_FAILURE",
+        payload: {
+          bookingsByBlock: [],
           bookingsLoading: false,
         },
       });
@@ -134,8 +150,20 @@ const BookingsContextProvider = ({ children }) => {
     setShowCustomerModal,
     showAddCustomerModal,
     setShowAddCustomerModal,
+    showInvoiceModal,
+    setShowInvoiceModal,
     showToast,
     setShowToast,
+    addBooking,
+    dateArrival,
+    setDateArrival,
+    dateDeparture,
+    setDateDeparture,
+    roomId,
+    setRoomId,
+    customerId,
+    setCustomerId,
+    getBookByBlock,
   };
 
   return (

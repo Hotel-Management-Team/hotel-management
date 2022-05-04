@@ -41,17 +41,27 @@ export const getBooking = async (req, res) => {
 };
 
 export const getBookingByBlock = async (req, res) => {
-  const results = new Array();
   try {
     //   available room
-    const rooms1 = await Room.find({ status: "Available" });
-    const ticket = await Ticket.find().populate("room");
+    const rooms1 = await Room.find({ status: "Available" })
+      .populate("roomtype")
+      .populate("charge");
+    const ticket = await Ticket.find().populate({
+      path: "room",
+      populate: {
+        path: "roomType",
+      },
+      populate: {
+        path: "charge",
+      },
+    });
+
     const rooms2 = ticket
       .filter((room) => {
         let startDate = new Date(room.startDate);
         let tomorow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
         if (startDate.getTime() >= tomorow.getTime()) {
-          return true && room.room.status === "Waiting";
+          return true;
         }
         return false;
       })
