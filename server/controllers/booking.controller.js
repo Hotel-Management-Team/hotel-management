@@ -43,33 +43,10 @@ export const getBooking = async (req, res) => {
 export const getBookingByBlock = async (req, res) => {
   try {
     //   available room
-    const rooms1 = await Room.find({ status: "Available" })
+    const result = await Room.find({ status: "Available" })
       .populate("roomtype")
       .populate("charge");
-    const ticket = await Ticket.find().populate({
-      path: "room",
-      populate: {
-        path: "roomType",
-      },
-      populate: {
-        path: "charge",
-      },
-    });
 
-    const rooms2 = ticket
-      .filter((room) => {
-        let startDate = new Date(room.startDate);
-        let tomorow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-        if (startDate.getTime() >= tomorow.getTime()) {
-          return true;
-        }
-        return false;
-      })
-      .map((room) => {
-        return room.room;
-      });
-
-    const result = rooms1.concat(rooms2);
     res.json({
       success: true,
       data: result,

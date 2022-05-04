@@ -45,14 +45,19 @@ const BookByBlock = () => {
                   <td>{room.roomtype.name}</td>
                   <td>
                     {room.charge.name}
-                    <span> </span>
-                    <Badge bg="secondary">
+
+                    <Badge bg="secondary" className="mx-2 p-2">
                       {room.charge.FirstBlockCharge}/
                       <small>{room.charge.FirstBlock}h</small>
                     </Badge>
                   </td>
                   <td>
-                    <Badge bg="info">{room.status}</Badge>
+                    <Badge
+                      className="p-2"
+                      bg={room.status == "Available" ? "info" : "danger"}
+                    >
+                      {room.status}
+                    </Badge>
                   </td>
                   <td>
                     <Button

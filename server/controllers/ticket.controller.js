@@ -4,89 +4,98 @@ import Charge from "../models/charge.model";
 import Customer from "../models/customer.model";
 
 export const getTicket = async (req, res) => {
-    const tickets = await Ticket.find();
-    const results = new Array();
+  const tickets = await Ticket.find();
+  const results = new Array();
 
-    for (let i = 0; i < tickets.length; i++) {
-        const room = await Room.findById(tickets[i].room);
-        const charge = await Charge.findById(room.charge);
-        const customer = await Customer.findById(tickets[i].customer);
+  for (let i = 0; i < tickets.length; i++) {
+    const room = await Room.findById(tickets[i].room);
+    const charge = await Charge.findById(room.charge);
+    const customer = await Customer.findById(tickets[i].customer);
 
-        results.push({
-            roomName: room.name,
-            customerName: customer.name,
-            customerPhone: customer.phone,
-            customerType: customer.type,
-            customerID: customer.ID,
-            customerAddress: customer.address,
-            startDate: tickets[i].startDate,
-        });
-    };
-    res.json(results);
+    results.push({
+      roomName: room.name,
+      customerName: customer.name,
+      customerPhone: customer.phone,
+      customerType: customer.type,
+      customerID: customer.ID,
+      customerAddress: customer.address,
+      startDate: tickets[i].startDate,
+    });
+  }
+  res.json(results);
 };
 
 export const getTicketList = async (req, res) => {
-    const { room, startDate } = req.body;
-    // switch startDate from 2016-05-18T16:00:00Z  to 18/05/2016
+  const { room, startDate } = req.body;
+  // switch startDate from 2016-05-18T16:00:00Z  to 18/05/2016
 
-    const tickets = await Ticket.find({ room, startDate });
-    const results = new Array();
+  const tickets = await Ticket.find({ room, startDate });
+  const results = new Array();
 
-    for (let i = 0; i < tickets.length; i++) {
-        const customer = await Customer.findById(tickets[i].customer);
-        results.push(customer);
-    };
-    res.json(results);
+  for (let i = 0; i < tickets.length; i++) {
+    const customer = await Customer.findById(tickets[i].customer);
+    results.push(customer);
+  }
+  res.json(results);
 };
 
 export const postTicket = async (req, res) => {
-    const { customer, room, arrivalDate, departureDate } = req.body;
-    // check if room is available and charge is valid
-    const roomAvailable = await Room.findById(room);
-    if (!roomAvailable) {
-        return res.json({
-            success: false,
-            message: "Phòng không tồn tại",
-        });
-    }
-    // save rentTicket and change status of room
-    const ticket = new Ticket({
-        customer,
-        room,
-        arrivalDate,
-        departureDate
+  const { customer, room, arrivalDate, departureDate } = req.body;
+  // check if room is available and charge is valid
+  const roomAvailable = await Room.findById(room);
+  if (!roomAvailable) {
+    return res.json({
+      success: false,
+      message: "Phòng không tồn tại",
     });
-    await ticket.save();
-    const updatedRoom = await Room.findByIdAndUpdate(room, { status: "Waiting" });
-    await updatedRoom.save();
-    res.json({
-        success: true,
-        msg: "Đặt phòng thành công",
-        ticketId: ticket._id,
-    });
+  }
+  // save rentTicket and change status of room
+  //   creat date from string
+  const startDate = new Date(arrivalDate);
+  //   console.log(typeof startDate);
+
+  const ticket = new Ticket({
+    customer,
+    room,
+    arrivalDate,
+    departureDate,
+  });
+  await ticket.save();
+  const today = new Date();
+  const isWatiing =
+    today.getDate() == startDate.getDate() &&
+    today.getMonth() == startDate.getMonth() &&
+    today.getFullYear() == startDate.getFullYear()
+      ? "Waiting"
+      : "Available";
+  const updatedRoom = await Room.findByIdAndUpdate(room, { status: isWatiing });
+  await updatedRoom.save();
+  res.json({
+    success: true,
+    msg: "Đặt phòng thành công",
+    ticketId: ticket._id,
+  });
 };
 
-export const putTicket = async (req, res) => {
-
-};
+export const putTicket = async (req, res) => {};
 
 export const deleteTicket = async (req, res) => {
-    console.log(req.params.id);
-    try {
-        const ticket = await Ticket.findOneAndDelete({ _id: req.params.id });
-        if (!ticket) {
-            return res.status(404).json({
-                success: false,
-                msg: 'Ticket not found'
-            });
-        }
-        res.json({
-            success: true,
-            msg: 'Ticket deleted successfully',
-            data: ticket
-        });
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).send('Server Error');
+  console.log(req.params.id);
+  try {
+    const ticket = await Ticket.findOneAndDelete({ _id: req.params.id });
+    if (!ticket) {
+      return res.status(404).json({
+        success: false,
+        msg: "Ticket not found",
+      });
     }
+    res.json({
+      success: true,
+      msg: "Ticket deleted successfully",
+      data: ticket,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
 };

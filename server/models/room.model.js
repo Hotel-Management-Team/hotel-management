@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Ticket from "./ticket.model";
 
 const roomSchema = new mongoose.Schema({
   name: {
