@@ -25,21 +25,19 @@ const BookByDate = () => {
     setDateArrival,
     dateDeparture,
     setDateDeparture,
-    setRoomId
+    setRoom,
   } = useContext(BookingsContext);
 
   const {
     customerState: { customers },
   } = useContext(CustomersContext);
 
-
-
   useEffect(() => {
     getRoomsTickets();
   }, [rooms.length]);
 
   const handleBooking = (room) => {
-    setRoomId(room._id);
+    setRoom(room);
     setShowCustomerModal(true);
   };
 

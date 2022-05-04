@@ -27,11 +27,12 @@ export const CustomerModal = () => {
     addBooking,
     dateArrival,
     dateDeparture,
-    roomId,
+    room,
     setShowInvoiceModal,
     setShowToast,
-    customerId,
-    setCustomerId,
+    customer,
+    setCustomer,
+    setDate,
   } = useContext(BookingsContext);
 
   const {
@@ -61,17 +62,18 @@ export const CustomerModal = () => {
   };
 
   const onChangeNewBookingForm = async (
-    customerId,
-    roomId,
+    customer,
+    room,
     arrivalDate,
     departureDate
   ) => {
     const { success, msg, ticketId } = await addBooking(
-      customerId,
-      roomId,
+      customer._id,
+      room._id,
       arrivalDate,
       departureDate
     );
+    setDate((new Date(dateDeparture) - new Date(dateArrival)) / (1000 * 60 * 60 * 24));
     if (success) {
       setShowInvoiceModal(true, ticketId);
       setShowToast(true, msg);
@@ -91,14 +93,15 @@ export const CustomerModal = () => {
         <Modal.Header closeButton>
           <Modal.Title>Xác nhận thuê phòng</Modal.Title>
         </Modal.Header>
-        <Modal.Body></Modal.Body>
+        <Modal.Body>
+        </Modal.Body>
         <Modal.Footer>
           <Button
             variant="danger"
             onClick={() => {
               onChangeNewBookingForm(
-                customerId,
-                roomId,
+                customer,
+                room,
                 dateArrival,
                 dateDeparture
               );
@@ -174,7 +177,7 @@ export const CustomerModal = () => {
                         <Button
                           variant="danger"
                           onClick={() => {
-                            setCustomerId(customer._id);
+                            setCustomer(customer);
                             setShowConfirmModal(true);
                             setShowCustomerModal(false);
                           }}
