@@ -216,4 +216,23 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzO
 ###
 GET http://localhost:5000/api/booking/bookbyblock
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY1MTM3MDU4OCwiZXhwIjoxNjUxNjI5Nzg4fQ.hVDeiVJOt9XOsk4XThrb0HFKG2DfvAqWMs0oJ4pQ56M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY1MTY4MzA5NiwiZXhwIjoxNjUxOTQyMjk2fQ.Gs38x2NS4J-RfMOoSAZFRh7es5zlHkO_S_W5yZNEu0A
+
+###
+POST  http://localhost:5000/api/invoice
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY1MTY4MzA5NiwiZXhwIjoxNjUxOTQyMjk2fQ.Gs38x2NS4J-RfMOoSAZFRh7es5zlHkO_S_W5yZNEu0A
+
+{
+    "total":1000,
+    "ticket": {
+        "_id":"6272ccf8ca3760c173140c0e"
+    }
+}
+
+###
+GET   http://localhost:5000/api/invoice
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY1MTY4MzA5NiwiZXhwIjoxNjUxOTQyMjk2fQ.Gs38x2NS4J-RfMOoSAZFRh7es5zlHkO_S_W5yZNEu0A
+
+

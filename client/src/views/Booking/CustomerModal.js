@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { BookingsContext } from "../../contexts/BookingsContext";
 import { CustomersContext } from "../../contexts/CustomersContext";
+import { InvoiceContext } from "../../contexts/InvoiceContext";
 import { Form, Button, FormControl, Table, Modal } from "react-bootstrap";
 import addIcon from "../../assets/plus-circle-fill.svg";
+import { paymentByDate, paymentByBlock } from "../../utils/payment";
 
 const CUSTOMER_TYPE = {
   LOCAL: "local",
@@ -21,6 +23,7 @@ export const CustomerModal = () => {
   ];
 
   const {
+    bookingsState: { bookingsByDate },
     showCustomerModal,
     setShowCustomerModal,
     setShowAddCustomerModal,
@@ -28,7 +31,6 @@ export const CustomerModal = () => {
     dateArrival,
     dateDeparture,
     room,
-    setShowInvoiceModal,
     setShowToast,
     customer,
     setCustomer,
@@ -39,6 +41,8 @@ export const CustomerModal = () => {
     customerState: { customers },
     getCustomers,
   } = useContext(CustomersContext);
+
+  const { addInvoice, setShowInvoiceModal } = useContext(InvoiceContext);
 
   const [searchCustomer, setSearchCustomer] = useState("");
 
@@ -61,25 +65,62 @@ export const CustomerModal = () => {
     setShowAddCustomerModal(true);
   };
 
-  const onChangeNewBookingForm = async (
+  const onConfrimNewBooking = async (
     customer,
     room,
     arrivalDate,
-    departureDate
+    departureDate,
+    isBlock
   ) => {
-    const { success, msg, ticketId } = await addBooking(
+    const addNewBooking = await addBooking(
       customer._id,
       room._id,
       arrivalDate,
       departureDate
     );
-    setDate((new Date(dateDeparture) - new Date(dateArrival)) / (1000 * 60 * 60 * 24));
-    if (success) {
-      setShowInvoiceModal(true, ticketId);
-      setShowToast(true, msg);
-      setShowCustomerModal(false);
+    setDate(
+      (new Date(dateDeparture) - new Date(dateArrival)) / (1000 * 60 * 60 * 24)
+    );
+
+    let total = 1;
+    if (isBlock) {
+      total = paymentByBlock(
+        arrivalDate,
+        departureDate,
+        room.charge.OvertimeCharge,
+        room.charge.FirstBlockCharge,
+        customer.type
+      );
     } else {
-      setShowToast({ show: true, msg, type: "danger" });
+      total = paymentByDate(
+        dateArrival,
+        dateDeparture,
+        room.charge.SurCharge,
+        room.charge.DateCharge,
+        customer.type
+      );
+    }
+
+    if (addNewBooking.success) {
+      const addNewInvoice = await addInvoice({
+        total,
+        ticket: addNewBooking.data,
+      });
+      if (addNewInvoice.success) {
+        setShowInvoiceModal(true);
+        setShowCustomerModal(false);
+        setShowToast({
+          show: true,
+          msg: addNewInvoice.msg,
+          type: addNewInvoice.success ? "success" : "danger",
+        });
+      }
+    } else {
+      setShowToast({
+        show: true,
+        msg: addNewBooking.msg,
+        type: addNewBooking.success ? "success" : "danger",
+      });
     }
   };
 
@@ -89,22 +130,60 @@ export const CustomerModal = () => {
 
   return (
     <>
-      <Modal show={showConfirmModal} onHide={closeDialogConfirmModal}>
+      <Modal show={showConfirmModal} onHide={closeDialogConfirmModal} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Xác nhận thuê phòng</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {window.location.href.includes("bookbydate") ? (
+            <>
+              <strong>{customer.name}</strong> sẽ thuê phòng{" "}
+              <strong>{room.name}</strong> từ ngày{" "}
+              <strong>{dateArrival}</strong> đến ngày{" "}
+              <strong>{dateDeparture}</strong>
+            </>
+          ) : (
+            <>
+              <strong>{customer.name}</strong> sẽ thuê phòng{" "}
+              <strong>{room.name}</strong> trong{" "}
+              {room.charge ? (
+                <>
+                  <strong>{room.charge.FirstBlock} giờ </strong>
+                  với giá <strong>{room.charge.FirstBlockCharge} VNĐ </strong>
+                </>
+              ) : (
+                <> </>
+              )}
+            </>
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button
             variant="danger"
             onClick={() => {
-              onChangeNewBookingForm(
-                customer,
-                room,
-                dateArrival,
-                dateDeparture
-              );
+              if (window.location.href.includes("bookbydate")) {
+                const isBlock = false;
+                onConfrimNewBooking(
+                  customer,
+                  room,
+                  dateArrival,
+                  dateDeparture,
+                  isBlock
+                );
+              } else {
+                const isBlock = true;
+                onConfrimNewBooking(
+                  customer,
+                  room,
+                  new Date(),
+                  new Date().setTime(
+                    new Date().getTime() +
+                      room.charge.FirstBlock * 60 * 60 * 1000
+                  ),
+                  isBlock
+                );
+              }
+
               setShowConfirmModal(false);
             }}
           >

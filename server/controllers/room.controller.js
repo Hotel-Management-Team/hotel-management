@@ -38,7 +38,7 @@ export const getRoom = async (req, res) => {
 
 export const postRoom = async (req, res) => {
   try {
-    const { name, roomtype, charge, description, status } = req.body;
+    const { name, roomtype, charge, description } = req.body;
 
     // simple validation
     if (!name || !roomtype || !charge || !description) {
@@ -61,7 +61,6 @@ export const postRoom = async (req, res) => {
         roomtype,
         charge,
         description,
-        status,
       });
       await newRoom.save();
       // populate roomtype and charge
@@ -78,7 +77,6 @@ export const postRoom = async (req, res) => {
         name: newRoom.name,
         roomtype: roomType,
         charge: chargeData,
-        status: newRoom.status,
         description: newRoom.description,
       };
       res.json({
@@ -173,7 +171,10 @@ export const deleteRoom = async (req, res) => {
 
 export const findRoom = async (req, res) => {
   try {
-    let rooms = await Room.find().lean();
+    let rooms = await Room.find()
+      .lean()
+      .populate("roomtype")
+      .populate("charge");
     const tickets = await Ticket.find();
 
     for (const room of rooms) {
@@ -186,7 +187,6 @@ export const findRoom = async (req, res) => {
       success: true,
       data: rooms,
     });
-
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");

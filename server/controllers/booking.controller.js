@@ -6,7 +6,7 @@ export const getBooking = async (req, res) => {
   const results = new Array();
   try {
     // ID ticket, Customer Name, Room Name, Start Date, Hours, Status, Price
-    const ticket = await Ticket.find().populate("room").populate("customer"); //.populate('charge');
+    const ticket = await Ticket.find().populate("room").populate("customer");
     //console.log(ticket);
     for (let i = 0; i < ticket.length; i++) {
       const room = await Room.findById(ticket[i].room);

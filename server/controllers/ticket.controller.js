@@ -58,23 +58,29 @@ export const postTicket = async (req, res) => {
   });
   await newTicket.save();
   const startDate = new Date(arrivalDate);
+  const endDate = new Date(departureDate);
   //   console.log(typeof startDate);
   const today = new Date();
-  const isWatiing =
-    today.getDate() == startDate.getDate() &&
-    today.getMonth() == startDate.getMonth() &&
-    today.getFullYear() == startDate.getFullYear()
+  const updateStatus =
+    startDate.getDate() === endDate.getDate() &&
+    startDate.getMonth() === endDate.getMonth() &&
+    startDate.getFullYear() === endDate.getFullYear()
+      ? "Using"
+      : today.getDate() === startDate.getDate() &&
+        today.getMonth() === startDate.getMonth() &&
+        today.getFullYear() === startDate.getFullYear()
       ? "Waiting"
       : "Available";
+
   const updatedRoom = await Room.findByIdAndUpdate(roomId, {
-    status: isWatiing,
+    status: updateStatus,
   });
 
   await updatedRoom.save();
   res.json({
     success: true,
     msg: "Đặt phòng thành công",
-    ticketId: newTicket._id,
+    data: newTicket,
   });
 };
 

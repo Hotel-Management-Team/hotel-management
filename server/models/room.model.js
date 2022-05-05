@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Ticket from "./ticket.model";
 
 const roomSchema = new mongoose.Schema({
   name: {
@@ -23,7 +22,7 @@ const roomSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "Waiting",
+    default: "Available",
     required: true,
     enum: ["Waiting", "Using", "Available", "NeedClean"],
   },

@@ -10,6 +10,7 @@ const BookingsContextProvider = ({ children }) => {
     bookings: [],
     bookingsLoading: true,
     bookingsByBlock: [],
+    bookingsByDate: [],
   });
 
   // handle click
@@ -41,8 +42,7 @@ const BookingsContextProvider = ({ children }) => {
       bookingsDispatch({
         type: "FILTER_BY_DATE_FAILURE",
         payload: {
-          bookings: rooms,
-          bookingsLoading: false,
+          bookingsByDate: [],
         },
       });
     } else {
@@ -64,8 +64,7 @@ const BookingsContextProvider = ({ children }) => {
     bookingsDispatch({
       type: "FILTER_BY_DATE",
       payload: {
-        bookings: result,
-        bookingsLoading: false,
+        bookingsByDate: result,
       },
     });
   };
@@ -107,10 +106,7 @@ const BookingsContextProvider = ({ children }) => {
     if (res.data.success) {
       bookingsDispatch({
         type: "ADD_BOOKING_SUCCESS",
-        payload: {
-          bookings: res.data.data,
-          bookingsLoading: false,
-        },
+        payload: res.data.data,
       });
       return res.data;
     }

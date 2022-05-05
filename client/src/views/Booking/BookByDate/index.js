@@ -3,6 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { RoomsContext } from "../../../contexts/RoomsContext";
 import { BookingsContext } from "../../../contexts/BookingsContext";
 import { CustomersContext } from "../../../contexts/CustomersContext";
+import { InvoiceContext } from "../../../contexts/InvoiceContext";
 import { Spinner, Form, Col, Row, Toast, Button } from "react-bootstrap";
 import { CustomerModal } from "../CustomerModal";
 import { AddCustomerModal } from "../AddCustomerModal";
@@ -16,7 +17,6 @@ const BookByDate = () => {
   } = useContext(RoomsContext);
 
   const {
-    bookingsState: { bookings },
     filterByDate,
     setShowCustomerModal,
     showToast: { show, msg, type },
@@ -31,6 +31,10 @@ const BookByDate = () => {
   const {
     customerState: { customers },
   } = useContext(CustomersContext);
+
+  const {
+    invoiceState: { newInvoice, invoices },
+  } = useContext(InvoiceContext);
 
   useEffect(() => {
     getRoomsTickets();
@@ -49,12 +53,14 @@ const BookByDate = () => {
     );
   }
 
+  // setShowInvoiceModal(true);
+
   return (
     <>
       {/* back button */}
       {<AddCustomerModal />}
       {customers !== null && <CustomerModal />}
-      {<InvoiceModal />}
+      {newInvoice !== null && newInvoice !== undefined && <InvoiceModal />}
 
       <Button
         className="m-3"
@@ -108,7 +114,7 @@ const BookByDate = () => {
         </Form>
 
         <div className="p-3">
-          {<TableBooking bookings={bookings} handleBooking={handleBooking} />}
+          {<TableBooking handleBooking={handleBooking} />}
         </div>
       </div>
       <Toast

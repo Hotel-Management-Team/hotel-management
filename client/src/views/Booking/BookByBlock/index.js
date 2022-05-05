@@ -2,17 +2,42 @@ import React from "react";
 import { Button, Table, Badge } from "react-bootstrap";
 import { useContext, useState, useEffect, useRef } from "react";
 import { BookingsContext } from "../../../contexts/BookingsContext";
+import { CustomerModal } from "../CustomerModal";
+import { AddCustomerModal } from "../AddCustomerModal";
+import { RoomsContext } from "../../../contexts/RoomsContext";
+import { InvoiceContext } from "../../../contexts/InvoiceContext";
+import { InvoiceModal } from "../InvoiceModal";
 
 const BookByBlock = () => {
   const {
     bookingsState: { bookingsByBlock },
     getBookByBlock,
-    bookingsLoading,
+    setRoom,
+    room,
+    setShowCustomerModal,
   } = useContext(BookingsContext);
+
+  const {
+    roomsState: { rooms, roomLoading },
+    getRoomsTickets,
+  } = useContext(RoomsContext);
+
+  const {
+    invoiceState: { newInvoice },
+  } = useContext(InvoiceContext);
 
   useEffect(() => {
     getBookByBlock();
   }, []);
+
+  useEffect(() => {
+    getRoomsTickets();
+  }, []);
+
+  const handleBooking = (room) => {
+    setRoom(room);
+    setShowCustomerModal(true);
+  };
 
   return (
     <>
@@ -23,7 +48,9 @@ const BookByBlock = () => {
       >
         Trở về
       </Button>
-
+      {room !== undefined && <CustomerModal />}
+      <AddCustomerModal />
+      {newInvoice !== null && newInvoice !== undefined && <InvoiceModal />}
       <div className="mt-5 mx-5 text-center">
         <Table responsive bordered hover className="mt-3">
           <thead className="text-primary bg-light border border-info">
@@ -54,7 +81,7 @@ const BookByBlock = () => {
                   <td>
                     <Badge
                       className="p-2"
-                      bg={room.status == "Available" ? "info" : "danger"}
+                      bg={room.status === "Available" ? "info" : "danger"}
                     >
                       {room.status}
                     </Badge>
@@ -62,7 +89,9 @@ const BookByBlock = () => {
                   <td>
                     <Button
                       variant="success"
-                      onClick={() => window.history.back()}
+                      onClick={() => {
+                        handleBooking(room);
+                      }}
                     >
                       Đặt ngay
                     </Button>
@@ -72,7 +101,7 @@ const BookByBlock = () => {
             ) : (
               <tr>
                 <td colSpan="5">
-                  <h3 className="text-center">Không có dữ liệu</h3>
+                  <h3 className="text-center">Không có phòng trống</h3>
                 </td>
               </tr>
             )}

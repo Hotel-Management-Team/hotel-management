@@ -27,6 +27,7 @@ import BookingsContextProvider from "./contexts/BookingsContext";
 import AccountContextProvider from "./contexts/AccountContext";
 import SubAccountContextProvider from "./contexts/SubAccountContext";
 import CustomerContextProvider from "./contexts/CustomersContext";
+import InvoiceContextProvider from "./contexts/InvoiceContext";
 function App() {
   return (
     <AuthContextProvider>
@@ -37,132 +38,134 @@ function App() {
               <AccountContextProvider>
                 <SubAccountContextProvider>
                   <CustomerContextProvider>
-                    <Router>
-                      <Routes>
-                        <Route path="/" element={<Landing />} />
-                        <Route
-                          exact
-                          path="/login"
-                          element={<Auth authRoute="login" />}
-                        />
-                        <Route
-                          exact
-                          path="/register"
-                          element={<Auth authRoute="register" />}
-                        />
-                        <Route
-                          exact
-                          path="/dashboard"
-                          element={
-                            <ProtectedRoute>
-                              <Dashboard />
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          exact
-                          path="/booking"
-                          element={
-                            <ProtectedRoute>
-                              <Booking />
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          exact
-                          path="/booking/bookbydate"
-                          element={
-                            <ProtectedRoute>
-                              <ProtectedBooking>
-                                <BookByDate />
-                              </ProtectedBooking>
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          exact
-                          path="/booking/bookbyblock"
-                          element={
-                            <ProtectedRoute>
-                              <ProtectedBooking>
-                                <BookByBlock />
-                              </ProtectedBooking>
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          exact
-                          path="/system-management"
-                          element={
-                            <ProtectedRoute>
-                              <System />
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          exact
-                          path="/revenue-management"
-                          element={
-                            <ProtectedRoute>
-                              <Revenue />
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          exact
-                          path="/account-management"
-                          element={
-                            <ProtectedRoute>
-                              <Account />
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          exact
-                          path="/system-management/rooms"
-                          element={
-                            <ProtectedRoute>
-                              <ProtectedRoom>
-                                <Rooms />
-                              </ProtectedRoom>
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          exact
-                          path="/system-management/charge-calculations"
-                          element={
-                            <ProtectedRoute>
-                              <ProtectedCharge>
-                                <Charge />
-                              </ProtectedCharge>
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          exact
-                          path="/system-management/room-types"
-                          element={
-                            <ProtectedRoute>
-                              <ProtectedRoomType>
-                                <RoomType />
-                              </ProtectedRoomType>
-                            </ProtectedRoute>
-                          }
-                        />
-                        <Route
-                          exact
-                          path="/system-management/sub-accounts"
-                          element={
-                            <ProtectedRoute>
-                              <ProtectedAdmin>
-                                <SubAccount />
-                              </ProtectedAdmin>
-                            </ProtectedRoute>
-                          }
-                        />
-                      </Routes>
-                    </Router>
+                    <InvoiceContextProvider>
+                      <Router>
+                        <Routes>
+                          <Route path="/" element={<Landing />} />
+                          <Route
+                            exact
+                            path="/login"
+                            element={<Auth authRoute="login" />}
+                          />
+                          <Route
+                            exact
+                            path="/register"
+                            element={<Auth authRoute="register" />}
+                          />
+                          <Route
+                            exact
+                            path="/dashboard"
+                            element={
+                              <ProtectedRoute>
+                                <Dashboard />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/booking"
+                            element={
+                              <ProtectedRoute>
+                                <Booking />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/booking/bookbydate"
+                            element={
+                              <ProtectedRoute>
+                                <ProtectedBooking>
+                                  <BookByDate />
+                                </ProtectedBooking>
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/booking/bookbyblock"
+                            element={
+                              <ProtectedRoute>
+                                <ProtectedBooking>
+                                  <BookByBlock />
+                                </ProtectedBooking>
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/system-management"
+                            element={
+                              <ProtectedRoute>
+                                <System />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/revenue-management"
+                            element={
+                              <ProtectedRoute>
+                                <Revenue />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/account-management"
+                            element={
+                              <ProtectedRoute>
+                                <Account />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/system-management/rooms"
+                            element={
+                              <ProtectedRoute>
+                                <ProtectedRoom>
+                                  <Rooms />
+                                </ProtectedRoom>
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/system-management/charge-calculations"
+                            element={
+                              <ProtectedRoute>
+                                <ProtectedCharge>
+                                  <Charge />
+                                </ProtectedCharge>
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/system-management/room-types"
+                            element={
+                              <ProtectedRoute>
+                                <ProtectedRoomType>
+                                  <RoomType />
+                                </ProtectedRoomType>
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/system-management/sub-accounts"
+                            element={
+                              <ProtectedRoute>
+                                <ProtectedAdmin>
+                                  <SubAccount />
+                                </ProtectedAdmin>
+                              </ProtectedRoute>
+                            }
+                          />
+                        </Routes>
+                      </Router>
+                    </InvoiceContextProvider>
                   </CustomerContextProvider>
                 </SubAccountContextProvider>
               </AccountContextProvider>
