@@ -236,6 +236,28 @@ const BookingsContextProvider = ({ children }) => {
     }
   };
 
+  const checkInRoom = async (roomId) => {
+    try {
+      const res = await axios.put(`${apiUrl}/booking/checkin`, { roomId });
+      if (res.data.success) {
+        bookingsDispatch({
+          type: "CHECK_IN_ROOM_SUCCESS",
+          payload: {
+            checkInRoom: res.data.data,
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      bookingsDispatch({
+        type: "CHECK_IN_ROOM_FAILURE",
+        payload: {
+          checkInRoom: null,
+        }
+      });
+    }
+  };
+
   const BookingsContextValue = {
     bookingsState,
     bookingsDispatch,
@@ -269,6 +291,7 @@ const BookingsContextProvider = ({ children }) => {
     getUsingBookings,
     getAvailableBookings,
     getNeedCleanBookings,
+    checkInRoom,
   };
 
   return (

@@ -84,6 +84,20 @@ export const bookingsReducer = (state, action) => {
         needCleanBookings: payload.needCleanBookings,
         bookingsLoading: payload.bookingsLoading,
       };
+    case "CHECK_IN_ROOM_SUCCESS":
+      return {
+        ...state,
+        usingBookings: [...state.usingBookings, payload],
+        availableBookings: state.availableBookings.filter(
+          (booking) => booking._id !== payload.room
+        ),
+      };
+    case "CHECK_IN_ROOM_FAILURE":
+      return {
+        ...state,
+      };
+
+
 
     default:
       return state;

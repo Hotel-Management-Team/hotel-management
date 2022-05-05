@@ -109,6 +109,7 @@ const AuthContextProvider = ({ children }) => {
     logoutUser,
     showToastErrorPermission,
     setShowToastErrorPermission,
+    authDispatch,
   };
 
   return (

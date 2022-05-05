@@ -23,9 +23,9 @@ export const putUser = async (req, res) => {
   try {
     const user = await User.findById(req.userId);
     if (!user) {
-      return res.status(404).json({
+      return res.json({
         success: false,
-        msg: "User not found",
+        msg: "Không tìm thấy tài khoản",
       });
     }
     if (fullName) user.fullName = fullName;
@@ -37,11 +37,11 @@ export const putUser = async (req, res) => {
     res.json({
       success: true,
       data: user,
-      msg: "User updated",
+      msg: "Cập nhật thông tin thành công",
     });
   } catch (error) {
     console.error(error.message);
-    res.status(500).json({
+    res.json({
       success: false,
       msg: "Server Error",
     });

@@ -14,6 +14,7 @@ const CheckIn = () => {
     getWaitingBookings();
   }, []);
 
+
   return (
     <>
       <BackStackButton />

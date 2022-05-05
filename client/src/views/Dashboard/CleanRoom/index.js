@@ -1,7 +1,7 @@
 import React from "react";
 import BackStackButton from "../../../components/common/BackStackButton";
 import { Table, Badge, Button } from "react-bootstrap";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { BookingsContext } from "../../../contexts/BookingsContext";
 
 const CleanRoom = () => {
