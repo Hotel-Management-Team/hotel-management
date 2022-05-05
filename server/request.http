@@ -231,7 +231,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzO
 }
 
 ###
-GET   http://localhost:5000/api/invoice/unpaid
+GET   http://localhost:5000/api/invoice/paid
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTEyYjUzODIwZmRlOTk0NGQ5MzIwOSIsImlhdCI6MTY1MTY4MzA5NiwiZXhwIjoxNjUxOTQyMjk2fQ.Gs38x2NS4J-RfMOoSAZFRh7es5zlHkO_S_W5yZNEu0A
 

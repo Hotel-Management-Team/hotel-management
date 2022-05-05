@@ -16,6 +16,7 @@ const BookingsContextProvider = ({ children }) => {
     usingBookings: [],
     availableBookings: [],
     needCleanBookings: [],
+    allBookings: [],
   });
 
   // handle click
@@ -287,6 +288,30 @@ const BookingsContextProvider = ({ children }) => {
     }
   };
 
+  const getAllBookings = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/booking/all`);
+      if (res.data.success) {
+        bookingsDispatch({
+          type: "GET_ALL_BOOKINGS_SUCCESS",
+          payload: {
+            allBookings: res.data.data,
+            bookingsLoading: false,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      bookingsDispatch({
+        type: "GET_ALL_BOOKINGS_FAILURE",
+        payload: {
+          allBookings: [],
+          bookingsLoading: false,
+        },
+      });
+    }
+  };
+
   const BookingsContextValue = {
     bookingsState,
     bookingsDispatch,
@@ -324,6 +349,7 @@ const BookingsContextProvider = ({ children }) => {
     checkoutBooking,
     cleanRoom,
     cancelBooking,
+    getAllBookings,
   };
 
   return (

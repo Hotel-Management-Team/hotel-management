@@ -24,6 +24,8 @@ import CheckIn from "./views/Dashboard/CheckIn";
 import CheckOut from "./views/Dashboard/CheckOut";
 import CancelBooking from "./views/Dashboard/CancelBooking";
 import CleanRoom from "./views/Dashboard/CleanRoom";
+import Percentage from "./views/Revenue/Percentage";
+import Profit from "./views/Revenue/Profit";
 import RoomsContextProvider from "./contexts/RoomsContext";
 import RoomTypeContextProvider from "./contexts/RoomTypeContext";
 import ChargeContextProvider from "./contexts/ChargesContext";
@@ -139,6 +141,24 @@ function App() {
                             element={
                               <ProtectedRoute>
                                 <System />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/revenue-management/percentage"
+                            element={
+                              <ProtectedRoute>
+                                <Percentage />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/revenue-management/profit"
+                            element={
+                              <ProtectedRoute>
+                                <Profit />
                               </ProtectedRoute>
                             }
                           />

@@ -139,6 +139,11 @@ export const bookingsReducer = (state, action) => {
           (booking) => booking._id !== payload.room._id
         ),
       };
+    case "GET_ALL_BOOKINGS_SUCCESS":
+      return {
+        ...state,
+        allBookings: [...state.allBookings, payload],
+      };
 
     default:
       return state;

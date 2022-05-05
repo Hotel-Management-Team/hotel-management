@@ -3,14 +3,49 @@ import Ticket from "../models/ticket.model";
 import Room from "../models/room.model";
 import Customer from "../models/customer.model";
 
-export const getInvoicePaid = async (req, res) => {
-  const invoices = await Invoice.find({ status: "Paid" })
-    .populate("ticket")
-    .populate("ticket.room");
+export const getInvoices = async (req, res) => {
+  const invoices = await Invoice.find().populate("ticket");
+  const rooms = await Room.find().populate("charge");
+
+  const data = invoices.map((invoice) => {
+    const ticket = invoice.ticket;
+    const room = rooms.find(
+      (room) => room._id.toString() === ticket.room._id.toString()
+    );
+    return {
+      ...invoice._doc,
+      ticket,
+      room,
+    };
+  });
+
   res.json({
     success: true,
-    data: invoices,
-    msg: "getInvoicePaid",
+    data: data,
+    msg: "getInvoices",
+  });
+};
+
+export const getInvoicePaid = async (req, res) => {
+  const invoices = await Invoice.find({ status: "Paid" }).populate("ticket");
+  const rooms = await Room.find().populate("charge");
+
+  const data = invoices.map((invoice) => {
+    const ticket = invoice.ticket;
+    const room = rooms.find(
+      (room) => room._id.toString() === ticket.room._id.toString()
+    );
+    return {
+      ...invoice._doc,
+      ticket,
+      room,
+    };
+  });
+
+  res.json({
+    success: true,
+    data: data,
+    msg: "getInvoices",
   });
 };
 

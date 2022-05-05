@@ -114,6 +114,20 @@ const InvoiceContextProvider = ({ children }) => {
     }
   };
 
+  const getInvoices = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/invoice`);
+      invoiceDispatch({
+        type: "GET_INVOICES_SUCCESS",
+        payload: response.data.data,
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
   const InvoiceContextValue = {
     invoiceState,
     invoiceDispatch,
@@ -128,6 +142,7 @@ const InvoiceContextProvider = ({ children }) => {
     setShowPaymentModal,
     findInvoice,
     paymentInvoice,
+    getInvoices,
   };
 
   return (

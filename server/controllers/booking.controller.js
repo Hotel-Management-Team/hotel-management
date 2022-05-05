@@ -224,3 +224,17 @@ export const cancelBooking = async (req, res) => {
     res.status(500).send("Server Error1");
   }
 };
+
+export const getAllBookings = async (req, res) => {
+  try {
+    const tickets = await Ticket.find().populate("room").populate("customer");
+    res.json({
+      success: true,
+      msg: "getAllBookings",
+      data: tickets,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error1");
+  }
+};

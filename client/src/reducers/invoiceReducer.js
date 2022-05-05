@@ -26,6 +26,11 @@ export const invoiceReducer = (state, action) => {
         ...state,
         invoice: payload,
       };
+    case "GET_INVOICES_SUCCESS":
+      return {
+        ...state,
+        invoices: payload,
+      };
     default:
       return state;
   }

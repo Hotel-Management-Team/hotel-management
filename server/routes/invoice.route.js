@@ -6,9 +6,11 @@ import {
   getInvoiceUnPaid,
   postInvoice,
   putInvoice,
+  getInvoices,
 } from "../controllers/invoice.controller";
 
 const router = Router();
+router.get("/", verifyToken, getInvoices);
 
 router.get("/paid", verifyToken, getInvoicePaid);
 

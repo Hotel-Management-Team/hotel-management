@@ -12,11 +12,14 @@ import {
   checkoutBooking,
   cleanRoom,
   cancelBooking,
+  getAllBookings,
 } from "../controllers/booking.controller";
 
 const router = Router();
 
 router.get("/", verifyToken, getBooking);
+router.get("/all", verifyToken, getBooking);
+
 router.get("/byblock", verifyToken, getBookingByBlock);
 router.get("/waiting", verifyToken, getWaitingBookings);
 router.get("/using", verifyToken, getUsingBookings);
