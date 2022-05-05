@@ -205,3 +205,23 @@ export const cleanRoom = async (req, res) => {
     });
   }
 };
+
+export const cancelBooking = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const ticket = await Ticket.findById(id)
+      .populate("room")
+      .populate("customer");
+    const invoice = await Invoice.findByIdAndDelete(ticket.invoice);
+    // delete  ticket
+    await Ticket.findByIdAndDelete(id);
+    res.json({
+      success: true,
+      msg: `${ticket.customer.name} đã hủy lịch đặt phòng ${ticket.room.name} thành công`,
+      data: ticket,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error1");
+  }
+};

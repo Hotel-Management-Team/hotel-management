@@ -11,6 +11,7 @@ import {
   checkinBooking,
   checkoutBooking,
   cleanRoom,
+  cancelBooking,
 } from "../controllers/booking.controller";
 
 const router = Router();
@@ -24,5 +25,6 @@ router.get("/needclean", verifyToken, getNeedCleanBookings);
 router.put("/checkin/:id", verifyToken, checkinBooking);
 router.put("/checkout/:id/:total", verifyToken, checkoutBooking);
 router.put("/clean/:id", verifyToken, cleanRoom);
+router.delete("/cancel/:id", verifyToken, cancelBooking);
 
 export default router;

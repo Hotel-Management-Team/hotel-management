@@ -126,6 +126,19 @@ export const bookingsReducer = (state, action) => {
           (booking) => booking._id !== payload.room._id
         ),
       };
+    case "CANCEL_BOOKING_SUCCESS":
+      return {
+        ...state,
+        availableBookings: state.availableBookings.filter(
+          (booking) => booking._id !== payload._id
+        ),
+        bookingsByDate: state.bookingsByDate.filter(
+          (booking) => booking._id !== payload.room._id
+        ),
+        bookingsByBlock: state.bookingsByBlock.filter(
+          (booking) => booking._id !== payload.room._id
+        ),
+      };
 
     default:
       return state;

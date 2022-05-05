@@ -272,6 +272,17 @@ const BookingsContextProvider = ({ children }) => {
     }
   };
 
+  const cancelBooking = async (ticketId) => {
+    const res = await axios.delete(`${apiUrl}/booking/cancel/${ticketId}`);
+    if (res.data.success) {
+      bookingsDispatch({
+        type: "CANCEL_BOOKING_SUCCESS",
+        payload: res.data.data,
+      });
+      return res.data;
+    }
+  };
+
   const BookingsContextValue = {
     bookingsState,
     bookingsDispatch,
@@ -308,6 +319,7 @@ const BookingsContextProvider = ({ children }) => {
     checkinBooking,
     checkoutBooking,
     cleanRoom,
+    cancelBooking,
   };
 
   return (

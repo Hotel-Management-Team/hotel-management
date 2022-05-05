@@ -1,6 +1,6 @@
 import React from "react";
 import BackStackButton from "../../../components/common/BackStackButton";
-import { Table, Badge, Button } from "react-bootstrap";
+import { Table, Badge, Button, Toast } from "react-bootstrap";
 import { useContext, useState, useEffect } from "react";
 import { BookingsContext } from "../../../contexts/BookingsContext";
 
@@ -8,6 +8,9 @@ const CancelBooking = () => {
   const {
     bookingsState: { availableBookings },
     getAvailableBookings,
+    cancelBooking,
+    showToast: { show, msg, type },
+    setShowToast,
   } = useContext(BookingsContext);
 
   useEffect(() => {
@@ -55,8 +58,15 @@ const CancelBooking = () => {
                   <td>
                     <Button
                       variant="success"
-                      onClick={() => {
-                        console.log("booking");
+                      onClick={async () => {
+                        const { msg, success } = await cancelBooking(
+                          ticket._id
+                        );
+                        setShowToast({
+                          show: true,
+                          msg,
+                          type: success ? "success" : "danger",
+                        });
                       }}
                     >
                       Hủy phòng
@@ -74,6 +84,22 @@ const CancelBooking = () => {
           </tbody>
         </Table>
       </div>
+      <Toast
+        show={show}
+        style={{ position: "fixed", top: "20%", right: "10px" }}
+        className={`bg-${type} text-white`}
+        onClose={setShowToast.bind(this, {
+          show: false,
+          msg: "",
+          type: null,
+        })}
+        delay={3000}
+        autohide
+      >
+        <Toast.Body>
+          <strong>{msg}</strong>
+        </Toast.Body>
+      </Toast>
     </>
   );
 };
