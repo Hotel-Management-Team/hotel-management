@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Landing from "./components/layout/Landing";
 import Auth from "./views/Auth";
-import Dashboard from "./views/Dashboard";
+import Dashboard from "./views/Dashboard/index";
 import AuthContextProvider from "./contexts/AuthContext";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import ProtectedAdmin from "./components/routing/ProtectedAdmin";
@@ -20,6 +20,9 @@ import Account from "./views/Account";
 import RoomType from "./views/System/RoomType/index";
 import Charge from "./views/System/Charge/index";
 import SubAccount from "./views/System/SubAccount";
+import CheckIn from "./views/Dashboard/CheckIn";
+import CheckOut from "./views/Dashboard/CheckOut";
+import CancelBooking from "./views/Dashboard/CancelBooking";
 import RoomsContextProvider from "./contexts/RoomsContext";
 import RoomTypeContextProvider from "./contexts/RoomTypeContext";
 import ChargeContextProvider from "./contexts/ChargesContext";
@@ -61,6 +64,34 @@ function App() {
                               </ProtectedRoute>
                             }
                           />
+                          <Route
+                            exact
+                            path="/dashboard/checkin"
+                            element={
+                              <ProtectedRoute>
+                                <CheckIn />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/dashboard/checkout"
+                            element={
+                              <ProtectedRoute>
+                                <CheckOut />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/dashboard/cancelbooking"
+                            element={
+                              <ProtectedRoute>
+                                <CancelBooking />
+                              </ProtectedRoute>
+                            }
+                          />
+
                           <Route
                             exact
                             path="/booking"

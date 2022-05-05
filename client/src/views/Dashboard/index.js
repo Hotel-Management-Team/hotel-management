@@ -1,8 +1,12 @@
 import React from "react";
 import { useContext, useState, useEffect, useRef } from "react";
-import { RoomsContext } from "../contexts/RoomsContext";
+import { RoomsContext } from "../../contexts/RoomsContext";
 import Select from "react-select";
 import { Table } from "react-bootstrap";
+import IMG_CHECKIN from "../../../src/assets/CheckIn.png";
+import IMG_CHECKOUT from "../../../src/assets/CheckOut.png";
+import IMG_CANCELBOOKING from "../../../src/assets/RemoveBooking.png";
+import CardFeature from "../../components/common/CardFeature";
 
 const Dashboard = () => {
   const options = [
@@ -10,6 +14,24 @@ const Dashboard = () => {
     { value: "Using", label: "Đang sử dụng" },
     { value: "Available", label: "Khả dụng" },
     { value: "NeedClean", label: "Cần dọn" },
+  ];
+
+  const features = [
+    {
+      name: "Nhận phòng",
+      img: IMG_CHECKIN,
+      href: "/dashboard/checkin",
+    },
+    {
+      name: "Trả phòng",
+      img: IMG_CHECKOUT,
+      href: "/dashboard/checkout",
+    },
+    {
+      name: "Hủy phòng",
+      img: IMG_CANCELBOOKING,
+      href: "/dashboard/cancelbooking",
+    },
   ];
 
   const {
@@ -45,7 +67,15 @@ const Dashboard = () => {
 
   return (
     <>
-      <h1>Dashboard</h1>;
+      <div className="container my-5">
+        <div className="row g-5 d-flex justify-content-center">
+          {features.map((feature) => (
+            <div className="col-md-3" key={feature.name}>
+              <CardFeature feature={feature} />
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="mt-5 mx-5 text-center">
         <h3 className="text-center">Trạng thái phòng</h3>
         <Select
