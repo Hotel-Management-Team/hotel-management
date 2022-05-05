@@ -68,8 +68,6 @@ export const deleteCharge = async (req, res) => {
 export const updateCharge = async (req, res) => {
   try {
     const { _id } = req.params;
-    console.log(_id);
-    console.log(req.body);
     const charge = await Charge.findByIdAndUpdate(_id, req.body, {
       new: true,
     });

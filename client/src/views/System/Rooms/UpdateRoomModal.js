@@ -36,7 +36,6 @@ const UpdateRoomModal = () => {
   }, [roomTypes.length, charges.length]);
 
   useEffect(() => {
-    console.log(room);
     setUpdatedRoomData(room);
   }, [room]);
 

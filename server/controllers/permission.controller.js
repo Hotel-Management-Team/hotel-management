@@ -1,7 +1,6 @@
 import User from "../models/user.model";
 
 export const putBannedUser = async (req, res) => {
-  console.log("putBannedUser");
   const { id } = req.params;
   try {
     if (!id) {
@@ -34,7 +33,6 @@ export const putBannedUser = async (req, res) => {
 };
 
 export const putPermissionUser = async (req, res) => {
-  console.log("putPermissionUser");
   const { id } = req.params;
   const { hasPrice, hasRental, hasRoom, hasType, isAdmin } = req.body;
   const permissions = {

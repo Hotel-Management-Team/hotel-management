@@ -78,7 +78,6 @@ export const postInvoice = async (req, res) => {
 };
 
 export const putInvoice = async (req, res) => {
-  console.log(req.body);
   const { _id, total, ticket, prepaid } = req.body;
   try {
     const invoice = await Invoice.findByIdAndUpdate(_id, {
