@@ -8,6 +8,7 @@ export const BookingsContext = createContext();
 const BookingsContextProvider = ({ children }) => {
   const [bookingsState, bookingsDispatch] = useReducer(bookingsReducer, {
     bookings: [],
+    booking: null,
     bookingsLoading: true,
     bookingsByBlock: [],
     bookingsByDate: [],
@@ -236,6 +237,41 @@ const BookingsContextProvider = ({ children }) => {
     }
   };
 
+  const checkinBooking = async (ticketId) => {
+    const res = await axios.put(`${apiUrl}/booking/checkin/${ticketId}`);
+    if (res.data.success) {
+      bookingsDispatch({
+        type: "CHECKIN_BOOKING_SUCCESS",
+        payload: res.data.data,
+      });
+      return res.data;
+    }
+  };
+
+  const checkoutBooking = async (invoice) => {
+    const res = await axios.put(
+      `${apiUrl}/booking/checkout/${invoice._id}/${invoice.total}`
+    );
+    if (res.data.success) {
+      bookingsDispatch({
+        type: "CHECKOUT_BOOKING_SUCCESS",
+        payload: res.data.data,
+      });
+      return res.data;
+    }
+  };
+
+  const cleanRoom = async (ticketId) => {
+    const res = await axios.put(`${apiUrl}/booking/clean/${ticketId}`);
+    if (res.data.success) {
+      bookingsDispatch({
+        type: "CLEAN_ROOM_SUCCESS",
+        payload: res.data.data,
+      });
+      return res.data;
+    }
+  };
+
   const BookingsContextValue = {
     bookingsState,
     bookingsDispatch,
@@ -269,6 +305,9 @@ const BookingsContextProvider = ({ children }) => {
     getUsingBookings,
     getAvailableBookings,
     getNeedCleanBookings,
+    checkinBooking,
+    checkoutBooking,
+    cleanRoom,
   };
 
   return (

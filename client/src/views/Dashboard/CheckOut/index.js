@@ -1,22 +1,37 @@
 import React from "react";
 import BackStackButton from "../../../components/common/BackStackButton";
-import { Table, Badge, Button } from "react-bootstrap";
+import { Table, Badge, Button, Toast } from "react-bootstrap";
 import { useContext, useState, useEffect } from "react";
 import { BookingsContext } from "../../../contexts/BookingsContext";
+import { InvoiceContext } from "../../../contexts/InvoiceContext";
+import { PaymentModal } from "./PaymentModal";
 
 const CheckOut = () => {
   const {
     bookingsState: { usingBookings },
     getUsingBookings,
+    showToast: { show, msg, type },
+    setShowToast,
   } = useContext(BookingsContext);
+
+  const {
+    invoiceState: { invoices, invoice },
+    getInvoicesPaid,
+    getInvoicesUnpaid,
+    findInvoice,
+    setShowPaymentModal,
+  } = useContext(InvoiceContext);
 
   useEffect(() => {
     getUsingBookings();
+    setShowToast({ show: false, msg: "", type: "" });
+    getInvoicesUnpaid();
   }, []);
 
   return (
     <>
       <BackStackButton />
+      {invoice !== null && invoice !== undefined && <PaymentModal />}
       <div className="mt-3 mx-5 text-center">
         <h3>
           {" "}
@@ -56,7 +71,8 @@ const CheckOut = () => {
                     <Button
                       variant="success"
                       onClick={() => {
-                        console.log("booking");
+                        findInvoice(ticket);
+                        setShowPaymentModal(true);
                       }}
                     >
                       Trả phòng
@@ -76,6 +92,22 @@ const CheckOut = () => {
           </tbody>
         </Table>
       </div>
+      <Toast
+        show={show}
+        style={{ position: "fixed", top: "20%", right: "10px" }}
+        className={`bg-${type} text-white`}
+        onClose={setShowToast.bind(this, {
+          show: false,
+          msg: "",
+          type: null,
+        })}
+        delay={3000}
+        autohide
+      >
+        <Toast.Body>
+          <strong>{msg}</strong>
+        </Toast.Body>
+      </Toast>
     </>
   );
 };

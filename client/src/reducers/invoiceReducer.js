@@ -11,6 +11,21 @@ export const invoiceReducer = (state, action) => {
     case "UPDATE_PREPAID_SUCCESS":
       return state;
 
+    case "GET_INVOICES_UNPAID_SUCCESS":
+      return {
+        ...state,
+        invoices: payload,
+      };
+    case "GET_INVOICES_PAID_SUCCESS":
+      return {
+        ...state,
+        invoices: payload,
+      };
+    case "FIND_INVOICE_SUCCESS":
+      return {
+        ...state,
+        invoice: payload,
+      };
     default:
       return state;
   }

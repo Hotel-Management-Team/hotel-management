@@ -84,6 +84,48 @@ export const bookingsReducer = (state, action) => {
         needCleanBookings: payload.needCleanBookings,
         bookingsLoading: payload.bookingsLoading,
       };
+    case "CHECKIN_BOOKING_SUCCESS":
+      return {
+        ...state,
+        waitingBookings: state.waitingBookings.filter(
+          (booking) => booking._id !== payload._id
+        ),
+        usingBookings: [...state.usingBookings, payload],
+        bookingsByDate: state.bookingsByDate.filter(
+          (booking) => booking._id !== payload.room._id
+        ),
+        bookingsByBlock: state.bookingsByBlock.filter(
+          (booking) => booking._id !== payload.room._id
+        ),
+      };
+    case "CHECKOUT_BOOKING_SUCCESS":
+      return {
+        ...state,
+        usingBookings: state.usingBookings.filter(
+          (booking) => booking._id !== payload._id
+        ),
+        needCleanBookings: [...state.needCleanBookings, payload],
+        bookingsByDate: state.bookingsByDate.filter(
+          (booking) => booking._id !== payload.room._id
+        ),
+        bookingsByBlock: state.bookingsByBlock.filter(
+          (booking) => booking._id !== payload.room._id
+        ),
+      };
+    case "CLEAN_ROOM_SUCCESS":
+      return {
+        ...state,
+        needCleanBookings: state.needCleanBookings.filter(
+          (booking) => booking._id !== payload._id
+        ),
+        availableBookings: [...state.availableBookings, payload],
+        bookingsByDate: state.bookingsByDate.filter(
+          (booking) => booking._id !== payload.room._id
+        ),
+        bookingsByBlock: state.bookingsByBlock.filter(
+          (booking) => booking._id !== payload.room._id
+        ),
+      };
 
     default:
       return state;

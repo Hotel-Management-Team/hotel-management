@@ -72,6 +72,7 @@ export const postTicket = async (req, res) => {
       ? "Waiting"
       : "Available";
 
+  console.log("status", updateStatus);
   const updatedRoom = await Room.findByIdAndUpdate(roomId, {
     status: updateStatus,
   });

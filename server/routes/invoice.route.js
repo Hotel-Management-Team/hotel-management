@@ -2,14 +2,17 @@ import { Router } from "express";
 import verifyToken from "../middlewares/auth.middleware";
 import Invoice from "../models/invoice.model";
 import {
-  getInvoice,
+  getInvoicePaid,
+  getInvoiceUnPaid,
   postInvoice,
   putInvoice,
 } from "../controllers/invoice.controller";
 
 const router = Router();
 
-router.get("/", verifyToken, getInvoice);
+router.get("/paid", verifyToken, getInvoicePaid);
+
+router.get("/unpaid", verifyToken, getInvoiceUnPaid);
 
 router.post("/", verifyToken, postInvoice);
 

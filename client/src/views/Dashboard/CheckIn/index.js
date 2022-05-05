@@ -1,6 +1,6 @@
 import React from "react";
 import BackStackButton from "../../../components/common/BackStackButton";
-import { Table, Badge, Button } from "react-bootstrap";
+import { Table, Badge, Button, Toast } from "react-bootstrap";
 import { useContext, useState, useEffect } from "react";
 import { BookingsContext } from "../../../contexts/BookingsContext";
 
@@ -8,7 +8,12 @@ const CheckIn = () => {
   const {
     bookingsState: { waitingBookings },
     getWaitingBookings,
+    checkinBooking,
+    showToast: { show, msg, type },
+    setShowToast,
   } = useContext(BookingsContext);
+
+  const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
     getWaitingBookings();
@@ -17,6 +22,7 @@ const CheckIn = () => {
   return (
     <>
       <BackStackButton />
+
       <div className="mt-3 mx-5 text-center">
         <h3>
           <strong>Nhận phòng</strong>
@@ -54,8 +60,15 @@ const CheckIn = () => {
                   <td>
                     <Button
                       variant="success"
-                      onClick={() => {
-                        console.log("booking");
+                      onClick={async () => {
+                        const { msg, success } = await checkinBooking(
+                          ticket._id
+                        );
+                        setShowToast({
+                          show: true,
+                          msg,
+                          type: success ? "success" : "danger",
+                        });
                       }}
                     >
                       Nhận phòng
@@ -73,6 +86,22 @@ const CheckIn = () => {
           </tbody>
         </Table>
       </div>
+      <Toast
+        show={show}
+        style={{ position: "fixed", top: "20%", right: "10px" }}
+        className={`bg-${type} text-white`}
+        onClose={setShowToast.bind(this, {
+          show: false,
+          msg: "",
+          type: null,
+        })}
+        delay={3000}
+        autohide
+      >
+        <Toast.Body>
+          <strong>{msg}</strong>
+        </Toast.Body>
+      </Toast>
     </>
   );
 };

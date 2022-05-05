@@ -1,13 +1,16 @@
 import React from "react";
 import BackStackButton from "../../../components/common/BackStackButton";
-import { Table, Badge, Button } from "react-bootstrap";
+import { Table, Badge, Button, Toast } from "react-bootstrap";
 import { useContext, useState, useEffect } from "react";
 import { BookingsContext } from "../../../contexts/BookingsContext";
 
 const CleanRoom = () => {
   const {
     bookingsState: { needCleanBookings },
+    showToast: { show, msg, type },
+    setShowToast,
     getNeedCleanBookings,
+    cleanRoom,
   } = useContext(BookingsContext);
 
   useEffect(() => {
@@ -48,18 +51,23 @@ const CleanRoom = () => {
                     {new Date(ticket.departureDate).toLocaleDateString("en-US")}
                   </td>
                   <td>
-                    <Badge bg="success" className="p-2">
+                    <Badge bg="warning" className="p-2">
                       {ticket.room.status}
                     </Badge>
                   </td>
                   <td>
                     <Button
                       variant="success"
-                      onClick={() => {
-                        console.log("booking");
+                      onClick={async () => {
+                        const { msg, success } = await cleanRoom(ticket._id);
+                        setShowToast({
+                          show: true,
+                          msg,
+                          type: success ? "success" : "danger",
+                        });
                       }}
                     >
-                      Trả phòng
+                      Đã dọn phòng?
                     </Button>
                   </td>
                 </tr>
@@ -76,6 +84,22 @@ const CleanRoom = () => {
           </tbody>
         </Table>
       </div>
+      <Toast
+        show={show}
+        style={{ position: "fixed", top: "20%", right: "10px" }}
+        className={`bg-${type} text-white`}
+        onClose={setShowToast.bind(this, {
+          show: false,
+          msg: "",
+          type: null,
+        })}
+        delay={3000}
+        autohide
+      >
+        <Toast.Body>
+          <strong>{msg}</strong>
+        </Toast.Body>
+      </Toast>
     </>
   );
 };

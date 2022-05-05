@@ -1,6 +1,7 @@
 import Ticket from "../models/ticket.model";
 import Room from "../models/room.model";
 import Charge from "../models/charge.model";
+import Invoice from "../models/invoice.model";
 
 export const getBooking = async (req, res) => {
   const results = new Array();
@@ -122,5 +123,85 @@ export const getNeedCleanBookings = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error1");
+  }
+};
+
+export const checkinBooking = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const ticket = await Ticket.findById(id)
+      .populate("customer")
+      .populate("room");
+    const room = await Room.findById(ticket.room);
+    room.status = "Using";
+    await room.save();
+    // ticket.isSolved = true;
+    await ticket.save();
+    res.json({
+      success: true,
+      msg: `${ticket.customer.name} đã nhận phòng ${room.name} thành công`,
+      data: ticket,
+    });
+    console.log("checkinBooking", ticket);
+  } catch (error) {
+    console.error(error.message);
+    res.json({
+      success: false,
+      msg: "Error",
+    });
+  }
+};
+
+export const checkoutBooking = async (req, res) => {
+  const { id, total } = req.params;
+  try {
+    const invoice = await Invoice.findByIdAndUpdate(id, {
+      total: total,
+      status: "Paid",
+    });
+    const ticket = await Ticket.findById(invoice.ticket)
+      .populate("room")
+      .populate("customer");
+    const room = await Room.findByIdAndUpdate(ticket.room, {
+      status: "NeedClean",
+    });
+    res.json({
+      success: true,
+      msg: `${ticket.customer.name} đã thanh toán phòng ${room.name} thành công`,
+      data: ticket,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error1");
+  }
+};
+
+export const cleanRoom = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const ticket = await Ticket.findByIdAndUpdate(id, {
+      isSolved: true,
+    })
+      .populate("room")
+      .populate("customer");
+
+    const room = await Room.findByIdAndUpdate(ticket.room, {
+      status: "Available",
+    });
+
+    console.log("Room", room);
+
+    res.json({
+      success: true,
+      msg: `${room.name} đã được dọn thành công`,
+      data: ticket,
+    });
+  } catch (error) {
+    console.error("errorr", error.message);
+    res.json({
+      success: false,
+      msg: "Error",
+    });
   }
 };

@@ -1,10 +1,44 @@
 import Invoice from "../models/invoice.model";
 import Ticket from "../models/ticket.model";
 import Room from "../models/room.model";
+import Customer from "../models/customer.model";
 
-export const getInvoice = async (req, res) => {
-  const invoices = await Invoice.find();
-  res.json(invoices);
+export const getInvoicePaid = async (req, res) => {
+  const invoices = await Invoice.find({ status: "Paid" })
+    .populate("ticket")
+    .populate("ticket.room");
+  res.json({
+    success: true,
+    data: invoices,
+    msg: "getInvoicePaid",
+  });
+};
+
+export const getInvoiceUnPaid = async (req, res) => {
+  const invoices = await Invoice.find({ status: "Unpaid" }).populate("ticket");
+  const rooms = await Room.find().populate("charge");
+  const customers = await Customer.find();
+  const data = invoices.map((invoice) => {
+    const ticket = invoice.ticket;
+    const room = rooms.find(
+      (room) => room._id.toString() === ticket.room._id.toString()
+    );
+    const customer = customers.find(
+      (customer) => customer._id.toString() === ticket.customer._id.toString()
+    );
+    return {
+      ...invoice._doc,
+      ticket,
+      room,
+      customer,
+    };
+  });
+
+  res.json({
+    success: true,
+    data: data,
+    msg: "getInvoiceUnPaid",
+  });
 };
 
 export const postInvoice = async (req, res) => {
