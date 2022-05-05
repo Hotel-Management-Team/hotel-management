@@ -9,6 +9,7 @@ import { CustomerModal } from "../CustomerModal";
 import { AddCustomerModal } from "../AddCustomerModal";
 import { TableBooking } from "../TableBooking";
 import { InvoiceModal } from "../InvoiceModal";
+import BackStackButton from "../../../components/common/BackStackButton";
 
 const BookByDate = () => {
   const {
@@ -62,13 +63,7 @@ const BookByDate = () => {
       {customers !== null && <CustomerModal />}
       {newInvoice !== null && newInvoice !== undefined && <InvoiceModal />}
 
-      <Button
-        className="m-3"
-        variant="outline-success"
-        onClick={() => window.history.back()}
-      >
-        Trở về
-      </Button>
+      <BackStackButton />
       <div className="container d-flex flex-column p-4">
         <Form className="p-3">
           <Row>

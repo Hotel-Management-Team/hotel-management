@@ -6,6 +6,7 @@ import { Table } from "react-bootstrap";
 import IMG_CHECKIN from "../../../src/assets/CheckIn.png";
 import IMG_CHECKOUT from "../../../src/assets/CheckOut.png";
 import IMG_CANCELBOOKING from "../../../src/assets/RemoveBooking.png";
+import IMG_CLEANROOM from "../../../src/assets/Clean.png";
 import CardFeature from "../../components/common/CardFeature";
 
 const Dashboard = () => {
@@ -31,6 +32,11 @@ const Dashboard = () => {
       name: "Hủy phòng",
       img: IMG_CANCELBOOKING,
       href: "/dashboard/cancelbooking",
+    },
+    {
+      name: "Dọn phòng",
+      img: IMG_CLEANROOM,
+      href: "/dashboard/cleanroom",
     },
   ];
 

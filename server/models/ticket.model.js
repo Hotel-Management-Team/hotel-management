@@ -22,6 +22,10 @@ const ticketSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
+  isSolved: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Ticket = mongoose.model("Ticket", ticketSchema);

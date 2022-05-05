@@ -56,3 +56,71 @@ export const getBookingByBlock = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+export const getWaitingBookings = async (req, res) => {
+  try {
+    const tickets = await Ticket.find().populate("room").populate("customer");
+    const results = tickets.filter((ticket) => {
+      return ticket.room.status === "Waiting" && ticket.isSolved === false;
+    });
+    res.json({
+      success: true,
+      msg: "getWaitingBookings",
+      data: results,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error1");
+  }
+};
+
+export const getUsingBookings = async (req, res) => {
+  try {
+    const tickets = await Ticket.find().populate("room").populate("customer");
+    const results = tickets.filter((ticket) => {
+      return ticket.room.status === "Using" && ticket.isSolved === false;
+    });
+    res.json({
+      success: true,
+      msg: "getUsingBookings",
+      data: results,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error1");
+  }
+};
+
+export const getAvailableBookings = async (req, res) => {
+  try {
+    const tickets = await Ticket.find().populate("room").populate("customer");
+    const results = tickets.filter((ticket) => {
+      return ticket.room.status === "Available" && ticket.isSolved === false;
+    });
+    res.json({
+      success: true,
+      msg: "getAvailableBookings",
+      data: results,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error1");
+  }
+};
+
+export const getNeedCleanBookings = async (req, res) => {
+  try {
+    const tickets = await Ticket.find().populate("room").populate("customer");
+    const results = tickets.filter((ticket) => {
+      return ticket.room.status === "NeedClean" && ticket.isSolved === false;
+    });
+    res.json({
+      success: true,
+      msg: "getNeedCleanBookings",
+      data: results,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error1");
+  }
+};

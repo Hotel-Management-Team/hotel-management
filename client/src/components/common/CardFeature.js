@@ -18,7 +18,7 @@ const CardFeature = ({ feature }) => {
           style={{ width: 150, height: 150, margin: "auto" }}
         />
         <Card.Footer className="d-flex justify-content-center bg-white">
-          {feature.name}
+          <strong> {feature.name}</strong>
         </Card.Footer>
       </Card>
     </>

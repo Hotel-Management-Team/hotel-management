@@ -11,6 +11,10 @@ const BookingsContextProvider = ({ children }) => {
     bookingsLoading: true,
     bookingsByBlock: [],
     bookingsByDate: [],
+    waitingBookings: [],
+    usingBookings: [],
+    availableBookings: [],
+    needCleanBookings: [],
   });
 
   // handle click
@@ -136,6 +140,102 @@ const BookingsContextProvider = ({ children }) => {
     }
   };
 
+  const getWaitingBookings = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/booking/waiting`);
+      if (res.data.success) {
+        bookingsDispatch({
+          type: "GET_WAITING_BOOKINGS_SUCCESS",
+          payload: {
+            waitingBookings: res.data.data,
+            bookingsLoading: false,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      bookingsDispatch({
+        type: "GET_WAITING_BOOKINGS_FAILURE",
+        payload: {
+          waitingBookings: [],
+          bookingsLoading: false,
+        },
+      });
+    }
+  };
+
+  const getUsingBookings = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/booking/using`);
+      if (res.data.success) {
+        bookingsDispatch({
+          type: "GET_USING_BOOKINGS_SUCCESS",
+          payload: {
+            usingBookings: res.data.data,
+            bookingsLoading: false,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      bookingsDispatch({
+        type: "GET_USING_BOOKINGS_FAILURE",
+        payload: {
+          usingBookings: [],
+          bookingsLoading: false,
+        },
+      });
+    }
+  };
+
+  const getAvailableBookings = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/booking/available`);
+      if (res.data.success) {
+        bookingsDispatch({
+          type: "GET_AVAILABLE_BOOKINGS_SUCCESS",
+          payload: {
+            availableBookings: res.data.data,
+            bookingsLoading: false,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      bookingsDispatch({
+        type: "GET_AVAILABLE_BOOKINGS_FAILURE",
+        payload: {
+          availableBookings: [],
+          bookingsLoading: false,
+        },
+      });
+    }
+  };
+
+  const getNeedCleanBookings = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/booking/needclean`);
+      if (res.data.success) {
+        bookingsDispatch({
+          type: "GET_NEED_CLEAN_BOOKINGS_SUCCESS",
+          payload: {
+            needCleanBookings: res.data.data,
+            bookingsLoading: false,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      bookingsDispatch({
+        type: "GET_NEED_CLEAN_BOOKINGS_FAILURE",
+        payload: {
+          needCleanBookings: [],
+          bookingsLoading: false,
+        },
+      });
+    }
+  };
+
   const BookingsContextValue = {
     bookingsState,
     bookingsDispatch,
@@ -165,6 +265,10 @@ const BookingsContextProvider = ({ children }) => {
     setTotal,
     date,
     setDate,
+    getWaitingBookings,
+    getUsingBookings,
+    getAvailableBookings,
+    getNeedCleanBookings,
   };
 
   return (

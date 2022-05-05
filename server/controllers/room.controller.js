@@ -175,7 +175,7 @@ export const findRoom = async (req, res) => {
       .lean()
       .populate("roomtype")
       .populate("charge");
-    const tickets = await Ticket.find();
+    const tickets = await Ticket.find({ isSovled: false });
 
     for (const room of rooms) {
       room.tickets = tickets.filter((ticket) => {

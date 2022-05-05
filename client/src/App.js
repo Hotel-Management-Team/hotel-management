@@ -23,6 +23,7 @@ import SubAccount from "./views/System/SubAccount";
 import CheckIn from "./views/Dashboard/CheckIn";
 import CheckOut from "./views/Dashboard/CheckOut";
 import CancelBooking from "./views/Dashboard/CancelBooking";
+import CleanRoom from "./views/Dashboard/CleanRoom";
 import RoomsContextProvider from "./contexts/RoomsContext";
 import RoomTypeContextProvider from "./contexts/RoomTypeContext";
 import ChargeContextProvider from "./contexts/ChargesContext";
@@ -88,6 +89,15 @@ function App() {
                             element={
                               <ProtectedRoute>
                                 <CancelBooking />
+                              </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            exact
+                            path="/dashboard/cleanroom"
+                            element={
+                              <ProtectedRoute>
+                                <CleanRoom />
                               </ProtectedRoute>
                             }
                           />

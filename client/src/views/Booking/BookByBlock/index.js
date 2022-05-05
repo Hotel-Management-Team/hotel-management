@@ -7,6 +7,7 @@ import { AddCustomerModal } from "../AddCustomerModal";
 import { RoomsContext } from "../../../contexts/RoomsContext";
 import { InvoiceContext } from "../../../contexts/InvoiceContext";
 import { InvoiceModal } from "../InvoiceModal";
+import BackStackButton from "../../../components/common/BackStackButton";
 
 const BookByBlock = () => {
   const {
@@ -41,13 +42,7 @@ const BookByBlock = () => {
 
   return (
     <>
-      <Button
-        className="m-3"
-        variant="outline-success"
-        onClick={() => window.history.back()}
-      >
-        Trở về
-      </Button>
+      <BackStackButton />
       {room !== undefined && <CustomerModal />}
       <AddCustomerModal />
       {newInvoice !== null && newInvoice !== undefined && <InvoiceModal />}

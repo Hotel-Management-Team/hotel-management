@@ -4,7 +4,7 @@ import Charge from "../models/charge.model";
 import Customer from "../models/customer.model";
 
 export const getTicket = async (req, res) => {
-  const tickets = await Ticket.find();
+  const tickets = await Ticket.find({ isSolved: false });
   const results = new Array();
 
   for (let i = 0; i < tickets.length; i++) {
@@ -29,7 +29,7 @@ export const getTicketList = async (req, res) => {
   const { room, startDate } = req.body;
   // switch startDate from 2016-05-18T16:00:00Z  to 18/05/2016
 
-  const tickets = await Ticket.find({ room, startDate });
+  const tickets = await Ticket.find({ room, startDate, isSolved: false });
   const results = new Array();
 
   for (let i = 0; i < tickets.length; i++) {
