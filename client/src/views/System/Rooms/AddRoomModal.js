@@ -37,6 +37,7 @@ const AddRoomModal = () => {
     roomtype: null,
     charge: null,
     description: "",
+    status: "Available",
   });
 
   const { name, roomtype, charge, description, status } = newRoom;
@@ -56,6 +57,7 @@ const AddRoomModal = () => {
       roomtype: null,
       charge: null,
       description: "",
+      status: "Booked",
     });
     setShowAddRoomModal(false);
   };

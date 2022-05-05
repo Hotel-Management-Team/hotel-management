@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import { useContext, useState } from "react";
 import { AccountContext } from "../contexts/AccountContext";
@@ -12,6 +12,7 @@ const Account = () => {
     },
   } = useContext(AuthContext);
   const { updateAccount } = useContext(AccountContext);
+  const { authDispatch } = useContext(AuthContext);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -59,11 +60,22 @@ const Account = () => {
       setTimeout(() => {
         setAlert(null);
       }, 5000);
+      handleClose();
+      if (updateResult.success) {
+        // update user info in auth context
+        const user = updateResult.data;
+        authDispatch({
+          type: "SET_AUTH",
+          payload: {
+            user,
+            isAuthenticated: true,
+          },
+        });
+      }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
-    setLoading(false);
-    handleClose();
   };
 
   return (
