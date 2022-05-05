@@ -34,6 +34,7 @@ const BookingsContextProvider = ({ children }) => {
   const [customer, setCustomer] = useState({});
   const [total, setTotal] = useState(0);
   const [date, setDate] = useState(0);
+
   const filterByDate = (date, rooms) => {
     const dateArrival_ = new Date(date.arrival);
     const dateDeparture_ = new Date(date.departure);
@@ -55,6 +56,9 @@ const BookingsContextProvider = ({ children }) => {
         for (const ticket of room.tickets) {
           let ticketArrival = new Date(ticket.arrivalDate);
           let ticketDeparture = new Date(ticket.departureDate);
+          if (ticket.isSolved) {
+            return true;
+          }
           if (
             dateArrival_.getTime() >= ticketDeparture.getTime() ||
             dateDeparture_.getTime() <= ticketArrival.getTime()
