@@ -212,7 +212,9 @@ export const cancelBooking = async (req, res) => {
     const ticket = await Ticket.findById(id)
       .populate("room")
       .populate("customer");
-    const invoice = await Invoice.findByIdAndDelete(ticket.invoice);
+    const invoice = await Invoice.find({ ticket: id });
+    // delete invoice
+    await Invoice.findByIdAndDelete(invoice[0]._id);
     // delete  ticket
     await Ticket.findByIdAndDelete(id);
     res.json({
