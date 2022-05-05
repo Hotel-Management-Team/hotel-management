@@ -63,16 +63,15 @@ export const postTicket = async (req, res) => {
   const today = new Date();
   const updateStatus =
     startDate.getDate() === endDate.getDate() &&
-    startDate.getMonth() === endDate.getMonth() &&
-    startDate.getFullYear() === endDate.getFullYear()
+      startDate.getMonth() === endDate.getMonth() &&
+      startDate.getFullYear() === endDate.getFullYear()
       ? "Using"
       : today.getDate() === startDate.getDate() &&
         today.getMonth() === startDate.getMonth() &&
         today.getFullYear() === startDate.getFullYear()
-      ? "Waiting"
-      : "Available";
+        ? "Waiting"
+        : "Available";
 
-  console.log("status", updateStatus);
   const updatedRoom = await Room.findByIdAndUpdate(roomId, {
     status: updateStatus,
   });
@@ -85,10 +84,9 @@ export const postTicket = async (req, res) => {
   });
 };
 
-export const putTicket = async (req, res) => {};
+export const putTicket = async (req, res) => { };
 
 export const deleteTicket = async (req, res) => {
-  console.log(req.params.id);
   try {
     const ticket = await Ticket.findOneAndDelete({ _id: req.params.id });
     if (!ticket) {

@@ -142,7 +142,6 @@ export const checkinBooking = async (req, res) => {
       msg: `${ticket.customer.name} đã nhận phòng ${room.name} thành công`,
       data: ticket,
     });
-    console.log("checkinBooking", ticket);
   } catch (error) {
     console.error(error.message);
     res.json({
@@ -189,8 +188,6 @@ export const cleanRoom = async (req, res) => {
     const room = await Room.findByIdAndUpdate(ticket.room, {
       status: "Available",
     });
-
-    console.log("Room", room);
 
     res.json({
       success: true,

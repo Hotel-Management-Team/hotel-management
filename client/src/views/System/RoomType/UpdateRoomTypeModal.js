@@ -15,8 +15,6 @@ const UpdateRoomTypeModal = () => {
 
   const [newRoomType, setNewRoomType] = useState(roomType);
 
-  // console.log(newRoomType);
-
   const { name, description, numberOfRoom } = newRoomType;
 
   const closeDialog = () => {
@@ -39,7 +37,6 @@ const UpdateRoomTypeModal = () => {
     e.preventDefault();
     const { success, msg } = await updateRoomType(newRoomType);
     setShowToast({ show: true, msg, type: success ? "success" : "danger" });
-    console.log(newRoomType);
     closeDialog();
   };
 
