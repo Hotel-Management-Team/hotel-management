@@ -61,23 +61,23 @@ export const AddCustomerModal = () => {
 
     return (
         <>
+            <Toast
+                show={show}
+                style={{ position: "fixed", bottom: "10%", right: "10px" }}
+                className={`bg-${type} text-white`}
+                onClose={setShowToast.bind(this, {
+                    show: false,
+                    msg: "",
+                    type: null,
+                })}
+                delay={3000}
+                autohide
+            >
+                <Toast.Body>
+                    <strong>{msg}</strong>
+                </Toast.Body>
+            </Toast>
             <Modal show={showAddCustomerModal} onHide={resetCustomerData} size="lg">
-                <Toast
-                    show={show}
-                    style={{ position: "fixed", bottom: "10%", right: "10px" }}
-                    className={`bg-${type} text-white`}
-                    onClose={setShowToast.bind(this, {
-                        show: false,
-                        msg: "",
-                        type: null,
-                    })}
-                    delay={3000}
-                    autohide
-                >
-                    <Toast.Body>
-                        <strong>{msg}</strong>
-                    </Toast.Body>
-                </Toast>
                 <Modal.Header closeButton>
                     <Modal.Title>Thêm khách hàng</Modal.Title>
                 </Modal.Header>
@@ -99,7 +99,6 @@ export const AddCustomerModal = () => {
                                     <option value={null}>Chọn loại khách hàng</option>
                                     <option value={CUSTOMER_TYPE.LOCAL}> Khách hàng Nội địa </option>
                                     <option value={CUSTOMER_TYPE.FOREIGN}> Khách hàng Quốc tế </option>
-                                    ))
                                 </Form.Select>
                             </Form.Group>
                         </Row>

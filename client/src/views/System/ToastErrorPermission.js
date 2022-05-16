@@ -19,7 +19,7 @@ const ToastErrorPermission = () => {
       autohide
       style={{
         position: "fixed",
-        top: "20%",
+        bottom: "10%",
         right: "10px",
       }}
       className={`bg-${type} text-white`}
